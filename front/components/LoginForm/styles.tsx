@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 import palette from "@styles/palette";
-export const SignUpFormBlock = styled.form`
+export const LoginFormBlock = styled.form`
   width: 80%;
   max-width: 480px;
   margin: 0 auto;
@@ -36,20 +36,16 @@ export const Input = styled.input`
 
 export const Desc = styled.div`
   margin-top: 2.5rem;
-  color: #828282;
+  color: #4f4f4f;
   font-size: 1rem;
   line-height: 1.8;
   white-space: pre-wrap;
-  text-align: center;
   letter-spacing: -0.015em;
-  font-weight: 300;
-  & > strong {
-    color: ${palette.gray[7]};
-    font-weight: 500;
-  }
+  font-weight: 500;
   & > u {
-    color: ${palette.gray[6]};
+    color: ${palette.gray[7]};
     text-decoration: underline;
+    font-weight: 600;
   }
 `;
 
@@ -58,4 +54,4 @@ export const Error = styled.div`
   margin: 8px 0 16px;
 `;
 
-export const SignUpButton = styled(Button)``;
+export const LoginButton = styled(Button)``;
