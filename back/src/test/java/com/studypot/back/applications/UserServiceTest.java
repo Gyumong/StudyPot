@@ -11,6 +11,7 @@ import com.studypot.back.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserServiceTest {
 
@@ -19,10 +20,13 @@ class UserServiceTest {
   @Mock
   private UserRepository userRepository;
 
+  @Mock
+  private PasswordEncoder passwordEncoder;
+
   @BeforeEach
   public void setUp() {
     openMocks(this);
-    userService = new UserService(userRepository);
+    userService = new UserService(userRepository, passwordEncoder);
   }
 
   @Test
@@ -32,7 +36,7 @@ class UserServiceTest {
     String email = "test@naver.com";
     String password = "test";
 
-    User mockUser = User.builder().email(email).name(name).password(password).build();
+    User mockUser = User.builder().email(email).name(name).password(passwordEncoder.encode(password)).build();
 
     given(userRepository.save(any(User.class))).willReturn(mockUser);
 
