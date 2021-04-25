@@ -1,7 +1,8 @@
 import React, { useState, ReactElement, useCallback, useEffect } from "react";
 import { Header, SignUpFormBlock, Input, SignUpButton, Desc, Error } from "./styles";
 import useInput from "@hooks/useInput";
-const SignUpForm = (): ReactElement => {
+
+  const SignUpForm = (): ReactElement => {
   const [email, onChangeEmail] = useInput("");
   const [name, onChangeName] = useInput("");
   const [password, , setPassword] = useInput("");
