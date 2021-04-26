@@ -15,7 +15,6 @@ public class JwtUtil {
   }
 
   public String createToken(Long userId, String userName) {
-    System.out.println(key);
     JwtBuilder builder = Jwts.builder()
         .claim("userId", userId)
         .claim("userName", userName);
