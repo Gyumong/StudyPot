@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 import palette from "@styles/palette";
+
 export const SignUpFormBlock = styled.form`
   width: 80%;
   max-width: 480px;

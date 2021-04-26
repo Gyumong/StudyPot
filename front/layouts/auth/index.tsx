@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { AuthTemplateBlock, WhiteBox } from "./styles";
+
 const AuthTemplate: FC = ({ children }) => {
   return (
     <AuthTemplateBlock>
