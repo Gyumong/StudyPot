@@ -47,6 +47,11 @@ export const Desc = styled.div`
     color: ${palette.gray[7]};
     font-weight: 500;
   }
+  & > a {
+    color: ${palette.gray[7]};
+    font-weight: 500;
+    text-decoration: underline;
+  }
   & > u {
     color: ${palette.gray[6]};
     text-decoration: underline;

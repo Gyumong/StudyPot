@@ -42,7 +42,7 @@ export const Desc = styled.div`
   white-space: pre-wrap;
   letter-spacing: -0.015em;
   font-weight: 500;
-  & > u {
+  & > a {
     color: ${palette.gray[7]};
     text-decoration: underline;
     font-weight: 600;

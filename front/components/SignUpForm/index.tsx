@@ -1,6 +1,7 @@
 import React, { useState, ReactElement, useCallback, useEffect } from "react";
 import { Header, SignUpFormBlock, Input, SignUpButton, Desc, Error } from "./styles";
 import useInput from "@hooks/useInput";
+import Link from "next/link";
 const SignUpForm = (): ReactElement => {
   const [email, onChangeEmail] = useInput("");
   const [name, onChangeName] = useInput("");
@@ -62,7 +63,10 @@ const SignUpForm = (): ReactElement => {
       </Desc>
       <SignUpButton>계정 만들기</SignUpButton>
       <Desc style={{ marginTop: "1rem" }}>
-        이미 가입하셨다면? <strong style={{ textDecoration: "underline" }}>로그인</strong>
+        이미 가입하셨다면?&nbsp;
+        <Link href={{ pathname: "/login" }}>
+          <a>로그인</a>
+        </Link>
       </Desc>
       {/* <Footer></Footer> */}
     </SignUpFormBlock>
