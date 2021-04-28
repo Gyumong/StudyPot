@@ -19,7 +19,7 @@ public class WebConfigurerImpl extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    Filter filter = new JwtAuthenticationFilter(authenticationManager(), jwtUtil());
+    Filter filter = new JwtAuthenticationFilter(authenticationManager(), new JwtUtil(secretKey));
     http
         .csrf().disable()
         .cors().disable()
@@ -39,8 +39,4 @@ public class WebConfigurerImpl extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
-  @Bean
-  public JwtUtil jwtUtil() {
-    return new JwtUtil(secretKey);
-  }
 }
