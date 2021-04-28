@@ -1,6 +1,7 @@
 package com.studypot.back.interfaces;
 
 import com.studypot.back.Dto.SessionRequestDto;
+import com.studypot.back.Dto.SessionResponseDto;
 import com.studypot.back.applications.UserService;
 import com.studypot.back.domain.User;
 import com.studypot.back.utils.JwtUtil;
@@ -22,7 +23,7 @@ public class SessionController {
   }
 
   @PostMapping("/login")
-  public String signIn(@RequestBody SessionRequestDto resource) {
+  public SessionResponseDto signIn(@RequestBody SessionRequestDto resource) {
 
     String email = resource.getEmail();
     String password = resource.getPassword();
@@ -31,7 +32,11 @@ public class SessionController {
 
     String token = jwtUtil.createToken(user.getId(), user.getName());
 
-    return token;
+    SessionResponseDto responseDto = new SessionResponseDto();
+
+    responseDto.setAccessToken(token);
+
+    return responseDto;
   }
 
 }

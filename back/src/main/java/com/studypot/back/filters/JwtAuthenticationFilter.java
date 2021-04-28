@@ -1,5 +1,7 @@
 package com.studypot.back.filters;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 import com.studypot.back.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import java.io.IOException;
@@ -39,7 +41,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
   }
 
   private Authentication getAuthentication(HttpServletRequest request) {
-    String token = request.getHeader("Authorization");
+    String token = request.getHeader(AUTHORIZATION);
     if (token == null) {
       return null;
     }
