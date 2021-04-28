@@ -5,6 +5,7 @@ import Button from "../common/Button"
 
 export const MainFrame = styled.div`
     display: flex;
+    position: relative;
     width: 100%;
     height: 5rem;
     background-color: white;
@@ -12,7 +13,7 @@ export const MainFrame = styled.div`
 `;
 
 export const Logo = styled.a`
-    position: relative;
+    position: absolute;
     top: 1rem;
     left: 5%;
     text-decoration: none;
@@ -21,7 +22,7 @@ export const Logo = styled.a`
 `;
 
 export const MenuFrame = styled.nav`
-    display: flex;
+    
     position: absolute;
     top: 1.5rem;
     left: 45%;
@@ -29,7 +30,7 @@ export const MenuFrame = styled.nav`
     
 `;
 
-export const Find = styled.div`
+export const Find = styled.a`
     margin-right: 1.5rem;
     cursor: pointer;
     &:hover {
@@ -37,7 +38,7 @@ export const Find = styled.div`
         color: #26de81;
       } 
 `;
-export const Recruit = styled.div`
+export const Recruit = styled.a`
     cursor: pointer;
     &:hover {
         text-decoration:underline;

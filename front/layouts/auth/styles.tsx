@@ -17,5 +17,5 @@ export const WhiteBox = styled.div`
   background: white;
   width: 80%;
   padding: 2rem;
-  border-radius: 2px;
+  border-radius: 4px;
 `;

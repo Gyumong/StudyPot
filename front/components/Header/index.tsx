@@ -7,7 +7,7 @@ const Header = () => {
     return (
         
          <MainFrame>
-             <Link href="/main">
+             <Link href="/">
                 <Logo>
                 <Image
         src="/logo_621x206.png"

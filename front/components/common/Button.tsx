@@ -32,6 +32,7 @@ const StyledButton = styled.button`
   &:focus {
     box-shadow: 0px 2px 12px #00000030;
   }
+  
 `;
 
 const Button: FC<Props> = (props) => <StyledButton {...props} />;
