@@ -2,9 +2,8 @@ package com.studypot.back.applications;
 
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.studypot.back.exceptions.UnregisteredEmailException;
+import com.studypot.back.exceptions.WrongPasswordException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +32,18 @@ public class UserService {
         .email(email)
         .password(encodedPassword)
         .build();
-    User thisUser = userRepository.save(user);
 
-    System.out.println(thisUser.getPassword());
+    return userRepository.save(user);
+  }
 
-    return thisUser;
+  public User authenticate(String email, String password) {
+
+    User user = userRepository.findByEmail(email).orElseThrow(() -> new UnregisteredEmailException(email));
+
+    if (!passwordEncoder.matches(password, user.getPassword())) {
+      throw new WrongPasswordException();
+    }
+
+    return user;
   }
 }

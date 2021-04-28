@@ -1,35 +1,37 @@
 package com.studypot.back.interfaces;
 
+import com.studypot.back.Dto.SessionRequestDto;
 import com.studypot.back.applications.UserService;
 import com.studypot.back.domain.User;
-import org.springframework.http.HttpStatus;
+import com.studypot.back.utils.JwtUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class SessionController {
+
+  private final JwtUtil jwtUtil;
 
   private final UserService userService;
 
-  public UserController(UserService userService) {
+  public SessionController(UserService userService, JwtUtil jwtUtil) {
+
     this.userService = userService;
+    this.jwtUtil = jwtUtil;
   }
 
-  @PostMapping("/signup")
-  @ResponseStatus(HttpStatus.CREATED)
-  public String create(
-      @RequestBody User resource
-  ) {
-    String name = resource.getName();
+  @PostMapping("/login")
+  public String signIn(@RequestBody SessionRequestDto resource) {
+
     String email = resource.getEmail();
     String password = resource.getPassword();
 
-    userService.registerUser(name, email, password);
+    User user = userService.authenticate(email, password);
 
-    return "Successfully registered";
+    String token = jwtUtil.createToken(user.getId(), user.getName());
 
+    return token;
   }
 
 }

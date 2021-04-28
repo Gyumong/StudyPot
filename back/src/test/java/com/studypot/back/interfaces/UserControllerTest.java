@@ -35,8 +35,7 @@ class UserControllerTest {
         .content("{\n"
             + "    \"email\":\"test@naver.com\", \"name\":\"tester\", \"password\":\"1234\"\n"
             + "  }"))
-        .andExpect(status().isCreated())
-        .andExpect(header().string("location", "/users/1"));
+        .andExpect(status().isCreated());
 
     verify(userService).registerUser(any(), any(), any());
   }
