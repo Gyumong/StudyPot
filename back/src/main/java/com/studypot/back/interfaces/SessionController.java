@@ -4,7 +4,6 @@ import com.studypot.back.Dto.SessionRequestDto;
 import com.studypot.back.applications.UserService;
 import com.studypot.back.domain.User;
 import com.studypot.back.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,17 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SessionController {
 
-  @Autowired
-  private JwtUtil jwtUtil;
+  private final JwtUtil jwtUtil;
 
   private final UserService userService;
 
-  public SessionController(UserService userService) {
+  public SessionController(UserService userService, JwtUtil jwtUtil) {
+
     this.userService = userService;
+    this.jwtUtil = jwtUtil;
   }
 
   @PostMapping("/login")
-  public String signIn(@RequestBody SessionRequestDto resource){
+  public String signIn(@RequestBody SessionRequestDto resource) {
 
     String email = resource.getEmail();
     String password = resource.getPassword();
