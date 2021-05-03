@@ -19,7 +19,7 @@ public class UserController {
 
   @PostMapping("/signup")
   @ResponseStatus(HttpStatus.CREATED)
-  public String create(
+  public void create(
       @RequestBody User resource
   ) {
     String name = resource.getName();
@@ -27,8 +27,6 @@ public class UserController {
     String password = resource.getPassword();
 
     userService.registerUser(name, email, password);
-
-    return "Successfully registered";
 
   }
 

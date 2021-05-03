@@ -23,4 +23,10 @@ public class SessionErrorAdvice {
     return "Unregistered Email";
   }
 
+  @ResponseBody
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(ExistEmailException.class)
+  public String handleExistEmail() {
+    return "Duplicated Email";}
+
 }

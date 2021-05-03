@@ -18,21 +18,16 @@ public class JwtUtil {
 
   private final Key key;
 
-  private int jwtExpirationTimeMs;
-  private int refreshExpirationTimeMs;
-
-  public JwtUtil(@Value("${jwt.secret}") String secretKey) {
-    this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
-  }
-
   @Value("${jwt.jwtExpirationTimeMs}")
-  public void setJwtExpirationTimeMs(int jwtExpirationTimeMs) {
-    this.jwtExpirationTimeMs = jwtExpirationTimeMs;
-  }
+  private int jwtExpirationTimeMs;
 
   @Value("${jwt.refreshExpirationTimeMs}")
-  public void setRefreshExpirationTimeMs(int refreshExpirationTimeMs) {
-    this.refreshExpirationTimeMs = refreshExpirationTimeMs;
+  private int refreshExpirationTimeMs;
+
+  public JwtUtil(
+      @Value("${jwt.secret}") String secretKey
+  ) {
+    this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
   }
 
   public String createToken(Long userId, String userName) {
@@ -48,15 +43,25 @@ public class JwtUtil {
   }
 
   public String createRefreshToken(Long userId, String userName) {
-    JwtBuilder builder = Jwts.builder()
+    JwtBuilder builder = Jwts.builder();
+
+    generatePayload(builder, userId, userName);
+    sign(builder);
+
+    return builder
+        .compact();
+  }
+
+  private void generatePayload(JwtBuilder jwtBuilder, Long userId, String userName) {
+    jwtBuilder
         .claim("userId", userId)
         .claim("userName", userName)
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + refreshExpirationTimeMs));
+  }
 
-    return builder
-        .signWith(key, SignatureAlgorithm.HS256)
-        .compact();
+  private void sign(JwtBuilder jwtBuilder) {
+    jwtBuilder.signWith(key, SignatureAlgorithm.HS256);
   }
 
   public Claims getClaims(String token) {
