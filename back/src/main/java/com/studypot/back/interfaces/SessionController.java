@@ -1,9 +1,9 @@
 package com.studypot.back.interfaces;
 
-import com.studypot.back.dto.session.SessionRequestDto;
-import com.studypot.back.dto.session.SessionResponseDto;
 import com.studypot.back.applications.UserService;
 import com.studypot.back.domain.User;
+import com.studypot.back.dto.session.SessionRequestDto;
+import com.studypot.back.dto.session.SessionResponseDto;
 import com.studypot.back.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.Authentication;
@@ -45,12 +45,11 @@ public class SessionController {
   }
 
   @GetMapping("/refresh")
-  public String refreshToken(Authentication authentication) throws Exception{
+  public String refreshToken(Authentication authentication) {
     Claims claims = (Claims) authentication.getPrincipal();
     Long userId = claims.get("userId", Long.class);
     String userName = claims.get("userName", String.class);
-    String newAccessToken = jwtUtil.createToken(userId, userName);
-    return newAccessToken;
+    return jwtUtil.createToken(userId, userName);
   }
 
 }
