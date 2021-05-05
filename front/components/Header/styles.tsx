@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import palette from "@styles/palette";
-import Button from "../common/Button"
-
+import Button from "../common/Button";
 
 
 export const MainFrame = styled.div`
@@ -19,6 +18,7 @@ export const Logo = styled.a`
   text-decoration: none;
   cursor: pointer;
 `;
+
 
 export const MenuFrame = styled.ul`
   display: flex;
@@ -38,23 +38,8 @@ export const MenuItem = styled.li`
         & + & {
         margin-left: 1rem;
         }
-`;
 
-// export const Find = styled.div`
-//   margin-right: 1.5rem;
-//   cursor: pointer;
-//   &:hover {
-//     text-decoration: underline;
-//     color: #26de81;
-//   }
-// `;
-// export const Recruit = styled.div`
-//   cursor: pointer;
-//   &:hover {
-//     text-decoration: underline;
-//     color: #26de81;
-//   }
-// `;
+
 
 export const ButtonFrame = styled.div`
   position: absolute;
@@ -83,19 +68,3 @@ export const LoginButton = styled(Button)`
     color: #ffffff;
   }
 `;
-
-// export const Find = styled.a`
-//     margin-right: 1.5rem;
-//     cursor: pointer;
-//     &:hover {
-//         text-decoration:underline;
-//         color: #26de81;
-//       } 
-// `;
-// export const Recruit = styled.a`
-//     cursor: pointer;
-//     &:hover {
-//         text-decoration:underline;
-//         color: #26de81;
-//       } 
-// `;

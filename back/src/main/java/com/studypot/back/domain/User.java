@@ -1,5 +1,7 @@
 package com.studypot.back.domain;
 
+import com.studypot.back.dto.user.ProfileResponseDto;
+import com.studypot.back.dto.user.UpdateProfileRequestDto;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GeneratorType;
+import org.hibernate.annotations.ColumnDefault;
 
 @Builder
 @NoArgsConstructor
@@ -30,5 +32,32 @@ public class User {
 
   private String password;
 
+  @ColumnDefault("0")
+  private boolean isStaff;
 
+  @ColumnDefault("1")
+  private boolean isActive;
+
+  @Setter
+  private String location;
+
+  @Setter
+  private String category;
+
+  @Setter
+  private String introduction;
+
+  @Setter
+  private String image;
+
+
+  public ProfileResponseDto updateProfile(UpdateProfileRequestDto updateProfileRequestDto) {
+    this.name = updateProfileRequestDto.getName();
+    this.location = updateProfileRequestDto.getLocation();
+    this.category = updateProfileRequestDto.getCategory();
+    this.introduction = updateProfileRequestDto.getIntroduction();
+    this.image = updateProfileRequestDto.getImage();
+
+    return new ProfileResponseDto(this.name, this.location, this.category, this.introduction, this.introduction);
+  }
 }
