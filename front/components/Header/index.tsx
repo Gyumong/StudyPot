@@ -25,16 +25,25 @@ const Header = () => {
                     </Link>
                 </MenuItem>
 
-            <MenuItem>
-                <Link href="/recruit">
-                    스터디모집
-                </Link>
-            </MenuItem>    
+                <MenuItem>
+                    <Link href="/recruit">
+                        스터디모집
+                    </Link>
+                </MenuItem>    
             </MenuFrame>
 
              <ButtonFrame>
-                <LoginButton> Log in </LoginButton>
-                <RegisterButton> Register </RegisterButton>
+                <Link href="/login">
+                    <LoginButton> 
+                            Log in
+                    </LoginButton>
+                </Link>
+                
+                <Link href="signup">
+                    <RegisterButton> 
+                            Register
+                    </RegisterButton>
+                </Link>
             </ButtonFrame>
          </MainFrame>
     )

@@ -38,8 +38,7 @@ export const MenuItem = styled.li`
         & + & {
         margin-left: 1rem;
         }
-
-
+`
 
 export const ButtonFrame = styled.div`
   position: absolute;
