@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import AuthTemplate from "@layouts/auth";
 import LoginForm from "@components/LoginForm";
 
-const logIn = (): ReactElement => {
+const Login = (): ReactElement => {
   return (
     <AuthTemplate>
       <LoginForm />
@@ -10,4 +10,4 @@ const logIn = (): ReactElement => {
   );
 };
 
-export default logIn;
+export default Login;
