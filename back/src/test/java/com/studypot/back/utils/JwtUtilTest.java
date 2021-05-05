@@ -20,11 +20,11 @@ class JwtUtilTest {
   }
 
   @Test
-  public void createToken() {
+  public void createAccessToken() {
     Long userId = 1L;
     String userName = "leo";
-//    jwtUtil.setJwtExpirationTimeMs(36000000);
-    String token = jwtUtil.createToken(userId, userName);
+    jwtUtil.setJwtExpirationTimeMs(36000000);
+    String token = jwtUtil.createAccessToken(userId, userName);
 
     System.out.println(token);
 

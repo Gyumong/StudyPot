@@ -116,4 +116,14 @@ class UserServiceTest {
     verify(userRepository).save(any(User.class));
   }
 
+  @Test
+  public void checkRefreshToken() {
+    Long userId = 1L;
+    User mockUser = User.builder().name("leo").build();
+    given(userRepository.findById(1L)).willReturn(Optional.ofNullable(mockUser));
+    userService.checkRefreshToken(userId);
+
+    verify(userRepository).findById(any(Long.class));
+  }
+
 }

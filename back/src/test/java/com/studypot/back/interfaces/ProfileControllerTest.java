@@ -8,18 +8,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.studypot.back.applications.UserService;
 import com.studypot.back.dto.user.UpdateProfileRequestDto;
+import com.studypot.back.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ProfileController.class)
+@Import({JwtUtil.class})
 class ProfileControllerTest {
 
   @Autowired
@@ -32,7 +35,7 @@ class ProfileControllerTest {
 
   @BeforeEach
   public void setUp() {
-    this.token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsInVzZXJOYW1lIjoibGVvIiwiaWF0IjoxNjIwMDIwODEzLCJleHAiOjE2MjAwNTY4MTN9.hw_gKw9UGCkrKxp2BcfDCM-FF7oIXHy4TeaQqemiYgw";
+    this.token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImxlbyIsInVzZXJJZCI6MSwiZXhwaXJlZEF0IjoxNjIwMjMxODQ0LCJpYXQiOjE2MjAxOTU4NDR9.VtzYLhxCnKYk_NlfaTT-Pk9ZHQZz6qqQ9XssFD6svu8";
   }
 
   @Test
