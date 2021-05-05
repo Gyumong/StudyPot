@@ -64,4 +64,8 @@ export const Error = styled.div`
   margin: 8px 0 16px;
 `;
 
+export const Success = styled.div`
+  color: #2eb67d;
+  font-weight: bold;
+`;
 export const SignUpButton = styled(Button)``;

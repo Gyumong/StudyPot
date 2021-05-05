@@ -5,6 +5,7 @@ const initialState: IUser = {
   userLoading: false,
   userData: null,
   error: null,
+  accessToken: "",
 };
 
 export const users = createSlice({
@@ -18,7 +19,7 @@ export const users = createSlice({
     },
     loginSuccess(state: IUser, action: PayloadAction<IUser>) {
       state.userLoading = false;
-      state.userData = action.payload;
+      state.accessToken = action.payload.accessToken;
     },
     loginFailure(state: IUser, action: PayloadAction<{ error: unknown }>) {
       state.userLoading = false;

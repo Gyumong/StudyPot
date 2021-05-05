@@ -12,8 +12,8 @@ interface SagaStore extends Store {
 const store = () => {
   const sagaMiddleware = createSagaMiddleware();
   const store = configureStore({ reducer: rootReducer, middleware: [sagaMiddleware, ...getDefaultMiddleware()] });
-
   (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
+
   return store;
 };
 

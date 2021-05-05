@@ -5,11 +5,10 @@ import { loginRequest, loginSuccess, loginFailure } from "../slices/users";
 import { LoginRequestPayload, ResponseGenerator } from "@typings/db";
 
 function logInAPI(data: LoginRequestPayload) {
-  return axios.post("/auth/login", data);
+  return axios.post("/signin", data);
 }
 
 function* logIn(action: PayloadAction<LoginRequestPayload>) {
-  // 액션을 받음
   try {
     const result: ResponseGenerator = yield call(logInAPI, action.payload);
     //   const { accessToken } = yield result.data;

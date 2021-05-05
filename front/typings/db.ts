@@ -1,7 +1,8 @@
 export interface IUser {
   userLoading: boolean;
-  userData: any;
-  error: any;
+  userData?: any;
+  error?: any;
+  accessToken?: string;
 }
 
 export interface LoginRequestPayload {
