@@ -4,6 +4,7 @@ import SignUpForm from "@components/SignUpForm";
 
 const SignUp = (): ReactElement => {
   return (
+    
     <AuthTemplate>
       <SignUpForm />
     </AuthTemplate>

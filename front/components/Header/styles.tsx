@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import palette from "@styles/palette";
 import Button from "../common/Button";
 
+
 export const MainFrame = styled.div`
   display: flex;
   width: 100%;
@@ -18,29 +19,27 @@ export const Logo = styled.a`
   cursor: pointer;
 `;
 
-export const MenuFrame = styled.nav`
+
+export const MenuFrame = styled.ul`
   display: flex;
   position: absolute;
-  top: 1.5rem;
-  left: 45%;
+  top: 0.5rem;
+  left: 40%;
   color: #4f4f4f;
 `;
 
-export const Find = styled.div`
-  margin-right: 1.5rem;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-    color: #26de81;
-  }
-`;
-export const Recruit = styled.div`
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-    color: #26de81;
-  }
-`;
+export const MenuItem = styled.li`
+    float: left;
+    cursor: pointer;
+        &:hover {
+            text-decoration:underline;
+            color: #26de81;
+        } 
+        & + & {
+        margin-left: 1rem;
+        }
+
+
 
 export const ButtonFrame = styled.div`
   position: absolute;

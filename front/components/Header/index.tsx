@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
-import { MainFrame, Logo, MenuFrame, Find, Recruit, ButtonFrame, RegisterButton, LoginButton } from './styles'
+import { MainFrame, Logo, MenuFrame, MenuItem, ButtonFrame, RegisterButton, LoginButton } from './styles'
 import Image from "next/image";
 
 const Header = () => {
     return (
         
          <MainFrame>
-             <Link href="/main">
+             <Link href="/">
                 <Logo>
                 <Image
         src="/logo_621x206.png"
@@ -19,17 +19,17 @@ const Header = () => {
              </Link>
             
             <MenuFrame>
-                <Link href="/find">
-                    <Find>
-                    스터디찾기
-                    </Find>
-                </Link>
+                <MenuItem>
+                    <Link href="/find">
+                        스터디찾기
+                    </Link>
+                </MenuItem>
 
+            <MenuItem>
                 <Link href="/recruit">
-                    <Recruit>
                     스터디모집
-                    </Recruit>
                 </Link>
+            </MenuItem>    
             </MenuFrame>
 
              <ButtonFrame>

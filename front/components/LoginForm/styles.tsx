@@ -42,8 +42,8 @@ export const Desc = styled.div`
   line-height: 1.8;
   white-space: pre-wrap;
   letter-spacing: -0.015em;
-  font-weight: 500;
-  & > a {
+
+  & > u {
     color: ${palette.gray[7]};
     text-decoration: underline;
     font-weight: 600;

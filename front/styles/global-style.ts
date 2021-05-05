@@ -19,4 +19,8 @@ export const globalStyles = css`
     outline: none;
     border: none;
   }
+  ol,ul,li {
+    list-style: none;
+  }
+
 `;
