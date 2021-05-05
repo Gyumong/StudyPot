@@ -30,7 +30,9 @@ const LoginForm = (): ReactElement => {
             withCredentials: true,
           },
         )
-        .then()
+        .then(() => {
+          console.log("?");
+        })
         .catch((error) => {
           setLogInError(error.response);
         });
