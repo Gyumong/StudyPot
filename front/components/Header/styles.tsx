@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import palette from "@styles/palette";
 import Button from "../common/Button";
 
-
 export const MainFrame = styled.div`
   display: flex;
   width: 100%;
@@ -19,7 +18,6 @@ export const Logo = styled.a`
   cursor: pointer;
 `;
 
-
 export const MenuFrame = styled.ul`
   display: flex;
   position: absolute;
@@ -29,16 +27,16 @@ export const MenuFrame = styled.ul`
 `;
 
 export const MenuItem = styled.li`
-    float: left;
-    cursor: pointer;
-        &:hover {
-            text-decoration:underline;
-            color: #26de81;
-        } 
-        & + & {
-        margin-left: 1rem;
-        }
-`
+  float: left;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+    color: #26de81;
+  }
+  & + & {
+    margin-left: 1rem;
+  }
+`;
 
 export const ButtonFrame = styled.div`
   position: absolute;
