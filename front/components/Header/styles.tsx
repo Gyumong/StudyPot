@@ -43,7 +43,7 @@ export const MenuItem = styled.li`
 export const ButtonFrame = styled.div`
   position: absolute;
   top: 0;
-  left: 75%;
+  left: 74%;
 `;
 
 export const RegisterButton = styled(Button)`
