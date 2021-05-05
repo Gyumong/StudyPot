@@ -7,6 +7,4 @@ public class SessionResponseDto {
 
   private String accessToken;
 
-  private String refreshToken;
-
 }

@@ -30,34 +30,36 @@ public class JwtUtil {
     this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
   }
 
-  public String createToken(Long userId, String userName) {
-    JwtBuilder builder = Jwts.builder()
-        .claim("userId", userId)
-        .claim("userName", userName)
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationTimeMs));
-
-    return builder
-        .signWith(key, SignatureAlgorithm.HS256)
-        .compact();
-  }
-
-  public String createRefreshToken(Long userId, String userName) {
+  public String createAccessToken(Long userId, String userName) {
     JwtBuilder builder = Jwts.builder();
 
-    generatePayload(builder, userId, userName);
+    generatePayload(builder, userId, userName, jwtExpirationTimeMs);
     sign(builder);
-
-    return builder
-        .compact();
+    return builder.compact();
   }
 
-  private void generatePayload(JwtBuilder jwtBuilder, Long userId, String userName) {
+  public String createRefreshToken(Long userId) {
+    JwtBuilder builder = Jwts.builder();
+
+    generatePayload(builder, userId, null, refreshExpirationTimeMs);
+    sign(builder);
+
+    return builder.compact();
+  }
+
+  public void setJwtExpirationTimeMs(int jwtExpirationTimeMs) {
+    this.jwtExpirationTimeMs = jwtExpirationTimeMs;
+  }
+
+  private void generatePayload(JwtBuilder jwtBuilder, Long userId, String userName, int expirationTime) {
+    if (userName != null) {
+      jwtBuilder.claim("userName", userName);
+    }
     jwtBuilder
         .claim("userId", userId)
-        .claim("userName", userName)
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + refreshExpirationTimeMs));
+        .claim("expiredAt",(new Date(System.currentTimeMillis()).getTime() + expirationTime) / 1000)
+        .setIssuedAt(new Date(System.currentTimeMillis()));
+
   }
 
   private void sign(JwtBuilder jwtBuilder) {
@@ -74,7 +76,7 @@ public class JwtUtil {
     } catch (SignatureException e) {
       throw new SignatureException("Bad Signature", e);
     } catch (MalformedJwtException e) {
-      throw new MalformedJwtException("This token was not correctly constructed", e);
+      throw new MalformedJwtException("This token was incorrectly constructed", e);
     }
   }
 }
