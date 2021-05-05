@@ -1,13 +1,12 @@
-package com.studypot.back.Dto;
+package com.studypot.back.dto.session;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 public class SessionResponseDto {
 
-  @Setter
   private String accessToken;
+
+  private String refreshToken;
 
 }

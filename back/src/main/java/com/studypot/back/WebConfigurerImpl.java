@@ -17,6 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebConfigurerImpl extends WebSecurityConfigurerAdapter {
 
+//  private final JwtUtil jwtUtil;
+//
+//  public WebConfigurerImpl(JwtUtil jwtUtil) {
+//    this.jwtUtil = jwtUtil;
+//  }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     Filter filter = new JwtAuthenticationFilter(authenticationManager(), new JwtUtil(secretKey));

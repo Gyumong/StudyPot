@@ -1,9 +1,14 @@
 package com.studypot.back.filters;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static com.studypot.back.constants.AuthConstant.AUTHORIZATION;
+import static com.studypot.back.constants.AuthConstant.BEARER;
+import static com.studypot.back.constants.AuthConstant.REFRESH_TOKEN;
 
+import com.studypot.back.exceptions.RequiredLoginAgainException;
+import com.studypot.back.exceptions.RequiredRefreshTokenException;
 import com.studypot.back.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -45,10 +50,32 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     if (token == null) {
       return null;
     }
+    try {
 
-    Claims claims = jwtUtil.getClaims(token.substring("Bearer ".length()));
+      Claims claims = jwtUtil.getClaims(token.substring(BEARER.length()));
 
-    Authentication authentication = new UsernamePasswordAuthenticationToken(claims, null);
-    return authentication;
+      return new UsernamePasswordAuthenticationToken(claims, null);
+
+    } catch (ExpiredJwtException e) {
+
+      String refreshToken = request.getHeader(REFRESH_TOKEN);
+
+      if (refreshToken == null) {
+
+        throw new RequiredRefreshTokenException("refresh token required.");
+
+      }
+      try {
+
+        Claims claims = jwtUtil.getClaims(refreshToken);
+
+        return new UsernamePasswordAuthenticationToken(claims, null);
+
+      } catch (ExpiredJwtException ex) {
+
+        throw new RequiredLoginAgainException("need login again.");
+
+      }
+    }
   }
 }

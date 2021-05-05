@@ -1,7 +1,6 @@
 package com.studypot.back.exceptions;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,5 +22,11 @@ public class SessionErrorAdvice {
   public String handleUnregisteredEmail() {
     return "Unregistered Email";
   }
+
+  @ResponseBody
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(ExistEmailException.class)
+  public String handleExistEmail() {
+    return "Duplicated Email";}
 
 }

@@ -2,6 +2,10 @@ package com.studypot.back.applications;
 
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
+import com.studypot.back.dto.user.ProfileProjection;
+import com.studypot.back.dto.user.ProfileResponseDto;
+import com.studypot.back.dto.user.UpdateProfileRequestDto;
+import com.studypot.back.exceptions.ExistEmailException;
 import com.studypot.back.exceptions.UnregisteredEmailException;
 import com.studypot.back.exceptions.WrongPasswordException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +26,7 @@ public class UserService {
   public User registerUser(String name, String email, String password) {
 
     if (userRepository.existsByEmail(email)) {
-      throw new RuntimeException("duplicated email.");
+      throw new ExistEmailException(email);
     }
 
     String encodedPassword = passwordEncoder.encode(password);
@@ -45,5 +49,20 @@ public class UserService {
     }
 
     return user;
+  }
+
+  public ProfileProjection getProfile(String name) {
+
+    //todo: 인덱스와 유니크
+    return userRepository.findByName(name);
+
+  }
+
+  public ProfileResponseDto updateProfile(Long userId, UpdateProfileRequestDto updateProfileRequestDto) {
+    User updateUser = userRepository.findById(userId).orElseThrow(() -> new UnregisteredEmailException("User Not Found"));
+    ProfileResponseDto profileResponseDto = updateUser.updateProfile(updateProfileRequestDto);
+    userRepository.save(updateUser);
+
+    return profileResponseDto;
   }
 }
