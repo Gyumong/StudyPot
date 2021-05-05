@@ -1,4 +1,4 @@
-package com.studypot.back.Dto;
+package com.studypot.back.dto.session;
 
 import lombok.Data;
 

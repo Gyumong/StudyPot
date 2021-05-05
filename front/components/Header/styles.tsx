@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import palette from "@styles/palette";
-import Button from "../common/Button"
-
+import Button from "../common/Button";
 
 
 export const MainFrame = styled.div`
@@ -19,6 +18,7 @@ export const Logo = styled.a`
   text-decoration: none;
   cursor: pointer;
 `;
+
 
 export const MenuFrame = styled.ul`
   display: flex;
@@ -38,8 +38,7 @@ export const MenuItem = styled.li`
         & + & {
         margin-left: 1rem;
         }
-`;
-
+`
 
 export const ButtonFrame = styled.div`
   position: absolute;
