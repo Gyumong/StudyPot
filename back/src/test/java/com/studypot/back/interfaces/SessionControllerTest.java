@@ -1,6 +1,5 @@
 package com.studypot.back.interfaces;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,12 +14,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SessionController.class)
+@Import(JwtUtil.class)
 class SessionControllerTest {
 
   @Autowired
@@ -29,8 +30,8 @@ class SessionControllerTest {
   @MockBean
   private UserService userService;
 
-  @MockBean
-  private JwtUtil jwtUtil;
+//  @MockBean
+//  private JwtUtil jwtUtil;
 
   @Test
   public void signIn() throws Exception {
@@ -39,7 +40,7 @@ class SessionControllerTest {
     User mockUser = User.builder().email(email).password(password).build();
 
     given(userService.authenticate(email, password)).willReturn(mockUser);
-    given(jwtUtil.createToken(1L, "Leo")).willReturn("jwtToken");
+//    given(jwtUtil.createAccessToken(1L, "Leo")).willReturn("jwtToken");
 
     mvc.perform(post("/login")
         .contentType(MediaType.APPLICATION_JSON)
@@ -50,7 +51,27 @@ class SessionControllerTest {
 
     verify(userService).authenticate("test@naver.com", "1234");
 
-    verify(jwtUtil).createToken(any(), any());
+//    verify(jwtUtil).createAccessToken(any(), any());
+
+  }
+
+  @Test
+  public void refreshToken() throws Exception {
+    String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImxlbyIsInVzZXJJZCI6MSwiZXhwaXJlZEF0IjoxNjIwMjMxODQ0LCJpYXQiOjE2MjAxOTU4NDR9.VtzYLhxCnKYk_NlfaTT-Pk9ZHQZz6qqQ9XssFD6svu8";
+
+    String email = "test@naver.com";
+    String password = "1234";
+    User mockUser = User.builder().email(email).password(password).build();
+
+    given(userService.checkRefreshToken(1L)).willReturn(mockUser);
+
+    mvc.perform(get("/refresh")
+        .header("Authorization", "Bearer " + token)
+    )
+        .andExpect(status().isOk());
+
+    Long userId= 1L;
+    verify(userService).checkRefreshToken(userId);
 
   }
 

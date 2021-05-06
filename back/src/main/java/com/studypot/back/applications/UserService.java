@@ -8,6 +8,7 @@ import com.studypot.back.dto.user.UpdateProfileRequestDto;
 import com.studypot.back.exceptions.ExistEmailException;
 import com.studypot.back.exceptions.UnregisteredEmailException;
 import com.studypot.back.exceptions.WrongPasswordException;
+import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +65,10 @@ public class UserService {
     userRepository.save(updateUser);
 
     return profileResponseDto;
+  }
+
+  public User checkRefreshToken(Long userId) {
+    Optional<User> user = userRepository.findById(userId);
+    return user.orElseThrow(() -> new UnregisteredEmailException("User Not Found"));
   }
 }
