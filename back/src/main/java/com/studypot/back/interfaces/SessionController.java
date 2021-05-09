@@ -6,8 +6,6 @@ import com.studypot.back.dto.session.SessionRequestDto;
 import com.studypot.back.dto.session.SessionResponseDto;
 import com.studypot.back.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +26,7 @@ public class SessionController {
   }
 
   @PostMapping("/login")
-  public SessionResponseDto signIn(@RequestBody SessionRequestDto resource, HttpServletResponse response) {
+  public SessionResponseDto signIn(@RequestBody SessionRequestDto resource) {
 
     String email = resource.getEmail();
     String password = resource.getPassword();
@@ -41,18 +39,8 @@ public class SessionController {
     SessionResponseDto responseDto = new SessionResponseDto();
 
     responseDto.setAccessToken(accessToken);
-    setCookie(response, refreshToken);
-
+    responseDto.setRefreshToken(refreshToken);
     return responseDto;
-  }
-
-  private void setCookie(HttpServletResponse response, String refreshToken) {
-    Cookie cookie = new Cookie("refresh-token", refreshToken);
-    cookie.setMaxAge(60*60*24*7);
-    cookie.setSecure(true);
-    cookie.setHttpOnly(true);
-
-    response.addCookie(cookie);
   }
 
   @GetMapping("/refresh")
