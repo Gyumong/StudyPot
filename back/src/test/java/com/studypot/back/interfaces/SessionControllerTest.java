@@ -57,7 +57,7 @@ class SessionControllerTest {
 
   @Test
   public void refreshToken() throws Exception {
-    String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImxlbyIsInVzZXJJZCI6MSwiZXhwaXJlZEF0IjoxNjIwMjMxODQ0LCJpYXQiOjE2MjAxOTU4NDR9.VtzYLhxCnKYk_NlfaTT-Pk9ZHQZz6qqQ9XssFD6svu8";
+    String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImxlbyIsInVzZXJJZCI6MSwiZXhwaXJlZEF0IjoxNjIwOTE2NDIyLCJpYXQiOjE2MjA1NTY0MjJ9.12S7kyTISSP1EIqcrcoTU4X9HHc4SfjAkcaFu9Xz3f0";
 
     String email = "test@naver.com";
     String password = "1234";
