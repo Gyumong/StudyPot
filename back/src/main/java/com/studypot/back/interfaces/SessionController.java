@@ -6,12 +6,15 @@ import com.studypot.back.domain.User;
 import com.studypot.back.dto.session.SessionRequestDto;
 import com.studypot.back.dto.session.SessionResponseDto;
 import com.studypot.back.utils.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Api("세션")
 public class SessionController {
 
   private final JwtUtil jwtUtil;
@@ -25,6 +28,7 @@ public class SessionController {
   }
 
   @PostMapping("/login")
+  @ApiOperation("로그인")
   public SessionResponseDto signIn(@RequestBody SessionRequestDto resource) {
 
     String email = resource.getEmail();
@@ -43,6 +47,7 @@ public class SessionController {
   }
 
   @GetMapping("/refresh")
+  @ApiOperation("토큰 리프레시")
   public SessionResponseDto refreshToken(@UserId Long userId) {
 
     User user = userService.checkRefreshToken(userId);

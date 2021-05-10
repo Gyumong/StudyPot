@@ -1,5 +1,6 @@
 package com.studypot.back.config;
 
+import com.studypot.back.BackApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -14,7 +15,7 @@ public class SwaggerConfig {
   public Docket docket() {
     return new Docket(DocumentationType.OAS_30)
         .select()
-        .apis(RequestHandlerSelectors.any())
+        .apis(RequestHandlerSelectors.basePackage(BackApplication.class.getPackageName()))
         .paths(PathSelectors.any())
         .build();
 
