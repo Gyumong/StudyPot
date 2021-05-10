@@ -1,12 +1,11 @@
 package com.studypot.back.interfaces;
 
 import com.studypot.back.applications.UserService;
+import com.studypot.back.auth.UserId;
 import com.studypot.back.domain.User;
 import com.studypot.back.dto.session.SessionRequestDto;
 import com.studypot.back.dto.session.SessionResponseDto;
 import com.studypot.back.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,9 +43,7 @@ public class SessionController {
   }
 
   @GetMapping("/refresh")
-  public SessionResponseDto refreshToken(Authentication authentication) {
-    Claims claims = (Claims) authentication.getPrincipal();
-    Long userId = claims.get("userId", Long.class);
+  public SessionResponseDto refreshToken(@UserId Long userId) {
 
     User user = userService.checkRefreshToken(userId);
 
