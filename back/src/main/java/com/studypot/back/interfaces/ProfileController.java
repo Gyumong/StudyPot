@@ -1,14 +1,11 @@
 package com.studypot.back.interfaces;
 
-import static com.studypot.back.constants.AuthConstant.AUTH_USER_ID;
-import static com.studypot.back.constants.AuthConstant.AUTH_USER_NAME;
-
 import com.studypot.back.applications.UserService;
+import com.studypot.back.auth.UserId;
+import com.studypot.back.auth.UserName;
 import com.studypot.back.dto.user.ProfileProjection;
 import com.studypot.back.dto.user.ProfileResponseDto;
 import com.studypot.back.dto.user.UpdateProfileRequestDto;
-import io.jsonwebtoken.Claims;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,20 +21,15 @@ public class ProfileController {
   }
 
   @GetMapping("/userInfo")
-  public ProfileProjection getUser(Authentication authentication) {
+  public ProfileProjection getUser(@UserName String userName) {
 
-    Claims claims = (Claims) authentication.getPrincipal();
-    String name = claims.get(AUTH_USER_NAME, String.class);
-    return userService.getProfile(name);
+    return userService.getProfile(userName);
   }
 
   @PatchMapping("/userInfo")
   public ProfileResponseDto updateUser(
-      Authentication authentication,
+      @UserId Long userId,
       @RequestBody UpdateProfileRequestDto updateProfileRequestDto) {
-
-    Claims claims = (Claims) authentication.getPrincipal();
-    Long userId = claims.get(AUTH_USER_ID, Long.class);
 
     return userService.updateProfile(userId, updateProfileRequestDto);
   }
