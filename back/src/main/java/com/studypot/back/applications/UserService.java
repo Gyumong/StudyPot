@@ -55,7 +55,6 @@ public class UserService {
 
   public ProfileProjection getProfile(String name) {
     return userRepository.findByName(name).orElseThrow(UserNotFoundException::new);
-    //todo: 인덱스와 유니크
   }
 
   public ProfileResponseDto updateProfile(Long userId, UpdateProfileRequestDto updateProfileRequestDto) {

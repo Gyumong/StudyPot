@@ -42,7 +42,7 @@ public abstract class AuthResolver implements HandlerMethodArgumentResolver {
 
   }
 
-  protected boolean isExpired(Claims claims) {
+  private boolean isExpired(Claims claims) {
     return claims.get(AUTH_EXPIRATION, Long.class) < new Date(System.currentTimeMillis()).getTime() / 1000;
   }
 

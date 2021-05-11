@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class WebConfigurerImpl extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
+  //todo: projection 수정하기
   private final UserNameResolver userNameResolver;
   private final UserIdResolver userIdResolver;
 
