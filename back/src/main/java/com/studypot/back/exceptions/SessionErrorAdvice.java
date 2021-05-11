@@ -29,4 +29,11 @@ public class SessionErrorAdvice {
   public String handleExistEmail() {
     return "Duplicated Email";}
 
+  @ResponseBody
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ExceptionHandler(UserNotFoundException.class)
+  public String  handleNotFound() {
+    return "User not found";
+  }
+
 }

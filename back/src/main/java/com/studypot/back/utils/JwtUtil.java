@@ -1,5 +1,9 @@
 package com.studypot.back.utils;
 
+import static com.studypot.back.constants.AuthConstant.AUTH_EXPIRATION;
+import static com.studypot.back.constants.AuthConstant.AUTH_USER_ID;
+import static com.studypot.back.constants.AuthConstant.AUTH_USER_NAME;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
@@ -53,11 +57,11 @@ public class JwtUtil {
 
   private void generatePayload(JwtBuilder jwtBuilder, Long userId, String userName, int expirationTime) {
     if (userName != null) {
-      jwtBuilder.claim("userName", userName);
+      jwtBuilder.claim(AUTH_USER_NAME, userName);
     }
     jwtBuilder
-        .claim("userId", userId)
-        .claim("expiredAt",(new Date(System.currentTimeMillis()).getTime() + expirationTime) / 1000)
+        .claim(AUTH_USER_ID, userId)
+        .claim(AUTH_EXPIRATION,(new Date(System.currentTimeMillis()).getTime() + expirationTime) / 1000)
         .setIssuedAt(new Date(System.currentTimeMillis()));
 
   }

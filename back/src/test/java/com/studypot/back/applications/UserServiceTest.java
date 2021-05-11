@@ -11,6 +11,7 @@ import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
 import com.studypot.back.dto.user.UpdateProfileRequestDto;
 import com.studypot.back.exceptions.UnregisteredEmailException;
+import com.studypot.back.exceptions.UserNotFoundException;
 import com.studypot.back.exceptions.WrongPasswordException;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -93,12 +94,9 @@ class UserServiceTest {
   }
 
   @Test
-  public void getProfile() {
+  public void getProfileWithNotRegisteredUser() {
 
-    userService.getProfile("leo");
-
-    verify(userRepository).findByName("leo");
-
+    assertThrows(UserNotFoundException.class, () -> userService.getProfile("leo"));
   }
 
   @Test
