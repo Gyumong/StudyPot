@@ -39,7 +39,7 @@
 ## :pencil2: Usage
 resource 자원을 깃에 공유하지 않아 현재 환경변수 설정이 담기지 않은 상태입니다.
 해당 서버를 실행하기 위해서는 다음을 따라주세요.
-1. src/main에 resources 폴더를 만든 후 해당 파일 안에 application.yml 파일을 생성합니다.
+1. src/main/resources 파일 안에 application.yml 파일을 생성합니다.
 2. application.yml 파일에 yaml 파일 형식에 맞게 jwt.secret, jwt.jwtExpirationTimeMs, jwt.refreshExpirationTimeMs 환경 변수를 설정합니다. <br>
 <br>
 예시)
