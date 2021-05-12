@@ -26,13 +26,16 @@ dependencies {
     // DB
     implementation 'com.h2database:h2'
 
-    // jWT
+    // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtime 'io.jsonwebtoken:jjwt-impl:0.11.2'
     runtime 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
     // API 문서화
     implementation "io.springfox:springfox-boot-starter:3.0.0"
+
+    // error log 수신
+    implementation "com.github.maricn:logback-slack-appender:1.4.0"
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
