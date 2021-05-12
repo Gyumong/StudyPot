@@ -1,13 +1,16 @@
 import React, { ReactElement } from "react";
 import AuthTemplate from "@layouts/auth";
-import SignUpForm from "@components/SignUpForm";
+import Header from "@components/Header";
+import MyPageForm from "@components/MyPageForm"
 
 const Mypage = (): ReactElement => {
   return (
-    
-    <AuthTemplate>
-      
-    </AuthTemplate>
+    <>
+      <Header />
+      <AuthTemplate>
+        <MyPageForm/>
+      </AuthTemplate>
+    </>
   );
 };
 
