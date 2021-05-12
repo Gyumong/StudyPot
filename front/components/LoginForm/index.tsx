@@ -1,13 +1,16 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import useInput from "@hooks/useInput";
 import { LoginFormBlock, Header, LoginButton, Input, Desc, Error } from "./styles";
 import Link from "next/link";
 import axios from "axios";
-const LoginForm = (): ReactElement => {
+import { backUrl } from "config/config";
+import { useRouter } from "next/router";
+
+const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, , setPassword] = useInput("");
-
   const [logInError, setLogInError] = useState(false);
+  const router = useRouter();
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
@@ -20,18 +23,14 @@ const LoginForm = (): ReactElement => {
       e.preventDefault();
       setLogInError(false);
       axios
-        .post(
-          "/signin",
-          {
-            email,
-            password,
-          },
-          {
-            withCredentials: true,
-          },
-        )
-        .then(() => {
-          console.log("?");
+        .post(`/login`, {
+          email,
+          password,
+        })
+        .then((response) => {
+          const { accessToken } = response.data;
+          localStorage.setItem("accessToken", accessToken);
+          router.push("/");
         })
         .catch((error) => {
           setLogInError(error.response);

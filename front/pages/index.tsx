@@ -1,7 +1,12 @@
-import React, { useState } from "react";
-import Head from "next/head";
+import React, { useState, useEffect } from "react";
 import Header from "@components/Header";
-
+import useMyInfo from "./../hooks/useMyInfo";
 export default function Home() {
-  return <Header />;
+  const [data, error] = useMyInfo();
+  console.log(data);
+  return (
+    <>
+      <Header />
+    </>
+  );
 }
