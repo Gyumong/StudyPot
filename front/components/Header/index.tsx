@@ -39,7 +39,7 @@ const Header = () => {
                     </LoginButton>
                 </Link>
                 
-                <Link href="signup">
+                <Link href="/signup">
                     <RegisterButton> 
                             Register
                     </RegisterButton>
