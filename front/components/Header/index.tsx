@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Link from "next/link";
 import { MainFrame, Logo, MenuFrame, MenuItem, ButtonFrame, RegisterButton, LoginButton } from "./styles";
 import Image from "next/image";
-import { StyledComponent } from "@emotion/styled";
+import useMyInfo from "./../../hooks/useMyInfo";
+import { mutate } from "swr";
 
-type HeaderIsLoggedIn = {
-  isLoggedIn?: boolean;
-};
-const Header = ({ isLoggedIn }: HeaderIsLoggedIn) => {
-  if (isLoggedIn) {
+const Header = () => {
+  const [data] = useMyInfo();
+
+  const onLogOut = useCallback(() => {
+    localStorage.removeItem("accessToken");
+    mutate("/user");
+  }, []);
+  if (data) {
     return (
       <MainFrame>
         <Link href="/">
@@ -28,9 +32,9 @@ const Header = ({ isLoggedIn }: HeaderIsLoggedIn) => {
         </MenuFrame>
 
         <ButtonFrame>
-          <Link href="/login">
-            <LoginButton>LogOut</LoginButton>
-          </Link>
+          <>
+            <LoginButton onClick={onLogOut}>LogOut</LoginButton>
+          </>
           <Link href="signup">
             <RegisterButton>MyPage</RegisterButton>
           </Link>
