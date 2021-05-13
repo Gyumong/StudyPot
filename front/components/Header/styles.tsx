@@ -9,7 +9,10 @@ interface Props {
 }
 export const MainFrame = styled.div`
   display: flex;
-  width: 100%;
+  position: absolute;
+  width: 100vw;
+  top: 0;
+  left: 0;
   height: 5rem;
   background-color: white;
   border-bottom: 1px solid #eeefee;

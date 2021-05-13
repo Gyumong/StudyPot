@@ -7,6 +7,7 @@ import com.studypot.back.dto.user.ProfileResponseDto;
 import com.studypot.back.dto.user.UpdateProfileRequestDto;
 import com.studypot.back.exceptions.ExistEmailException;
 import com.studypot.back.exceptions.UnregisteredEmailException;
+import com.studypot.back.exceptions.UserNotFoundException;
 import com.studypot.back.exceptions.WrongPasswordException;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,14 +54,11 @@ public class UserService {
   }
 
   public ProfileProjection getProfile(String name) {
-
-    //todo: 인덱스와 유니크
-    return userRepository.findByName(name);
-
+    return userRepository.findByName(name).orElseThrow(UserNotFoundException::new);
   }
 
   public ProfileResponseDto updateProfile(Long userId, UpdateProfileRequestDto updateProfileRequestDto) {
-    User updateUser = userRepository.findById(userId).orElseThrow(() -> new UnregisteredEmailException("User Not Found"));
+    User updateUser = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     ProfileResponseDto profileResponseDto = updateUser.updateProfile(updateProfileRequestDto);
     userRepository.save(updateUser);
 

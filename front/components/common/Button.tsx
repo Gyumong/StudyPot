@@ -15,7 +15,6 @@ const StyledButton = styled.button`
   width: 100%;
   max-width: 500px;
   font-size: 1rem;
-  margin-top: 2rem;
   background-color: #26de81;
   border-radius: 6px;
   padding: 1.25rem 0;

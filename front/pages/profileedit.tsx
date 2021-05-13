@@ -1,17 +1,17 @@
 import React, { ReactElement } from "react";
 import AuthTemplate from "@layouts/auth";
 import Header from "@components/Header";
-import MyPageForm from "@components/MyPageForm"
+import ProfileEditForm from "@components/ProfileEditForm"
 
-const Mypage = (): ReactElement => {
+const ProfileEdit = (): ReactElement => {
   return (
     <>
       <Header />
       <AuthTemplate>
-        <MyPageForm/>
+        <ProfileEditForm/>
       </AuthTemplate>
     </>
   );
 };
 
-export default Mypage;
+export default ProfileEdit;

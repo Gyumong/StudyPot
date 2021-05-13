@@ -6,13 +6,13 @@ import useMyInfo from "./../../hooks/useMyInfo";
 import { mutate } from "swr";
 
 const Header = () => {
-  const [data] = useMyInfo();
+  const [userData] = useMyInfo();
 
   const onLogOut = useCallback(() => {
     localStorage.removeItem("accessToken");
     mutate("/user");
   }, []);
-  if (data) {
+  if (userData) {
     return (
       <MainFrame>
         <Link href="/">

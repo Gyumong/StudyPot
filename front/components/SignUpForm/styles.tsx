@@ -3,7 +3,7 @@ import Button from "@components/common/Button";
 import palette from "@styles/palette";
 
 export const SignUpFormBlock = styled.form`
-  width: 80%;
+  width: 80vw;
   max-width: 480px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -68,4 +68,6 @@ export const Success = styled.div`
   color: #2eb67d;
   font-weight: bold;
 `;
-export const SignUpButton = styled(Button)``;
+export const SignUpButton = styled(Button)`
+  margin-top: 2rem;
+`;
