@@ -37,6 +37,9 @@ dependencies {
     // error log 수신
     implementation "com.github.maricn:logback-slack-appender:1.4.0"
 
+    // AWS
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
