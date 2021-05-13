@@ -2,9 +2,8 @@ import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 
 
-export const ProfileFormBlock = styled.form`
+export const ProfileFormBlock = styled.div`
   width: 40vw;
-  height: 30vh;
   padding: 0;
   display: flex;
   flex-direction: column;

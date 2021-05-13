@@ -8,6 +8,7 @@ const MyPageForm = (): ReactElement => {
   return (
     <MypageFormBlock>
       <Profile/>
+  
       <StudyList>
           <p>내스터디</p>
           <button>수정</button>
@@ -16,6 +17,9 @@ const MyPageForm = (): ReactElement => {
             <StudyName>디스코드 캠스터디</StudyName>
             <StudyDetail>디스코드로 캠 켜고 같이 공부해요! 얼굴은 안나오고 손만 켤...</StudyDetail>
       </StudyListBox>
+    
+
+  
       <StudyList>
           <p>관심 스터디</p>
           <button>수정</button>
@@ -24,6 +28,8 @@ const MyPageForm = (): ReactElement => {
             <StudyName>디스코드 캠스터디</StudyName>
             <StudyDetail>디스코드로 캠 켜고 같이 공부해요! 얼굴은 안나오고 손만 켤...</StudyDetail>
       </StudyListBox>
+  
+    
     </MypageFormBlock>
   );
 };

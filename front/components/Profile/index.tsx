@@ -2,7 +2,6 @@ import React, { ReactElement} from "react";
 import { ProfileFormBlock, Location, Interest, UserName, SelfIntro, ProfileEditButton } from "./styles";
 import Link from 'next/link';
 import Image from 'react-bootstrap/Image';
-import { useSelector } from 'react-redux';
 
 import {LocationPin} from '@styled-icons/entypo/LocationPin';
 import {LightningFill} from '@styled-icons/bootstrap/LightningFill';

@@ -1,23 +1,20 @@
 import styled from "@emotion/styled";
-import Button from "@components/common/Button";
 
 
-export const MypageFormBlock = styled.form`
+export const MypageFormBlock = styled.main`
   width: 40vw;
   margin: 0 auto;
   padding: 0 2rem;
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
-
-  
 `;
 
 
 export const StudyList = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 3.5rem;
+  margin-top: 1.5rem;
   & > p {
     color: #4f4f4f;
     font-weight: 500;
