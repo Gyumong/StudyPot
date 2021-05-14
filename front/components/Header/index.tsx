@@ -35,7 +35,7 @@ const Header = () => {
           <>
             <LoginButton onClick={onLogOut}>LogOut</LoginButton>
           </>
-          <Link href="signup">
+          <Link href="/mypage">
             <RegisterButton>MyPage</RegisterButton>
           </Link>
         </ButtonFrame>
@@ -65,7 +65,7 @@ const Header = () => {
           <LoginButton>Log in</LoginButton>
         </Link>
 
-        <Link href="signup">
+        <Link href="/signup">
           <RegisterButton>Register</RegisterButton>
         </Link>
       </ButtonFrame>

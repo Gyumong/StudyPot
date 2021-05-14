@@ -15,27 +15,27 @@ import {
 } from "./styles";
 import Link from "next/link";
 import gravatar from "gravatar";
-
-import { LocationPin } from "@styled-icons/entypo/LocationPin";
-import { LightningFill } from "@styled-icons/bootstrap/LightningFill";
 import useMyInfo from "@hooks/useMyInfo";
 
 const ProfileEditForm = (): ReactElement => {
   const [userData] = useMyInfo();
+  if (userData) {
+    <div>loading...</div>;
+  }
   return (
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
       <ProfileSubmitForm>
-        <UserName>{userData.name} </UserName>
-        <Location>{userData.location}</Location>
+        <UserName>{userData?.name} </UserName>
+        <Location>{userData?.location}</Location>
         <Interest>관심사</Interest>
-        <SelfIntro>{userData.introduction}</SelfIntro>
+        <SelfIntro>{userData?.introduction}</SelfIntro>
         <textarea id="story" name="story">
           It was a dark and stormy night...
         </textarea>
         <EditButton>수정완료</EditButton>
         <img
-          src={gravatar.url(userData.name, { s: "24px", d: "retro" })}
+          src={gravatar.url(userData?.name, { s: "24px", d: "retro" })}
           style={{ width: "70px", height: "70px", position: "absolute", right: 0 }}
         />
       </ProfileSubmitForm>
