@@ -11,7 +11,6 @@ export const AuthTemplateBlock = styled.div`
   top: 0;
   bottom: 0;
   background: #e5e5e5;
-  
 `;
 
 export const WhiteBox = styled.div`
@@ -19,4 +18,6 @@ export const WhiteBox = styled.div`
   width: 50vw;
   padding: 2rem;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
 `;

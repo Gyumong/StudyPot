@@ -14,8 +14,8 @@ const useMyInfo = (): ReturnTypes => {
     }
     return null;
   };
-  const { data, error } = useSWR("/user", fetcher);
-  return [data, error];
+  const { data: userData, error } = useSWR("/user", fetcher);
+  return [userData, error];
 };
 
 export default useMyInfo;
