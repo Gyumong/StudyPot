@@ -17,6 +17,9 @@ export const ProfileSubmitForm = styled.form`
   display: flex;
   flex-direction: column;
   position: relative;
+  & > img {
+    border-radius: 50%;
+  }
 `;
 
 export const Setting = styled.p`
