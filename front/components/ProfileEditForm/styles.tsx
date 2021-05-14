@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 
 export const ProfileEditBlock = styled.div`
-  width: 40vw;
+  width: 50vw;
   margin-bottom: 2rem;
   padding: 0;
   display: flex;

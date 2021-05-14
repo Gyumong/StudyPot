@@ -2,11 +2,19 @@ import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 
 export const ProfileFormBlock = styled.div`
-  width: 40vw;
   padding: 0;
   display: flex;
+`;
+
+export const DescBlock = styled.div`
+  display: flex;
+  flex: 3;
   flex-direction: column;
-  position: relative;
+`;
+export const ImageBlock = styled.div`
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
   & > img {
     border-radius: 50%;
   }
