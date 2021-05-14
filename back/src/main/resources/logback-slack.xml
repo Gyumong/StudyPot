@@ -3,12 +3,12 @@
   <springProperty name="SLACK_WEBHOOK_URI" source="logging.slack.webhook-uri"/>
   <appender name="SLACK" class="com.github.maricn.logback.SlackAppender">
     <!-- Slack API token -->
-<!--    <token>1111111111-1111111-11111111-111111111</token>-->
+    <!--    <token>1111111111-1111111-11111111-111111111</token>-->
     <!-- Slack incoming webhook uri. Uncomment the lines below to use incoming webhook uri instead of API token. -->
     <webhookUri>${SLACK_WEBHOOK_URI}</webhookUri>
 
     <!-- Channel that you want to post - default is #general -->
-<!--    <channel>#general</channel>-->
+    <!--    <channel>#general</channel>-->
     <!-- Formatting (you can use Slack formatting - URL links, code formatting, etc.) -->
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %class - %msg%n</pattern>
@@ -23,15 +23,19 @@
 
   <!-- Currently recommended way of using Slack appender -->
   <appender name="ASYNC_SLACK" class="ch.qos.logback.classic.AsyncAppender">
-    <appender-ref ref="SLACK" />
+    <appender-ref ref="SLACK"/>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>WARN</level>
     </filter>
   </appender>
 
   <root>
-    <level value="ALL" />
-    <appender-ref ref="ASYNC_SLACK" />
+    <level value="ALL"/>
+    <appender-ref ref="ASYNC_SLACK"/>
   </root>
+
+  <logger name="com.studypot.back" level="ALL">
+    <appender-ref ref="ASYNC_SLACK"/>
+  </logger>
 
 </configuration>
