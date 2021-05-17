@@ -58,7 +58,7 @@ const SignUpForm = (): ReactElement => {
           })
           .catch((error) => {
             console.log(error.response);
-            setSignUpError(error.response.data);
+            setSignUpError(error.response);
           });
       }
     },
