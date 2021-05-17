@@ -1,15 +1,23 @@
 import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 
-
 export const ProfileFormBlock = styled.div`
-  width: 40vw;
   padding: 0;
   display: flex;
+`;
+
+export const DescBlock = styled.div`
+  display: flex;
+  flex: 3;
   flex-direction: column;
-  position: relative;
-  
-  
+`;
+export const ImageBlock = styled.div`
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+  & > img {
+    border-radius: 50%;
+  }
 `;
 
 export const UserName = styled.p`
@@ -22,24 +30,22 @@ export const Location = styled.div`
   display: flex;
   flex-direction: low;
   & > p {
-  color: #bdbdbd;
-  margin-top:0;
-}
-  
-`;
-
-export const Interest = styled.div`
-display: flex;
-flex-direction: low;
-  & > p {
     color: #bdbdbd;
-    margin-top:0;
+    margin-top: 0;
   }
 `;
 
+export const Interest = styled.div`
+  display: flex;
+  flex-direction: low;
+  & > p {
+    color: #bdbdbd;
+    margin-top: 0;
+  }
+`;
 
 export const SelfIntro = styled.p`
-  color: #4F4F4F;
+  color: #4f4f4f;
 `;
 
 export const ProfileEditButton = styled(Button)`

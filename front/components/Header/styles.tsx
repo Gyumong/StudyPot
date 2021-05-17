@@ -2,6 +2,11 @@ import styled from "@emotion/styled";
 import palette from "@styles/palette";
 import Button from "../common/Button";
 
+interface Props {
+  name: string;
+  className?: string;
+  onClick?: (e: Event) => void;
+}
 export const MainFrame = styled.div`
   display: flex;
   position: absolute;

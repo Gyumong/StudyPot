@@ -3,7 +3,6 @@ import { Header, SignUpFormBlock, Input, SignUpButton, Desc, Error, Success } fr
 import useInput from "@hooks/useInput";
 import Link from "next/link";
 import axios from "axios";
-import { backUrl } from "config/config";
 
 const SignUpForm = (): ReactElement => {
   const [email, onChangeEmail] = useInput("");
@@ -59,7 +58,7 @@ const SignUpForm = (): ReactElement => {
           })
           .catch((error) => {
             console.log(error.response);
-            setSignUpError(error.response.data);
+            setSignUpError(error.response);
           });
       }
     },
