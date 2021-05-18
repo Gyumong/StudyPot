@@ -2,10 +2,8 @@ package com.studypot.back.interfaces;
 
 import com.studypot.back.applications.ProfileService;
 import com.studypot.back.auth.UserId;
-import com.studypot.back.auth.UserName;
-import com.studypot.back.dto.user.ProfileProjection;
-import com.studypot.back.dto.user.ProfileResponseDto;
-import com.studypot.back.dto.user.UpdateProfileRequestDto;
+import com.studypot.back.dto.profile.ProfileResponseDto;
+import com.studypot.back.dto.profile.UpdateProfileRequestDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
@@ -25,9 +23,9 @@ public class ProfileController {
 
   @GetMapping("/user")
   @ApiOperation("유저 정보 조회")
-  public ProfileProjection getUser(@UserName String userName) {
+  public ProfileResponseDto getUser(@UserId Long userId) {
 
-    return profileService.getProfile(userName);
+    return profileService.getProfile(userId);
   }
 
   @PatchMapping("/user")

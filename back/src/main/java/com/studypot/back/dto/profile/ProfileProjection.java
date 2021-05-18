@@ -1,4 +1,4 @@
-package com.studypot.back.dto.user;
+package com.studypot.back.dto.profile;
 
 public interface ProfileProjection {
 

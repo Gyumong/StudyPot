@@ -3,9 +3,8 @@ package com.studypot.back.applications;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
-import com.studypot.back.dto.user.ProfileProjection;
-import com.studypot.back.dto.user.ProfileResponseDto;
-import com.studypot.back.dto.user.UpdateProfileRequestDto;
+import com.studypot.back.dto.profile.ProfileResponseDto;
+import com.studypot.back.dto.profile.UpdateProfileRequestDto;
 import com.studypot.back.exceptions.UserNotFoundException;
 import com.studypot.back.s3.S3Service;
 import java.io.IOException;
@@ -24,6 +23,11 @@ public class ProfileService {
   private final UserRepository userRepository;
   private final S3Service s3Service;
 
+  public ProfileResponseDto getProfile(Long userId) {
+    User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    return user.getProfile();
+  }
+
   public ProfileResponseDto updateProfile(Long userId, UpdateProfileRequestDto updateProfileRequestDto) throws IOException {
     String fileUrl = uploadToS3(updateProfileRequestDto.getImage());
     User updateUser = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
@@ -31,10 +35,6 @@ public class ProfileService {
     userRepository.save(updateUser);
     return profileResponseDto;
 
-  }
-
-  public ProfileProjection getProfile(String name) {
-    return userRepository.findByName(name).orElseThrow(UserNotFoundException::new);
   }
 
   private String uploadToS3(MultipartFile multipartFile) throws IOException {
