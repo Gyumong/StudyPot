@@ -63,7 +63,6 @@ public class User {
   public ProfileResponseDto updateProfile(UpdateProfileRequestDto updateProfileRequestDto, String imageUrl) {
     this.name = updateProfileRequestDto.getName();
     this.location = updateProfileRequestDto.getLocation();
-    this.categories = updateProfileRequestDto.getCategories();
     this.introduction = updateProfileRequestDto.getIntroduction();
     this.image = imageUrl;
 

@@ -3,6 +3,7 @@ package com.studypot.back.applications;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
 import com.studypot.back.exceptions.UnregisteredEmailException;
+import com.studypot.back.exceptions.UserNotFoundException;
 import com.studypot.back.exceptions.WrongPasswordException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class SessionService {
 
   public User checkRefreshToken(Long userId) {
     Optional<User> user = userRepository.findById(userId);
-    return user.orElseThrow(() -> new UnregisteredEmailException("User Not Found"));
+    return user.orElseThrow(UserNotFoundException::new);
   }
 
 }

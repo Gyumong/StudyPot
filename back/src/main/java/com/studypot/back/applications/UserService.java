@@ -56,11 +56,19 @@ public class UserService {
   }
 
   private void saveCategories(List<String> categories, User savedUser) {
+    // TODO: enum 클래스로 리팩토링할 때 수정하기
     for (String c : categories) {
       Category category = categoryRepository.findByName(c).orElse(
-          categoryRepository.save(Category.builder().name(c).build())
+          categoryRepository.save(
+              Category.builder()
+                  .name(c)
+                  .build())
       );
-      userCategoryRepository.save(UserCategory.builder().user(savedUser).Category(category).build());
+      userCategoryRepository.save(
+          UserCategory.builder()
+              .user(savedUser)
+              .Category(category)
+              .build());
     }
   }
 

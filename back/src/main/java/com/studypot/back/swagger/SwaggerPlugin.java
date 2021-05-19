@@ -1,6 +1,6 @@
-package com.studypot.back.plugins;
+package com.studypot.back.swagger;
 
-import com.studypot.back.auth.UserName;
+import com.studypot.back.auth.UserId;
 import com.studypot.back.constants.AuthConstant;
 import java.util.Optional;
 import org.springframework.core.annotation.Order;
@@ -21,7 +21,7 @@ public class SwaggerPlugin implements ParameterBuilderPlugin {
   @Override
   public void apply(ParameterContext parameterContext) {
     ResolvedMethodParameter parameter = parameterContext.resolvedMethodParameter();
-    Optional<UserName> annotation = parameter.findAnnotation(UserName.class);
+    Optional<UserId> annotation = parameter.findAnnotation(UserId.class);
 
     if (annotation.isPresent()) {
       parameterContext
