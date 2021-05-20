@@ -1,25 +1,48 @@
 package com.studypot.back.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Builder
-@Entity
+@Getter
 public class Category {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String name;
+  @ManyToOne
+  private User user;
+
+  @Setter
+  @Enumerated(EnumType.STRING)
+  private EnumCategory category;
+
+  @Getter
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public enum EnumCategory {
+
+    IT("IT"),
+    CS("CS"),
+    INTERVIEW("면접");
+
+    private String categoryName;
+
+  }
+
 
 }

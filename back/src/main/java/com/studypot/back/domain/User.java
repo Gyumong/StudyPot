@@ -1,11 +1,9 @@
 package com.studypot.back.domain;
 
-import com.studypot.back.dto.profile.ProfileResponseDto;
-import com.studypot.back.dto.profile.UpdateProfileRequestDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,9 +43,8 @@ public class User {
   @Setter
   private String location;
 
-  @Setter
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<UserCategory> categories;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private List<Category> categories;
 
   @Setter
   private String introduction;
@@ -55,17 +52,10 @@ public class User {
   @Setter
   private String image;
 
-
-  public ProfileResponseDto getProfile() {
-    return new ProfileResponseDto(this.name, this.location, this.categories, this.introduction, this.image);
+  public List<String> getCategoryList() {
+    return categories.stream()
+        .map(category -> category.getCategory().getCategoryName())
+        .collect(Collectors.toList());
   }
 
-  public ProfileResponseDto updateProfile(UpdateProfileRequestDto updateProfileRequestDto, String imageUrl) {
-    this.name = updateProfileRequestDto.getName();
-    this.location = updateProfileRequestDto.getLocation();
-    this.introduction = updateProfileRequestDto.getIntroduction();
-    this.image = imageUrl;
-
-    return new ProfileResponseDto(this.name, this.location, this.categories, this.introduction, this.image);
-  }
 }

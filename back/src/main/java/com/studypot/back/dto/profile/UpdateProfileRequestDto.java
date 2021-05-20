@@ -1,10 +1,10 @@
 package com.studypot.back.dto.profile;
 
 import java.util.List;
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-@Getter
+@Data
 public class UpdateProfileRequestDto {
 
   private String name;
