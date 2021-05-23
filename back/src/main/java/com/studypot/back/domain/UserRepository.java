@@ -1,6 +1,5 @@
 package com.studypot.back.domain;
 
-import com.studypot.back.dto.user.ProfileProjection;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,5 +9,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   Optional<User> findByEmail(String email);
 
-  Optional<ProfileProjection> findByName(String name);
 }

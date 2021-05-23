@@ -1,4 +1,4 @@
-package com.studypot.back.plugins;
+package com.studypot.back.swagger;
 
 import com.studypot.back.auth.UserName;
 import com.studypot.back.constants.AuthConstant;
