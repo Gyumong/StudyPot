@@ -42,6 +42,10 @@ public class Category {
 
     private String categoryName;
 
+    public String getKey() {
+      return name();
+    }
+
   }
 
 

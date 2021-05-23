@@ -1,6 +1,7 @@
 package com.studypot.back.dto.profile;
 
 
+import com.studypot.back.dto.CategoryResponseDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class ProfileResponseDto {
 
   private String location;
 
-  private List<String> categories;
+  private List<CategoryResponseDto> categories;
 
   private String introduction;
 

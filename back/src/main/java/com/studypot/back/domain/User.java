@@ -1,5 +1,6 @@
 package com.studypot.back.domain;
 
+import com.studypot.back.dto.CategoryResponseDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
@@ -52,9 +53,9 @@ public class User {
   @Setter
   private String image;
 
-  public List<String> getCategoryList() {
+  public List<CategoryResponseDto> getCategoryList() {
     return categories.stream()
-        .map(category -> category.getCategory().getCategoryName())
+        .map(category -> new CategoryResponseDto(category.getCategory()))
         .collect(Collectors.toList());
   }
 
