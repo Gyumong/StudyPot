@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ProfileResponseDto {
 
-  private String getName;
+  private String name;
 
-  private String getLocation;
+  private String location;
 
-  private String getCategory;
+  private String category;
 
-  private String getIntroduction;
+  private String introduction;
 
-  private String getImage;
+  private String image;
 
 }
