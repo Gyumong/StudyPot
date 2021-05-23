@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.studypot.back.applications.UserService;
+import com.studypot.back.applications.SessionService;
 import com.studypot.back.domain.User;
 import com.studypot.back.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class SessionControllerTest {
   private MockMvc mvc;
 
   @MockBean
-  private UserService userService;
+  private SessionService sessionService;
 
 //  @MockBean
 //  private JwtUtil jwtUtil;
@@ -39,7 +39,7 @@ class SessionControllerTest {
     String password = "1234";
     User mockUser = User.builder().email(email).password(password).build();
 
-    given(userService.authenticate(email, password)).willReturn(mockUser);
+    given(sessionService.authenticate(email, password)).willReturn(mockUser);
 //    given(jwtUtil.createAccessToken(1L, "Leo")).willReturn("jwtToken");
 
     mvc.perform(post("/login")
@@ -49,7 +49,7 @@ class SessionControllerTest {
             + "  }"))
         .andExpect(status().isOk());
 
-    verify(userService).authenticate("test@naver.com", "1234");
+    verify(sessionService).authenticate("test@naver.com", "1234");
 
 //    verify(jwtUtil).createAccessToken(any(), any());
 
@@ -57,21 +57,21 @@ class SessionControllerTest {
 
   @Test
   public void refreshToken() throws Exception {
-    String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImxlbyIsInVzZXJJZCI6MSwiZXhwaXJlZEF0IjoxNjIwOTE2NDIyLCJpYXQiOjE2MjA1NTY0MjJ9.12S7kyTISSP1EIqcrcoTU4X9HHc4SfjAkcaFu9Xz3f0";
+    String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImxlbyIsInVzZXJJZCI6MSwiZXhwaXJlZEF0IjoxNjIxNzg3NDIzLCJpYXQiOjE2MjE3NjU2MjN9.9UQdhuT9M2dS3zbHC7ASOXMISmR_4x8_1n5xtZmRQKw";
 
     String email = "test@naver.com";
     String password = "1234";
     User mockUser = User.builder().email(email).password(password).build();
 
-    given(userService.checkRefreshToken(1L)).willReturn(mockUser);
+    given(sessionService.checkRefreshToken(1L)).willReturn(mockUser);
 
     mvc.perform(get("/refresh")
         .header("Authorization", "Bearer " + token)
     )
         .andExpect(status().isOk());
 
-    Long userId= 1L;
-    verify(userService).checkRefreshToken(userId);
+    Long userId = 1L;
+    verify(sessionService).checkRefreshToken(userId);
 
   }
 

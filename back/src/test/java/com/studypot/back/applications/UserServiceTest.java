@@ -1,17 +1,17 @@
 package com.studypot.back.applications;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
 
+import com.studypot.back.domain.CategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
-import com.studypot.back.exceptions.UnregisteredEmailException;
-import com.studypot.back.exceptions.WrongPasswordException;
-import java.util.Optional;
+import com.studypot.back.dto.user.UserSignupRequestDto;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,10 +27,13 @@ class UserServiceTest {
   @Mock
   private PasswordEncoder passwordEncoder;
 
+  @Mock
+  private CategoryRepository categoryRepository;
+
   @BeforeEach
   public void setUp() {
     openMocks(this);
-    userService = new UserService(userRepository, passwordEncoder);
+    userService = new UserService(userRepository, passwordEncoder, categoryRepository);
   }
 
   @Test
@@ -39,66 +42,25 @@ class UserServiceTest {
     String name = "test";
     String email = "test@naver.com";
     String password = "test";
+    List<String> categories = new ArrayList<>();
+    categories.add("IT");
 
+    UserSignupRequestDto userSignupRequestDto = UserSignupRequestDto.builder()
+        .name(name)
+        .email(email)
+        .password(password)
+        .categories(categories)
+        .build();
     User mockUser = User.builder().email(email).name(name).password(passwordEncoder.encode(password)).build();
 
     given(userRepository.save(any(User.class))).willReturn(mockUser);
 
-    User user = userService.registerUser(name, email, password);
+    User user = userService.registerUser(userSignupRequestDto);
 
     assertEquals("test", user.getName());
 
     verify(userRepository).save(any());
 
-  }
-
-  @Test
-  public void authenticateWithValid() {
-    String email = "test@naver.com";
-    String password = "1234";
-
-    User mockUser = User.builder().email(email).build();
-    given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
-    given(passwordEncoder.matches(any(), any())).willReturn(true);
-
-    User user = userService.authenticate(email, password);
-
-    assertEquals(email, user.getEmail());
-
-  }
-
-  @Test
-  public void authenticateWithUnregisteredEmail() {
-    String email = "test@naver.net";
-    String password = "1234";
-
-    given(userRepository.findByEmail(email)).willThrow(UnregisteredEmailException.class);
-
-    assertThrows(UnregisteredEmailException.class, () -> userService.authenticate(email, password));
-
-  }
-
-  @Test
-  public void authenticateWithWrongPassword() {
-    String email = "test@naver.com";
-    String password = "4321";
-
-    User mockUser = User.builder().email(email).password(password).build();
-    given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
-    given(passwordEncoder.matches(any(), any())).willReturn(false);
-
-    assertThrows(WrongPasswordException.class, () -> userService.authenticate(email, password));
-
-  }
-
-  @Test
-  public void checkRefreshToken() {
-    Long userId = 1L;
-    User mockUser = User.builder().name("leo").build();
-    given(userRepository.findById(1L)).willReturn(Optional.ofNullable(mockUser));
-    userService.checkRefreshToken(userId);
-
-    verify(userRepository).findById(any(Long.class));
   }
 
 }
