@@ -1,13 +1,14 @@
 package com.studypot.back.dto.user;
 
-import lombok.Getter;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
-@Getter
+@Data
 public class UpdateProfileRequestDto {
 
   private String name;
   private String location;
   private String category;
   private String introduction;
-  private String image;
+  private MultipartFile image;
 }

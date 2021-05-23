@@ -34,6 +34,10 @@ dependencies {
     // API 문서화
     implementation "io.springfox:springfox-boot-starter:3.0.0"
 
+
+    // AWS
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
+
     // error log 수신
     implementation "com.github.maricn:logback-slack-appender:1.4.0"
 
