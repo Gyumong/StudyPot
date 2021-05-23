@@ -51,13 +51,13 @@ public class User {
   private String image;
 
 
-  public ProfileResponseDto updateProfile(UpdateProfileRequestDto updateProfileRequestDto) {
+  public ProfileResponseDto updateProfile(UpdateProfileRequestDto updateProfileRequestDto, String imageUrl) {
     this.name = updateProfileRequestDto.getName();
     this.location = updateProfileRequestDto.getLocation();
     this.category = updateProfileRequestDto.getCategory();
     this.introduction = updateProfileRequestDto.getIntroduction();
-    this.image = updateProfileRequestDto.getImage();
+    this.image = imageUrl;
 
-    return new ProfileResponseDto(this.name, this.location, this.category, this.introduction, this.introduction);
+    return new ProfileResponseDto(this.name, this.location, this.category, this.introduction, this.image);
   }
 }
