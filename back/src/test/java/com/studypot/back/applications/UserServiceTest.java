@@ -9,9 +9,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
-import com.studypot.back.dto.user.UpdateProfileRequestDto;
 import com.studypot.back.exceptions.UnregisteredEmailException;
-import com.studypot.back.exceptions.UserNotFoundException;
 import com.studypot.back.exceptions.WrongPasswordException;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -91,27 +89,6 @@ class UserServiceTest {
 
     assertThrows(WrongPasswordException.class, () -> userService.authenticate(email, password));
 
-  }
-
-  @Test
-  public void getProfileWithNotRegisteredUser() {
-
-    assertThrows(UserNotFoundException.class, () -> userService.getProfile("leo"));
-  }
-
-  @Test
-  public void updateProfile() {
-
-    User mockUser = User.builder().location("Seoul").build();
-    UpdateProfileRequestDto updateProfileRequestDto = new UpdateProfileRequestDto();
-    Long userId = 1L;
-
-    given(userRepository.findById(userId)).willReturn(Optional.ofNullable(mockUser));
-
-    userService.updateProfile(userId, updateProfileRequestDto);
-
-    verify(userRepository).findById(any(Long.class));
-    verify(userRepository).save(any(User.class));
   }
 
   @Test
