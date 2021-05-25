@@ -1,4 +1,4 @@
-package com.studypot.back.config;
+package com.studypot.back.swagger;
 
 import com.studypot.back.BackApplication;
 import org.springframework.context.annotation.Bean;

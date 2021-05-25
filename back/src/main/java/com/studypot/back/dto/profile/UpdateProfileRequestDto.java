@@ -1,5 +1,7 @@
-package com.studypot.back.dto.user;
+package com.studypot.back.dto.profile;
 
+import com.studypot.back.domain.Category.CategoryName;
+import java.util.List;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,8 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class UpdateProfileRequestDto {
 
   private String name;
+
   private String location;
-  private String category;
+
+  private List<CategoryName> categories;
+
   private String introduction;
+
   private MultipartFile image;
 }

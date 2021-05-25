@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.studypot.back.applications.UserService;
+import com.studypot.back.dto.user.UserSignupRequestDto;
 import com.studypot.back.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +39,7 @@ class UserControllerTest {
             + "  }"))
         .andExpect(status().isCreated());
 
-    verify(userService).registerUser(any(), any(), any());
+    verify(userService).registerUser(any(UserSignupRequestDto.class));
   }
 
 }
