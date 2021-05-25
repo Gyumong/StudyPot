@@ -1,6 +1,7 @@
 package com.studypot.back.applications;
 
 import com.studypot.back.domain.Category;
+import com.studypot.back.domain.Category.CategoryName;
 import com.studypot.back.domain.CategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
@@ -27,7 +28,7 @@ public class UserService {
   public User registerUser(UserSignupRequestDto signupRequestDto) {
 
     String email = checkEmail(signupRequestDto.getEmail());
-    String encodedPassword = checkPassword(signupRequestDto.getPassword());
+    String encodedPassword = encodePassword(signupRequestDto.getPassword());
 
     User savedUser = userRepository.save(
         User.builder()
@@ -48,21 +49,19 @@ public class UserService {
     return email;
   }
 
-  private String checkPassword(String password) {
-    //TODO: 패스워드 확인 더 만들기
+  private String encodePassword(String password) {
     String encodedPassword = passwordEncoder.encode(password);
     return encodedPassword;
   }
 
-  private void saveCategories(List<String> categories, User user) {
-    // TODO: enum 클래스로 리팩토링할 때 수정하기
+  private void saveCategories(List<CategoryName> categories, User user) {
     Set<Category> categorySet = new HashSet<>();
-    for (String c : categories) {
+    for (CategoryName categoryName : categories) {
 
       categorySet.add(
           Category.builder()
               .user(user)
-              .category(Category.EnumCategory.valueOf(c))
+              .category(categoryName)
               .build());
     }
 

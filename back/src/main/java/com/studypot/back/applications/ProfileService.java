@@ -2,9 +2,11 @@ package com.studypot.back.applications;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.studypot.back.domain.Category;
+import com.studypot.back.domain.Category.CategoryName;
 import com.studypot.back.domain.CategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
+import com.studypot.back.dto.CategoryResponseDto;
 import com.studypot.back.dto.profile.ProfileResponseDto;
 import com.studypot.back.dto.profile.UpdateProfileRequestDto;
 import com.studypot.back.exceptions.UserNotFoundException;
@@ -15,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,35 +29,44 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfileService {
 
   private final UserRepository userRepository;
-  private final S3Service s3Service;
   private final CategoryRepository categoryRepository;
+  private final S3Service s3Service;
 
   public ProfileResponseDto getProfile(Long userId) {
     User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     return new ProfileResponseDto(
         user.getName(),
         user.getLocation(),
-        user.getCategoryList(),
+        userCategoryList(user.getCategories()),
         user.getIntroduction(),
         user.getImage());
   }
 
   public ProfileResponseDto updateProfile(Long userId, UpdateProfileRequestDto updateProfileRequestDto) throws IOException {
     //TODO: PATCH 요청에 맞게 들어오는 key값만 변경하도록 바꾸기
-    String fileUrl;
-    if (updateProfileRequestDto.getImage() != null) {
-      fileUrl = uploadToS3(updateProfileRequestDto.getImage());
-    } else {
-      fileUrl = null;
-    }
+    User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+
+    String fileUrl = saveImage(updateProfileRequestDto.getImage(), user);
 
     //TODO: 딜리트 말고 다른 방안 찾아보기
     categoryRepository.deleteAllByUserId(userId);
 
-    User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-
     return updateUser(user, updateProfileRequestDto, fileUrl);
 
+  }
+
+  private List<CategoryResponseDto> userCategoryList(List<Category> categories) {
+    return categories.stream()
+        .map(category -> new CategoryResponseDto(category.getCategory()))
+        .collect(Collectors.toList());
+  }
+
+  private String saveImage(MultipartFile imageFile, User user) throws IOException {
+    String fileUrl = user.getImage();
+    if (imageFile != null) {
+      return uploadToS3(imageFile);
+    }
+    return fileUrl;
   }
 
   private ProfileResponseDto updateUser(User user, UpdateProfileRequestDto updateProfileRequestDto, String fileUrl) {
@@ -68,20 +80,21 @@ public class ProfileService {
     return new ProfileResponseDto(
         user.getName(),
         user.getLocation(),
-        user.getCategoryList(),
+        userCategoryList(user.getCategories()),
         user.getIntroduction(),
         user.getImage());
 
   }
 
-  private void updateCategories(List<String> categories, User user) {
+  private void updateCategories(List<CategoryName> categories, User user) {
     Set<Category> categorySet = new HashSet<>();
-    for (String c : categories) {
+    for (CategoryName categoryName : categories) {
+
       categorySet.add(
           Category.builder()
               .user(user)
-              .category(Category.EnumCategory.valueOf(c)
-              ).build());
+              .category(categoryName)
+              .build());
     }
     categoryRepository.saveAll(categorySet);
   }

@@ -1,8 +1,6 @@
 package com.studypot.back.domain;
 
-import com.studypot.back.dto.CategoryResponseDto;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,11 +50,5 @@ public class User {
 
   @Setter
   private String image;
-
-  public List<CategoryResponseDto> getCategoryList() {
-    return categories.stream()
-        .map(category -> new CategoryResponseDto(category.getCategory()))
-        .collect(Collectors.toList());
-  }
 
 }
