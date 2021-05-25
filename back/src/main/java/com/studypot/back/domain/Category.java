@@ -29,22 +29,17 @@ public class Category {
 
   @Setter
   @Enumerated(EnumType.STRING)
-  private EnumCategory category;
+  private CategoryName category;
 
   @Getter
   @AllArgsConstructor
-  @NoArgsConstructor
-  public enum EnumCategory {
+  public enum CategoryName {
 
     IT("IT"),
     CS("CS"),
     INTERVIEW("면접");
 
-    private String categoryName;
-
-    public String getKey() {
-      return name();
-    }
+    private final String value;
 
   }
 

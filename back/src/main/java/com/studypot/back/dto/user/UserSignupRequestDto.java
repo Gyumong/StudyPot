@@ -1,11 +1,10 @@
 package com.studypot.back.dto.user;
 
+import com.studypot.back.domain.Category.CategoryName;
 import java.util.List;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class UserSignupRequestDto {
 
   private String email;
@@ -14,6 +13,6 @@ public class UserSignupRequestDto {
 
   private String name;
 
-  private List<String> categories;
+  private List<CategoryName> categories;
 
 }

@@ -1,16 +1,16 @@
 package com.studypot.back.dto;
 
-import com.studypot.back.domain.Category.EnumCategory;
+import com.studypot.back.domain.Category.CategoryName;
 import lombok.Getter;
 
 @Getter
 public class CategoryResponseDto {
 
-  private String key;
-  private String value;
+  private final String key;
+  private final String value;
 
-  public CategoryResponseDto(EnumCategory enumCategory) {
-    this.key = enumCategory.getKey();
-    this.value = enumCategory.getCategoryName();
+  public CategoryResponseDto(CategoryName categoryName) {
+    this.key = categoryName.name();
+    this.value = categoryName.getValue();
   }
 }
