@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-import com.studypot.back.domain.Category.EnumCategory;
+import com.studypot.back.domain.Category.CategoryName;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,13 +21,12 @@ public class CategoryTest {
   }
 
   @Test
-  public void get() {
-    List<EnumCategory> categories = new ArrayList<>();
-    categories.add(EnumCategory.INTERVIEW);
+  public void getCategoryName() {
+    List<CategoryName> categories = new ArrayList<>();
+    categories.add(CategoryName.INTERVIEW);
 
-    assertThat(categories.get(0).getKey(), is("INTERVIEW"));
-    assertThat(categories.get(0).getCategoryName(), is("면접"));
+    assertThat(categories.get(0).name(), is("INTERVIEW"));
+    assertThat(categories.get(0).getValue(), is("면접"));
   }
-
 
 }

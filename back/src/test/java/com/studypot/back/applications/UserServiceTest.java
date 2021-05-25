@@ -1,11 +1,13 @@
 package com.studypot.back.applications;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
 
+import com.studypot.back.domain.Category.CategoryName;
 import com.studypot.back.domain.CategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
@@ -42,22 +44,18 @@ class UserServiceTest {
     String name = "test";
     String email = "test@naver.com";
     String password = "test";
-    List<String> categories = new ArrayList<>();
-    categories.add("IT");
-
-    UserSignupRequestDto userSignupRequestDto = UserSignupRequestDto.builder()
-        .name(name)
-        .email(email)
-        .password(password)
-        .categories(categories)
-        .build();
     User mockUser = User.builder().email(email).name(name).password(passwordEncoder.encode(password)).build();
+
+    List<CategoryName> categories = new ArrayList<>();
+    categories.add(CategoryName.valueOf("IT"));
+    UserSignupRequestDto mockDto = new UserSignupRequestDto();
+    mockDto.setCategories(categories);
 
     given(userRepository.save(any(User.class))).willReturn(mockUser);
 
-    User user = userService.registerUser(userSignupRequestDto);
+    User user = userService.registerUser(mockDto);
 
-    assertEquals("test", user.getName());
+    assertThat(user.getName(), is("test"));
 
     verify(userRepository).save(any());
 

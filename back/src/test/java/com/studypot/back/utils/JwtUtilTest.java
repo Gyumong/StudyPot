@@ -23,16 +23,17 @@ class JwtUtilTest {
   public void createAccessToken() {
     Long userId = 1L;
     String userName = "leo";
-    jwtUtil.setJwtExpirationTimeMs(36000000);
     String token = jwtUtil.createAccessToken(userId, userName);
-
-    System.out.println(token);
 
     assertThat(token, containsString("."));
   }
+
   @Test
-  public void getClaims(){
-    String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsInVzZXJOYW1lIjoibGVvIn0.I86ZHNwcLuefDn1PGii1-wNXSpQSedDFEdojamgjO1A";
+  public void getClaims() {
+
+    Long userId = 1L;
+    String userName = "leo";
+    String token = jwtUtil.createAccessToken(userId, userName);
 
     Claims claims = jwtUtil.getClaims(token);
 

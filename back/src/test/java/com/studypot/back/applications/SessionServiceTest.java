@@ -1,15 +1,19 @@
 package com.studypot.back.applications;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
+import com.studypot.back.dto.session.SessionResponseDto;
 import com.studypot.back.exceptions.UnregisteredEmailException;
 import com.studypot.back.exceptions.WrongPasswordException;
+import com.studypot.back.utils.JwtUtil;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,31 +30,50 @@ class SessionServiceTest {
   @Mock
   private PasswordEncoder passwordEncoder;
 
+  @Mock
+  private JwtUtil jwtUtil;
+
+  private Long id;
+  private String name;
+  private String email;
+  private String password;
+  private User mockUser;
+
   @BeforeEach
   public void setUp() {
     openMocks(this);
-    this.sessionService = new SessionService(userRepository, passwordEncoder);
+    this.sessionService = new SessionService(userRepository, passwordEncoder, jwtUtil);
+
+    this.id = 1L;
+    this.name = "leo";
+    this.email = "test@naver.com";
+    this.password = "1234";
+
+    this.mockUser = User.builder()
+        .id(id).name(name)
+        .email(email)
+        .password(passwordEncoder.encode(password))
+        .build();
+
   }
 
   @Test
   public void authenticateWithValid() {
-    String email = "test@naver.com";
-    String password = "1234";
 
-    User mockUser = User.builder().email(email).build();
     given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
     given(passwordEncoder.matches(any(), any())).willReturn(true);
+    given(jwtUtil.createAccessToken(id, name)).willReturn("header.access.signature");
+    given(jwtUtil.createRefreshToken(id)).willReturn("header.refresh.signature");
 
-    User user = sessionService.authenticate(email, password);
+    SessionResponseDto sessionResponseDto = sessionService.authenticate(email, password);
 
-    assertEquals(email, user.getEmail());
-
+    assertThat(sessionResponseDto.getAccessToken(), is("header.access.signature"));
+    assertThat(sessionResponseDto.getRefreshToken(), is("header.refresh.signature"));
   }
 
   @Test
   public void authenticateWithUnregisteredEmail() {
-    String email = "test@naver.net";
-    String password = "1234";
+    this.email = "test2@naver.com";
 
     given(userRepository.findByEmail(email)).willThrow(UnregisteredEmailException.class);
 
@@ -60,12 +83,10 @@ class SessionServiceTest {
 
   @Test
   public void authenticateWithWrongPassword() {
-    String email = "test@naver.com";
-    String password = "4321";
+    this.password = "4321";
 
-    User mockUser = User.builder().email(email).password(password).build();
     given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
-    given(passwordEncoder.matches(any(), any())).willReturn(false);
+    given(passwordEncoder.matches(password, mockUser.getPassword())).willReturn(false);
 
     assertThrows(WrongPasswordException.class, () -> sessionService.authenticate(email, password));
 
@@ -73,12 +94,13 @@ class SessionServiceTest {
 
   @Test
   public void checkRefreshToken() {
-    Long userId = 1L;
-    User mockUser = User.builder().name("leo").build();
-    given(userRepository.findById(1L)).willReturn(Optional.ofNullable(mockUser));
-    sessionService.checkRefreshToken(userId);
+    given(userRepository.findById(id)).willReturn(Optional.ofNullable(mockUser));
+    given(jwtUtil.createAccessToken(id, name)).willReturn("header.payload.signature");
+    given(jwtUtil.createRefreshToken(id)).willReturn("never produced");
+    SessionResponseDto sessionResponseDto = sessionService.checkRefreshToken(id);
 
-    verify(userRepository).findById(any(Long.class));
+    assertThat(sessionResponseDto.getAccessToken(), is("header.payload.signature"));
+    assertNull(sessionResponseDto.getRefreshToken());
   }
 
 }
