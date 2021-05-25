@@ -27,12 +27,12 @@ public class UserService {
 
   public User registerUser(UserSignupRequestDto signupRequestDto) {
 
-    String email = checkEmail(signupRequestDto.getEmail());
+    checkEmailExists(signupRequestDto.getEmail());
     String encodedPassword = encodePassword(signupRequestDto.getPassword());
 
     User savedUser = userRepository.save(
         User.builder()
-            .email(email)
+            .email(signupRequestDto.getEmail())
             .name(signupRequestDto.getName())
             .password(encodedPassword)
             .build()
@@ -42,11 +42,10 @@ public class UserService {
     return savedUser;
   }
 
-  private String checkEmail(String email) {
+  private void checkEmailExists(String email) {
     if (userRepository.existsByEmail(email)) {
       throw new ExistEmailException(email);
     }
-    return email;
   }
 
   private String encodePassword(String password) {

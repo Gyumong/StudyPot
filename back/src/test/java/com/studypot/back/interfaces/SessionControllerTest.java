@@ -63,14 +63,14 @@ class SessionControllerTest {
   public void refreshToken() throws Exception {
 
     Long userId = 1L;
-    given(sessionService.checkRefreshToken(userId)).willReturn(new SessionResponseDto());
+    given(sessionService.createAccessToken(userId)).willReturn(new SessionResponseDto());
 
     mvc.perform(get("/refresh")
         .header("Authorization", "Bearer " + token)
     )
         .andExpect(status().isOk());
 
-    verify(sessionService).checkRefreshToken(userId);
+    verify(sessionService).createAccessToken(userId);
 
   }
 

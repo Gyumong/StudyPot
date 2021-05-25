@@ -28,27 +28,32 @@ public class SessionService {
       throw new WrongPasswordException();
     }
 
-    return makeToken(user.getId(), user.getName(), false);
+    SessionResponseDto sessionResponseDto = new SessionResponseDto();
+
+    accessTokenResponse(sessionResponseDto, user.getId(), user.getName());
+    refreshTokenResponse(sessionResponseDto, user.getId());
+
+    return sessionResponseDto;
 
   }
 
-  public SessionResponseDto checkRefreshToken(Long userId) {
+  public SessionResponseDto createAccessToken(Long userId) {
+
     User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-    return makeToken(user.getId(), user.getName(), true);
-  }
 
-  private SessionResponseDto makeToken(Long userId, String userName, Boolean isRefreshToken) {
     SessionResponseDto responseDto = new SessionResponseDto();
 
-    String accessToken = jwtUtil.createAccessToken(userId, userName);
-    responseDto.setAccessToken(accessToken);
-
-    if (!isRefreshToken) {
-      String refreshToken = jwtUtil.createRefreshToken(userId);
-      responseDto.setRefreshToken(refreshToken);
-    }
+    accessTokenResponse(responseDto, user.getId(), user.getName());
 
     return responseDto;
+  }
+
+  private void accessTokenResponse(SessionResponseDto sessionResponseDto, Long userId, String userName) {
+    sessionResponseDto.setAccessToken(jwtUtil.createAccessToken(userId, userName));
+  }
+
+  private void refreshTokenResponse(SessionResponseDto sessionResponseDto, Long userId) {
+    sessionResponseDto.setRefreshToken(jwtUtil.createRefreshToken(userId));
   }
 
 }

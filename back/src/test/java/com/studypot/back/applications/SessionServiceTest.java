@@ -97,7 +97,7 @@ class SessionServiceTest {
     given(userRepository.findById(id)).willReturn(Optional.ofNullable(mockUser));
     given(jwtUtil.createAccessToken(id, name)).willReturn("header.payload.signature");
     given(jwtUtil.createRefreshToken(id)).willReturn("never produced");
-    SessionResponseDto sessionResponseDto = sessionService.checkRefreshToken(id);
+    SessionResponseDto sessionResponseDto = sessionService.createAccessToken(id);
 
     assertThat(sessionResponseDto.getAccessToken(), is("header.payload.signature"));
     assertNull(sessionResponseDto.getRefreshToken());

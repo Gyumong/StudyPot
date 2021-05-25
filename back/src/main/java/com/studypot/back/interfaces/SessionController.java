@@ -34,7 +34,7 @@ public class SessionController {
   @ApiOperation("토큰 리프레시")
   public SessionResponseDto refreshToken(@UserId Long userId) {
 
-    return sessionService.checkRefreshToken(userId);
+    return sessionService.createAccessToken(userId);
 
   }
 
