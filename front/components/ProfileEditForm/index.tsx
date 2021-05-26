@@ -49,26 +49,26 @@ const ProfileEditForm = (): ReactElement => {
     [FavoriteValue],
   );
   console.log(FavoriteValue);
-  if (userData) {
-    <div>loading...</div>;
-  }
+  // if (userData) {
+  //   <div>loading...</div>;
+  // }
   return (
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
       <ProfileSubmitForm>
-        <UserName>{userData?.name} </UserName>
-        <Location>{userData?.location}</Location>
+        {/* <UserName>{userData?.name} </UserName>
+        <Location>{userData?.location}</Location> */}
         <Interest>관심사</Interest>
         <Select isMulti value={FavoriteValue} options={Option} onChange={onChangeFavorite} styles={colourStyles} />
-        <SelfIntro>{userData?.introduction}</SelfIntro>
+        {/* <SelfIntro>{userData?.introduction}</SelfIntro> */}
         <textarea id="story" name="story">
           It was a dark and stormy night...
         </textarea>
         <EditButton>수정완료</EditButton>
-        <img
+        {/* <img
           src={gravatar.url(userData?.name, { s: "24px", d: "retro" })}
           style={{ width: "70px", height: "70px", position: "absolute", right: 0 }}
-        />
+        /> */}
       </ProfileSubmitForm>
       <Setting>계정 설정</Setting>
 
