@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import axios from "axios";
 
-type ReturnTypes<T = any> = [T, () => void, boolean];
+type ReturnTypes<T = any> = [T, () => void];
 type AccessToken = {
   accessToken: string;
 };
@@ -28,8 +28,8 @@ const useMyInfo = (): ReturnTypes => {
     }
     return null;
   };
-  const { data: userData, error, isValidating: loading } = useSWR("/user", fetcher);
-  return [userData, error, loading];
+  const { data: userData, error } = useSWR("/user", fetcher);
+  return [userData, error];
 };
 
 export default useMyInfo;
