@@ -6,9 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.studypot.back.applications.UserService;
-import com.studypot.back.domain.User;
+import com.studypot.back.applications.SessionService;
+import com.studypot.back.dto.session.SessionResponseDto;
 import com.studypot.back.utils.JwtUtil;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,20 +28,25 @@ class SessionControllerTest {
   @Autowired
   private MockMvc mvc;
 
-  @MockBean
-  private UserService userService;
+  @Autowired
+  private JwtUtil jwtUtil;
 
-//  @MockBean
-//  private JwtUtil jwtUtil;
+  @MockBean
+  private SessionService sessionService;
+
+  private String token;
+
+  @BeforeEach
+  public void setUp() {
+    token = jwtUtil.createRefreshToken(1L);
+  }
 
   @Test
   public void signIn() throws Exception {
     String email = "test@naver.com";
     String password = "1234";
-    User mockUser = User.builder().email(email).password(password).build();
 
-    given(userService.authenticate(email, password)).willReturn(mockUser);
-//    given(jwtUtil.createAccessToken(1L, "Leo")).willReturn("jwtToken");
+    given(sessionService.authenticate(email, password)).willReturn(new SessionResponseDto());
 
     mvc.perform(post("/login")
         .contentType(MediaType.APPLICATION_JSON)
@@ -49,42 +55,23 @@ class SessionControllerTest {
             + "  }"))
         .andExpect(status().isOk());
 
-    verify(userService).authenticate("test@naver.com", "1234");
-
-//    verify(jwtUtil).createAccessToken(any(), any());
+    verify(sessionService).authenticate("test@naver.com", "1234");
 
   }
 
   @Test
   public void refreshToken() throws Exception {
-    String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImxlbyIsInVzZXJJZCI6MSwiZXhwaXJlZEF0IjoxNjIwOTE2NDIyLCJpYXQiOjE2MjA1NTY0MjJ9.12S7kyTISSP1EIqcrcoTU4X9HHc4SfjAkcaFu9Xz3f0";
 
-    String email = "test@naver.com";
-    String password = "1234";
-    User mockUser = User.builder().email(email).password(password).build();
-
-    given(userService.checkRefreshToken(1L)).willReturn(mockUser);
+    Long userId = 1L;
+    given(sessionService.createAccessToken(userId)).willReturn(new SessionResponseDto());
 
     mvc.perform(get("/refresh")
         .header("Authorization", "Bearer " + token)
     )
         .andExpect(status().isOk());
 
-    Long userId= 1L;
-    verify(userService).checkRefreshToken(userId);
+    verify(sessionService).createAccessToken(userId);
 
   }
-
-//  @Test
-//  public void signInWithInvalidDto() throws Exception {
-//
-//    mvc.perform(post("/login")
-//        .contentType(MediaType.APPLICATION_JSON)
-//        .content("{\n"
-//            + "    \"email\":\"test@naver.com\"\n"
-//            + "  }"))
-//        .andExpect(status().isOk());
-//
-//  }
 
 }

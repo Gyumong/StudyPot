@@ -1,7 +1,6 @@
 package com.studypot.back;
 
 import com.studypot.back.auth.UserIdResolver;
-import com.studypot.back.auth.UserNameResolver;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +18,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class WebConfigurerImpl extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
-  //todo: projection 수정하기
-  private final UserNameResolver userNameResolver;
   private final UserIdResolver userIdResolver;
 
-  public WebConfigurerImpl(UserNameResolver userNameResolver, UserIdResolver userIdResolver) {
-    this.userNameResolver = userNameResolver;
+  public WebConfigurerImpl(UserIdResolver userIdResolver) {
     this.userIdResolver = userIdResolver;
   }
 
@@ -53,7 +49,6 @@ public class WebConfigurerImpl extends WebSecurityConfigurerAdapter implements W
 
   @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-    resolvers.add(userNameResolver);
     resolvers.add(userIdResolver);
   }
 

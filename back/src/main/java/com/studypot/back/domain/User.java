@@ -1,11 +1,12 @@
 package com.studypot.back.domain;
 
-import com.studypot.back.dto.user.ProfileResponseDto;
-import com.studypot.back.dto.user.UpdateProfileRequestDto;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   @Setter
   private String email;
@@ -41,8 +42,8 @@ public class User {
   @Setter
   private String location;
 
-  @Setter
-  private String category;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private List<Category> categories;
 
   @Setter
   private String introduction;
@@ -50,14 +51,4 @@ public class User {
   @Setter
   private String image;
 
-
-  public ProfileResponseDto updateProfile(UpdateProfileRequestDto updateProfileRequestDto, String imageUrl) {
-    this.name = updateProfileRequestDto.getName();
-    this.location = updateProfileRequestDto.getLocation();
-    this.category = updateProfileRequestDto.getCategory();
-    this.introduction = updateProfileRequestDto.getIntroduction();
-    this.image = imageUrl;
-
-    return new ProfileResponseDto(this.name, this.location, this.category, this.introduction, this.image);
-  }
 }

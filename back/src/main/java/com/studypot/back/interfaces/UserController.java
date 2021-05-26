@@ -1,7 +1,7 @@
 package com.studypot.back.interfaces;
 
 import com.studypot.back.applications.UserService;
-import com.studypot.back.domain.User;
+import com.studypot.back.dto.user.UserSignupRequestDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -23,15 +23,8 @@ public class UserController {
   @PostMapping("/signup")
   @ApiOperation("회원가입")
   @ResponseStatus(HttpStatus.CREATED)
-  public void create(
-      @RequestBody User resource
-  ) {
-    String name = resource.getName();
-    String email = resource.getEmail();
-    String password = resource.getPassword();
-
-    userService.registerUser(name, email, password);
-
+  public void create(@RequestBody UserSignupRequestDto resource) {
+    userService.registerUser(resource);
   }
 
 }
