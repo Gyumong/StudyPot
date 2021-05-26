@@ -30,7 +30,6 @@ const Header = () => {
             <Link href="/recruit">스터디모집</Link>
           </MenuItem>
         </MenuFrame>
-
         <ButtonFrame>
           <>
             <LoginButton onClick={onLogOut}>LogOut</LoginButton>
