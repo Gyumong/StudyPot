@@ -3,7 +3,7 @@ import palette from "@styles/palette";
 import Button from "../common/Button";
 
 interface Props {
-  name: string;
+  name?: string;
   className?: string;
   onClick?: (e: Event) => void;
 }
@@ -60,7 +60,7 @@ export const RegisterButton = styled(Button)`
   margin-top: 1rem;
 `;
 
-export const LoginButton = styled(Button)`
+export const LoginButton = styled(Button)<Props>`
   position: relative;
   width: 130px;
   height: 15px;
