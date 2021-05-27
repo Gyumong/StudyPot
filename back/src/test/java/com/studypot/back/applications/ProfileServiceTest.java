@@ -2,7 +2,7 @@ package com.studypot.back.applications;
 
 import static org.mockito.MockitoAnnotations.openMocks;
 
-import com.studypot.back.domain.CategoryRepository;
+import com.studypot.back.domain.UserCategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
 import com.studypot.back.s3.S3Service;
@@ -24,7 +24,7 @@ class ProfileServiceTest {
   private S3Service s3Service;
 
   @Mock
-  private CategoryRepository categoryRepository;
+  private UserCategoryRepository userCategoryRepository;
 
   private User mockUser;
 

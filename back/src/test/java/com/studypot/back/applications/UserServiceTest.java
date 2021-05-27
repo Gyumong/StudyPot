@@ -7,8 +7,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-import com.studypot.back.domain.Category.CategoryName;
-import com.studypot.back.domain.CategoryRepository;
+import com.studypot.back.domain.CategoryName;
+import com.studypot.back.domain.UserCategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
 import com.studypot.back.dto.user.UserSignupRequestDto;
@@ -30,12 +30,12 @@ class UserServiceTest {
   private PasswordEncoder passwordEncoder;
 
   @Mock
-  private CategoryRepository categoryRepository;
+  private UserCategoryRepository userCategoryRepository;
 
   @BeforeEach
   public void setUp() {
     openMocks(this);
-    userService = new UserService(userRepository, passwordEncoder, categoryRepository);
+    userService = new UserService(userRepository, passwordEncoder, userCategoryRepository);
   }
 
   @Test
