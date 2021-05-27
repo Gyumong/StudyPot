@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Getter
-public class Category {
+public class UserCategory {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,18 +30,6 @@ public class Category {
   @Setter
   @Enumerated(EnumType.STRING)
   private CategoryName category;
-
-  @Getter
-  @AllArgsConstructor
-  public enum CategoryName {
-
-    IT("IT"),
-    CS("CS"),
-    INTERVIEW("면접");
-
-    private final String value;
-
-  }
 
 
 }

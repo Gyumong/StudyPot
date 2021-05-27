@@ -1,8 +1,8 @@
 package com.studypot.back.applications;
 
-import com.studypot.back.domain.Category;
-import com.studypot.back.domain.Category.CategoryName;
-import com.studypot.back.domain.CategoryRepository;
+import com.studypot.back.domain.UserCategory;
+import com.studypot.back.domain.CategoryName;
+import com.studypot.back.domain.UserCategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
 import com.studypot.back.dto.user.UserSignupRequestDto;
@@ -22,7 +22,7 @@ public class UserService {
 
   private final PasswordEncoder passwordEncoder;
 
-  private final CategoryRepository categoryRepository;
+  private final UserCategoryRepository userCategoryRepository;
 
 
   public User registerUser(UserSignupRequestDto signupRequestDto) {
@@ -54,17 +54,17 @@ public class UserService {
   }
 
   private void saveCategories(List<CategoryName> categories, User user) {
-    Set<Category> categorySet = new HashSet<>();
+    Set<UserCategory> userCategorySet = new HashSet<>();
     for (CategoryName categoryName : categories) {
 
-      categorySet.add(
-          Category.builder()
+      userCategorySet.add(
+          UserCategory.builder()
               .user(user)
               .category(categoryName)
               .build());
     }
 
-    categoryRepository.saveAll(categorySet);
+    userCategoryRepository.saveAll(userCategorySet);
   }
 
 }

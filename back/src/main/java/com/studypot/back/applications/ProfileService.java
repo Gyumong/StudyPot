@@ -1,9 +1,9 @@
 package com.studypot.back.applications;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.studypot.back.domain.Category;
-import com.studypot.back.domain.Category.CategoryName;
-import com.studypot.back.domain.CategoryRepository;
+import com.studypot.back.domain.UserCategory;
+import com.studypot.back.domain.CategoryName;
+import com.studypot.back.domain.UserCategoryRepository;
 import com.studypot.back.domain.User;
 import com.studypot.back.domain.UserRepository;
 import com.studypot.back.dto.CategoryResponseDto;
@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfileService {
 
   private final UserRepository userRepository;
-  private final CategoryRepository categoryRepository;
+  private final UserCategoryRepository userCategoryRepository;
   private final S3Service s3Service;
 
   public ProfileResponseDto getProfile(Long userId) {
@@ -49,13 +49,13 @@ public class ProfileService {
     String fileUrl = saveImage(updateProfileRequestDto.getImage(), user);
 
     //TODO: 딜리트 말고 다른 방안 찾아보기
-    categoryRepository.deleteAllByUserId(userId);
+    userCategoryRepository.deleteAllByUserId(userId);
 
     return updateUser(user, updateProfileRequestDto, fileUrl);
 
   }
 
-  private List<CategoryResponseDto> userCategoryList(List<Category> categories) {
+  private List<CategoryResponseDto> userCategoryList(List<UserCategory> categories) {
     return categories.stream()
         .map(category -> new CategoryResponseDto(category.getCategory()))
         .collect(Collectors.toList());
@@ -87,16 +87,16 @@ public class ProfileService {
   }
 
   private void updateCategories(List<CategoryName> categories, User user) {
-    Set<Category> categorySet = new HashSet<>();
+    Set<UserCategory> userCategorySet = new HashSet<>();
     for (CategoryName categoryName : categories) {
 
-      categorySet.add(
-          Category.builder()
+      userCategorySet.add(
+          UserCategory.builder()
               .user(user)
               .category(categoryName)
               .build());
     }
-    categoryRepository.saveAll(categorySet);
+    userCategoryRepository.saveAll(userCategorySet);
   }
 
   private String uploadToS3(MultipartFile multipartFile) throws IOException {
