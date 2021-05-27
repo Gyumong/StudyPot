@@ -28,8 +28,9 @@ const LoginForm = () => {
           password,
         })
         .then((response) => {
-          const { accessToken } = response.data;
+          const { accessToken, refreshToken } = response.data;
           localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
           router.push("/");
         })
         .catch((error) => {

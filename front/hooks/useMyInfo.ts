@@ -5,6 +5,10 @@ type ReturnTypes<T = any> = [T, () => void];
 type AccessToken = {
   accessToken: string;
 };
+type RefershToken = {
+  refreshToken: string;
+};
+
 const useMyInfo = (): ReturnTypes => {
   const fetcher = async (url: string) => {
     if (localStorage.getItem("accessToken")) {
@@ -16,14 +20,25 @@ const useMyInfo = (): ReturnTypes => {
         });
         return response.data;
       } catch (e) {
-        const { accessToken }: AccessToken = await axios.get("/refresh", {
-          headers: {
+        await axios
+          .get("/refresh", {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
             },
-          },
-        });
-        localStorage.setItem("accessToken", accessToken);
+          })
+          .then((response) => {
+            const { accessToken } = response.data;
+            localStorage.setItem("accessToken", accessToken);
+            console.log(localStorage.getItem("accessToken"));
+          })
+          .then(async () => {
+            const response = await axios.get(url, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            });
+            return response.data;
+          });
       }
     }
     return null;
