@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 import chroma from "chroma-js";
 
 export const colourStyles = {
-  control: (styles: any) => ({ ...styles, backgroundColor: "white" }),
-  option: (styles: { [x: string]: any }, { data, isDisabled, isFocused, isSelected }: any) => {
+  control: (styles) => ({ ...styles, backgroundColor: "white" }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     const color = chroma(data.color);
     return {
       ...styles,
@@ -19,18 +18,18 @@ export const colourStyles = {
       },
     };
   },
-  multiValue: (styles: any, { data }: any) => {
+  multiValue: (styles, { data }) => {
     const color = chroma(data.color);
     return {
       ...styles,
       backgroundColor: color.alpha(0.1).css(),
     };
   },
-  multiValueLabel: (styles: any, { data }: any) => ({
+  multiValueLabel: (styles, { data }) => ({
     ...styles,
     color: data.color,
   }),
-  multiValueRemove: (styles: any, { data }: any) => ({
+  multiValueRemove: (styles, { data }) => ({
     ...styles,
     color: data.color,
     ":hover": {
