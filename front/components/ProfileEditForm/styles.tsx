@@ -3,8 +3,8 @@ import Button from "@components/common/Button";
 import chroma from "chroma-js";
 
 export const colourStyles = {
-  control: (styles) => ({ ...styles, backgroundColor: "white" }),
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  control: (styles: any) => ({ ...styles, backgroundColor: "white" }),
+  option: (styles: { [x: string]: any }, { data, isDisabled, isFocused, isSelected }: any) => {
     const color = chroma(data.color);
     return {
       ...styles,
@@ -18,18 +18,18 @@ export const colourStyles = {
       },
     };
   },
-  multiValue: (styles, { data }) => {
+  multiValue: (styles: any, { data }: any) => {
     const color = chroma(data.color);
     return {
       ...styles,
       backgroundColor: color.alpha(0.1).css(),
     };
   },
-  multiValueLabel: (styles, { data }) => ({
+  multiValueLabel: (styles: any, { data }: any) => ({
     ...styles,
     color: data.color,
   }),
-  multiValueRemove: (styles, { data }) => ({
+  multiValueRemove: (styles: any, { data }: any) => ({
     ...styles,
     color: data.color,
     ":hover": {
@@ -52,7 +52,6 @@ export const ProfileSubmitForm = styled.form`
 
   margin-bottom: 2rem;
   padding: 0;
- 
 `;
 
 export const Setting = styled.p`
@@ -68,7 +67,7 @@ export const ProfileInputBox = styled.div`
   margin-left: 2rem;
 
   position: relative;
-  
+
   & > img {
     position: absolute;
     top: 0;
@@ -83,14 +82,13 @@ export const UserName = styled.p`
   margin-bottom: 0;
 
   & > span {
-    margin-right:3rem;
+    margin-right: 3rem;
   }
 `;
 
 export const UserNameView = styled.p`
- margin : 0;
+  margin: 0;
 `;
-
 
 export const Location = styled.div`
   display: flex;
@@ -110,7 +108,6 @@ export const InterestBox = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
-
 `;
 
 export const Interest = styled.div`
@@ -147,27 +144,24 @@ export const AccountSetting = styled.div`
 `;
 
 export const ChangePassword = styled.div`
-  display : flex;
+  display: flex;
 
   & > p {
     width: 6rem;
-    margin-right : 2rem;
+    margin-right: 2rem;
   }
-
 `;
 
 export const DeletedAccount = styled.div`
-  display : flex; 
-
+  display: flex;
 
   & > p {
     width: 6rem;
-    margin-right : 2rem;
+    margin-right: 2rem;
   }
-
 `;
 
 export const AccountSettingButton = styled.p`
   cursor: pointer;
-  border-bottom : 1px solid #4F4F4F;
+  border-bottom: 1px solid #4f4f4f;
 `;
