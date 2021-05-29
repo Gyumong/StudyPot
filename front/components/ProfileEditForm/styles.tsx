@@ -38,6 +38,7 @@ export const colourStyles = {
     },
   }),
 };
+
 export const ProfileEditBlock = styled.div`
   width: 50vw;
   margin-bottom: 2rem;
@@ -51,12 +52,7 @@ export const ProfileSubmitForm = styled.form`
 
   margin-bottom: 2rem;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  & > img {
-    border-radius: 50%;
-  }
+ 
 `;
 
 export const Setting = styled.p`
@@ -65,22 +61,61 @@ export const Setting = styled.p`
   margin-top: 0;
 `;
 
-export const UserName = styled.p`
-  margin-top: 0;
+export const ProfileInputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 2rem;
+
+  position: relative;
+  
+  & > img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+  }
 `;
+
+export const UserName = styled.p`
+  display: flex;
+  margin-top: 2rem;
+  margin-bottom: 0;
+
+  & > span {
+    margin-right:3rem;
+  }
+`;
+
+export const UserNameView = styled.p`
+ margin : 0;
+`;
+
 
 export const Location = styled.div`
   display: flex;
   flex-direction: low;
-  & > p {
+  margin-top: 2rem;
+  & > span {
     font-size: 1rem;
-    color: #bdbdbd;
     margin-top: 0;
   }
 `;
 
+export const LocationView = styled.p`
+  margin: 0;
+`;
+
+export const InterestBox = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  height: 3rem;
+
+`;
+
 export const Interest = styled.div`
   margin-bottom: 3rem;
+  margin-right: 3rem;
   & > p {
     font-size: 1rem;
     color: #bdbdbd;
@@ -90,6 +125,8 @@ export const Interest = styled.div`
 
 export const SelfIntro = styled.p`
   color: #4f4f4f;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 `;
 
 export const EditButton = styled(Button)`
@@ -110,21 +147,27 @@ export const AccountSetting = styled.div`
 `;
 
 export const ChangePassword = styled.div`
-  & > button {
-    color: #4f4f4f;
-    all: unset;
-    appearance: none;
-    cursor: pointer;
-    border-bottom: 1px solid black;
+  display : flex;
+
+  & > p {
+    width: 6rem;
+    margin-right : 2rem;
   }
+
 `;
 
 export const DeletedAccount = styled.div`
-  & > button {
-    color: #4f4f4f;
-    all: unset;
-    appearance: none;
-    cursor: pointer;
-    border-bottom: 1px solid black;
+  display : flex; 
+
+
+  & > p {
+    width: 6rem;
+    margin-right : 2rem;
   }
+
+`;
+
+export const AccountSettingButton = styled.p`
+  cursor: pointer;
+  border-bottom : 1px solid #4F4F4F;
 `;

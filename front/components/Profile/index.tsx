@@ -17,6 +17,7 @@ import { LightningFill } from "@styled-icons/bootstrap/LightningFill";
 import gravatar from "gravatar";
 import useMyInfo from "@hooks/useMyInfo";
 import { useRouter } from "next/router";
+
 const Profile = (): ReactElement => {
   const [userData, loading] = useMyInfo();
   const router = useRouter();
