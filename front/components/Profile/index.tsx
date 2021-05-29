@@ -19,12 +19,12 @@ import useMyInfo from "@hooks/useMyInfo";
 import { useRouter } from "next/router";
 
 const Profile = (): ReactElement => {
-  const [userData, loading] = useMyInfo();
+  const [userData, error] = useMyInfo();
   const router = useRouter();
-  if (!userData && !loading) {
-    router.push("/");
-  }
-  if (loading) {
+  // if (!userData ) {
+  //   router.push("/");
+  // }
+  if (!userData && !error) {
     <div>loading...</div>;
   }
   return (
