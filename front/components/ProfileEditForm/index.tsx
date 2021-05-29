@@ -46,7 +46,6 @@ const Option: IOptionType[] = [
 ];
 
 const ProfileEditForm = (): ReactElement => {
-  
   const [userData] = useMyInfo();
   const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
   const onChangeFavorite = useCallback(
@@ -56,93 +55,61 @@ const ProfileEditForm = (): ReactElement => {
     [FavoriteValue],
   );
   console.log(FavoriteValue);
-<<<<<<< HEAD
 
   if (userData) {
     <div>loading...</div>;
   }
 
-=======
-  // if (userData) {
-  //   <div>loading...</div>;
-  // }
->>>>>>> 835300a8d3c068ad1633e6e0ca6ba5f38dd1a6c5
   return (
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
 
       <ProfileSubmitForm>
-<<<<<<< HEAD
-
         <ProfileInputBox>
-
           <UserName>
-            <span>
-            이름
-            </span> 
-            <UserNameView>{userData?.name}</UserNameView> 
+            <span>이름</span>
+            <UserNameView>{userData?.name}</UserNameView>
           </UserName>
 
           <Location>
-            <span>
-            지역
-            </span>
+            <span>지역</span>
 
             <LocationView> {userData?.location} </LocationView>
           </Location>
 
           <img
-          src={gravatar.url(userData?.name, { s: "24px", d: "retro" })}
-          style={{ width: "70px", height: "70px", position: "absolute", right: 0 }}
-        />
+            src={gravatar.url(userData?.name, { s: "24px", d: "retro" })}
+            style={{ width: "70px", height: "70px", position: "absolute", right: 0 }}
+          />
 
-        <InterestBox>
-          <Interest>관심사</Interest>
-          <Select isMulti value={FavoriteValue} options={Option} onChange={onChangeFavorite} styles={colourStyles} />
-        </InterestBox>
-        
-        <SelfIntro> 자기소개{userData?.introduction}</SelfIntro>
+          <InterestBox>
+            <Interest>관심사</Interest>
+            <Select isMulti value={FavoriteValue} options={Option} onChange={onChangeFavorite} styles={colourStyles} />
+          </InterestBox>
+
+          <SelfIntro> 자기소개{userData?.introduction}</SelfIntro>
 
           <textarea id="story" name="story">
             It was a dark and stormy night...
-          </textarea> 
+          </textarea>
 
-        <EditButton>수정완료</EditButton>
-
+          <EditButton>수정완료</EditButton>
         </ProfileInputBox>
-
-=======
-        {/* <UserName>{userData?.name} </UserName>
-        <Location>{userData?.location}</Location> */}
-        <Interest>관심사</Interest>
-        <Select isMulti value={FavoriteValue} options={Option} onChange={onChangeFavorite} styles={colourStyles} />
-        {/* <SelfIntro>{userData?.introduction}</SelfIntro> */}
-        <textarea id="story" name="story">
-          It was a dark and stormy night...
-        </textarea>
-        <EditButton>수정완료</EditButton>
-        {/* <img
-          src={gravatar.url(userData?.name, { s: "24px", d: "retro" })}
-          style={{ width: "70px", height: "70px", position: "absolute", right: 0 }}
-        /> */}
->>>>>>> 835300a8d3c068ad1633e6e0ca6ba5f38dd1a6c5
       </ProfileSubmitForm>
 
       <Setting>계정 설정</Setting>
 
       <AccountSettingBlock>
-        
         <AccountSetting>
-            <ChangePassword>
-              <p>비밀번호 변경</p>
-              <AccountSettingButton>변경하기</AccountSettingButton>
-            </ChangePassword>
-            <DeletedAccount>
-              <p>서비스 탈퇴</p>
-              <AccountSettingButton>탈퇴하기</AccountSettingButton>
-            </DeletedAccount>
+          <ChangePassword>
+            <p>비밀번호 변경</p>
+            <AccountSettingButton>변경하기</AccountSettingButton>
+          </ChangePassword>
+          <DeletedAccount>
+            <p>서비스 탈퇴</p>
+            <AccountSettingButton>탈퇴하기</AccountSettingButton>
+          </DeletedAccount>
         </AccountSetting>
-
       </AccountSettingBlock>
     </ProfileEditBlock>
   );
