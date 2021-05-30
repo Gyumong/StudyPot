@@ -1,6 +1,6 @@
 package com.studypot.back.dto;
 
-import com.studypot.back.domain.Category.CategoryName;
+import com.studypot.back.domain.CategoryName;
 import lombok.Getter;
 
 @Getter

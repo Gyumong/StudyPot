@@ -1,6 +1,6 @@
 package com.studypot.back.interfaces;
 
-import com.studypot.back.domain.Category.CategoryName;
+import com.studypot.back.domain.CategoryName;
 import com.studypot.back.dto.CategoryResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
