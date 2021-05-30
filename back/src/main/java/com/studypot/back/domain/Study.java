@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +28,8 @@ public class Study {
 
   private LocalDateTime createdAt;
 
+  private LocalDateTime updatedAt;
+
   private String title;
 
   private String content;
@@ -37,8 +38,7 @@ public class Study {
 
   private String thumbnail;
 
-  @OneToOne
-  private User leader;
+  private Long leaderUserId;
 
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
   private List<StudyMember> members;
