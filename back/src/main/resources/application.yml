@@ -1,0 +1,37 @@
+spring:
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${mysql.hostServer}:3306/${mysql.databaseName}?serverTimezone=UTC&characterEncoding=UTF-8&validationQuery="select 1"
+    username: root
+    password: ${MYSQL_PASSWORD}
+
+jwt:
+  secret: ${JWT_SECRET}
+  jwtExpirationTimeMs: ${JWT_ACCESS_EXPIRATION_TIME}
+  refreshExpirationTimeMs: ${JWT_REFRESH_EXPIRATION_TIME}
+
+logging:
+  slack:
+    webhook-uri: ${WEBHOOK_URI}
+  config: classpath:logback-slack.xml
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESSKEY}
+      secretKey: ${AWS_SECRETKEY}
+    s3:
+      bucket: ${AWS_BUCKET_NAME}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+mysql:
+  hostServer: ${MYSQL_HOST}
+  databaseName: ${MYSQL_DB}

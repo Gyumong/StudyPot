@@ -11,6 +11,7 @@
     "resolveJsonModule": true,
     "jsxImportSource": "@emotion/react",
     "baseUrl": ".",
+
     "paths": {
       // 절대경로
       "@hooks/*": ["hooks/*"],
@@ -19,7 +20,8 @@
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
       "@typings/*": ["typings/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@lib/*": ["lib/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,

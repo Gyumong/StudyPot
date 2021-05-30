@@ -1,8 +1,48 @@
 import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 import palette from "@styles/palette";
+import chroma from "chroma-js";
+
+
+export const colourStyles = {
+  control: (styles) => ({ ...styles, backgroundColor: "white" }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    const color = chroma(data.color);
+    return {
+      ...styles,
+      backgroundColor: isDisabled ? null : isSelected ? data.color : isFocused ? color.alpha(0.1).css() : null,
+      color: isDisabled ? "#ccc" : isSelected ? (chroma.contrast(color, "white") > 2 ? "white" : "black") : data.color,
+      cursor: isDisabled ? "not-allowed" : "default",
+
+      ":active": {
+        ...styles[":active"],
+        backgroundColor: !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
+      },
+    };
+  },
+  multiValue: (styles, { data }) => {
+    const color = chroma(data.color);
+    return {
+      ...styles,
+      backgroundColor: color.alpha(0.1).css(),
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: data.color,
+  }),
+  multiValueRemove: (styles, { data }) => ({
+    ...styles,
+    color: data.color,
+    ":hover": {
+      backgroundColor: data.color,
+      color: "white",
+    },
+  }),
+};
+
 export const SignUpFormBlock = styled.form`
-  width: 80%;
+  width: 80vw;
   max-width: 480px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -47,6 +87,11 @@ export const Desc = styled.div`
     color: ${palette.gray[7]};
     font-weight: 500;
   }
+  & > a {
+    color: ${palette.gray[7]};
+    font-weight: 500;
+    text-decoration: underline;
+  }
   & > u {
     color: ${palette.gray[6]};
     text-decoration: underline;
@@ -58,4 +103,34 @@ export const Error = styled.div`
   margin: 8px 0 16px;
 `;
 
-export const SignUpButton = styled(Button)``;
+export const Success = styled.div`
+  color: #2eb67d;
+  font-weight: bold;
+`;
+export const SignUpButton = styled(Button)`
+  margin-top: 2rem;
+`;
+
+
+export const SelfIntro = styled.p`
+  color: #4f4f4f;
+`;
+
+export const SignUpInnerBox = styled.p`
+  
+`;
+
+export const Interest = styled.div`
+  margin-bottom: 3rem;
+  & > p {
+    font-size: 1rem;
+    color: #bdbdbd;
+    margin-top: 0;
+  }
+`;
+
+export const SelectBox = styled.div`
+  padding-top : 2rem;
+  font-size: 1rem;
+  
+`;

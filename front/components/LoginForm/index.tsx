@@ -1,10 +1,16 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import useInput from "@hooks/useInput";
-import { LoginFormBlock, Header, LoginButton, Input, Desc } from "./styles";
-const LoginForm = (): ReactElement => {
+import { LoginFormBlock, Header, LoginButton, Input, Desc, Error } from "./styles";
+import Link from "next/link";
+import axios from "axios";
+import { backUrl } from "config/config";
+import { useRouter } from "next/router";
+
+const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, , setPassword] = useInput("");
-
+  const [logInError, setLogInError] = useState(false);
+  const router = useRouter();
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
@@ -15,7 +21,21 @@ const LoginForm = (): ReactElement => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(email, password);
+      setLogInError(false);
+      axios
+        .post(`/login`, {
+          email,
+          password,
+        })
+        .then((response) => {
+          const { accessToken, refreshToken } = response.data;
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          router.push("/");
+        })
+        .catch((error) => {
+          setLogInError(error.response);
+        });
     },
     [email, password],
   );
@@ -25,9 +45,13 @@ const LoginForm = (): ReactElement => {
       <Header>로그인</Header>
       <Input type="email" placeholder="이메일" value={email} onChange={onChangeEmail} />
       <Input type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
+      {logInError && <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>}
       <LoginButton>로그인</LoginButton>
       <Desc>
-        StudyPot 계정이 없으세요?&nbsp;<u>회원 가입</u>
+        StudyPot 계정이 없으세요?&nbsp;
+        <Link href={{ pathname: "/signup" }}>
+          <a>회원 가입</a>
+        </Link>
       </Desc>
     </LoginFormBlock>
   );

@@ -1,9 +1,14 @@
 import React, { FC } from "react";
 import { AuthTemplateBlock, WhiteBox } from "./styles";
+import Header from "@components/Header"
+
 const AuthTemplate: FC = ({ children }) => {
   return (
     <AuthTemplateBlock>
-      <WhiteBox>{children}</WhiteBox>
+      <WhiteBox>
+      <Header/>
+        {children}
+        </WhiteBox>
     </AuthTemplateBlock>
   );
 };
