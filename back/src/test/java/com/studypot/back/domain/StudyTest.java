@@ -11,10 +11,10 @@ public class StudyTest {
 
   @Test
   public void getLeader() {
-    User leaderUser = User.builder().email("test@test.com").build();
-    Study study = Study.builder().leader(leaderUser).build();
+    User leaderUser = User.builder().id(101L).build();
+    Study study = Study.builder().leaderUserId(leaderUser.getId()).build();
 
-    assertThat(study.getLeader().getEmail(), is("test@test.com"));
+    assertThat(study.getLeaderUserId(), is(101L));
   }
 
   @Test
@@ -23,5 +23,5 @@ public class StudyTest {
     assertThat(study.getCreatedAt().toString(), containsString("2021"));
 
   }
-  
+
 }
