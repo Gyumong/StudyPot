@@ -5,8 +5,8 @@ import chroma from "chroma-js";
 
 
 export const colourStyles = {
-  control: (styles) => ({ ...styles, backgroundColor: "white" }),
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  control: (styles:any) => ({ ...styles, backgroundColor: "white" }),
+  option: (styles:any, { data, isDisabled, isFocused, isSelected }:{data:any; isDisabled:any; isFocused:any; isSelected:any}) => {
     const color = chroma(data.color);
     return {
       ...styles,
@@ -20,18 +20,18 @@ export const colourStyles = {
       },
     };
   },
-  multiValue: (styles, { data }) => {
+  multiValue: (styles:any, { data }:{data:any}) => {
     const color = chroma(data.color);
     return {
       ...styles,
       backgroundColor: color.alpha(0.1).css(),
     };
   },
-  multiValueLabel: (styles, { data }) => ({
+  multiValueLabel: (styles:any, { data }:{data:any}) => ({
     ...styles,
     color: data.color,
   }),
-  multiValueRemove: (styles, { data }) => ({
+  multiValueRemove: (styles:any, { data }:{data:any}) => ({
     ...styles,
     color: data.color,
     ":hover": {
