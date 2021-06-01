@@ -1,24 +1,28 @@
 import { AnyAction, combineReducers } from "@reduxjs/toolkit";
 import { IUser } from "@typings/db";
 import { HYDRATE } from "next-redux-wrapper";
-import users from "./users";
+import userSlice from "./UserSlice";
 
 export interface State {
   users: IUser;
 }
-const rootReducer = (state: State | undefined, action: AnyAction) => {
-  switch (action.type) {
-    case HYDRATE:
-      console.log("HYDRATE", action);
-      return action.payload;
-    default: {
-      const combinedReducer = combineReducers({
-        users,
-      });
-      return combinedReducer(state, action);
-    }
-  }
-};
+export const rootReducer = combineReducers({
+  users: userSlice,
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
-export default rootReducer;
+
+let initialRootState: RootState;
+
+export const reducer = (state: any, action: any) => {
+  if (action.type === HYDRATE) {
+    if (state === initialRootState) {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    return state;
+  }
+  return rootReducer(state, action);
+};

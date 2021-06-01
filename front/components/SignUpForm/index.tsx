@@ -1,10 +1,24 @@
 import React, { useState, ReactElement, useCallback, useEffect } from "react";
-import { Header, SignUpFormBlock, Input, SignUpButton, Desc, Error, Success, Interest, SelfIntro, colourStyles, SignUpInnerBox, SelectBox } from "./styles";
+import {
+  Header,
+  SignUpFormBlock,
+  Input,
+  SignUpButton,
+  Desc,
+  Error,
+  Success,
+  Interest,
+  SelfIntro,
+  colourStyles,
+  SignUpInnerBox,
+  SelectBox,
+} from "./styles";
 import useInput from "@hooks/useInput";
 import Link from "next/link";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import Select, { ActionMeta, ValueType } from "react-select";
 import useMyInfo from "@hooks/useMyInfo";
+import { signUpUser } from "@lib/slices/UserSlice";
 
 type IOptionType = { label: string; value: number; color?: string; isFixed?: boolean; isDisabled?: boolean };
 type IsMulti = true | false;
@@ -22,7 +36,6 @@ const Option: IOptionType[] = [
   { value: 10, label: "C", color: "#666666" },
 ];
 
-
 const SignUpForm = (): ReactElement => {
   const [email, onChangeEmail] = useInput("");
   const [name, onChangeName] = useInput("");
@@ -33,7 +46,7 @@ const SignUpForm = (): ReactElement => {
 
   const [signUpError, setSignUpError] = useState("");
   const [signUpSuccess, setSignUpSuccess] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if ((!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password) || password.length < 8) && password.length > 0) {
       setPasswordError(true);
@@ -65,39 +78,33 @@ const SignUpForm = (): ReactElement => {
       if (!passwordError && !mismatchError && name) {
         setSignUpError("");
         setSignUpSuccess(false);
-        axios
-          .post(`/signup`, {
-            email,
-            name,
-            password,
-          })
-          .then((response) => {
-            console.log(response);
-            setSignUpSuccess(true);
-          })
-          .catch((error) => {
-            console.log(error.response);
-            setSignUpError(error.response);
-          });
+        dispatch(
+          signUpUser({
+            categories: FavoriteValue.map((i) => i.label),
+            email: email,
+            name: name,
+            password: password,
+          }),
+        );
       }
     },
     [email, name, password, passwordCheck, mismatchError],
   );
 
-  const [userData] = useMyInfo();
+  // const [userData] = useMyInfo();
   const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
   const onChangeFavorite = useCallback(
     (value: ValueType<IOptionType, IsMulti>, _: ActionMeta<IOptionType>) => {
       setFavoriteValue(value as IOptionType[]);
+      console.log(FavoriteValue);
     },
     [FavoriteValue],
   );
 
   return (
     <SignUpFormBlock onSubmit={onSubmit}>
-      
       <Header>회원가입</Header>
-      
+
       <SignUpInnerBox>
         <Input type="text" placeholder="이름" value={name} onChange={onChangeName} />
         <Input type="email" placeholder="이메일" value={email} onChange={onChangeEmail} />
@@ -112,17 +119,20 @@ const SignUpForm = (): ReactElement => {
         {mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}
         {signUpError && <Error>{signUpError}</Error>}
         {signUpSuccess && <Success>회원가입되었습니다! 로그인해주세요.</Success>}
-        
+
         <SelectBox>
-        <Select isMulti value={FavoriteValue} options={Option} onChange={onChangeFavorite} styles={colourStyles} placeholder="관심사" />
-        <SelfIntro>{userData?.introduction}</SelfIntro>
+          <Select
+            isMulti
+            value={FavoriteValue}
+            options={Option}
+            onChange={onChangeFavorite}
+            styles={colourStyles}
+            placeholder="관심사"
+          />
+          {/* <SelfIntro>{userData?.introduction}</SelfIntro> */}
         </SelectBox>
-        
       </SignUpInnerBox>
 
-
-      
-      
       <Desc>
         계정 만들기 버튼을 클릭하면, <strong>스터디팟</strong> 의 <u>회원약관</u>에 동의하며 <br />
         쿠키 사용을 포함한 <u>개인정보처리방침</u>을 읽었음을 인정하게 됩니다.
