@@ -15,10 +15,10 @@ import {
 } from "./styles";
 import useInput from "@hooks/useInput";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select, { ActionMeta, ValueType } from "react-select";
 import useMyInfo from "@hooks/useMyInfo";
-import { signUpUser } from "@lib/slices/UserSlice";
+import { clearState, signUpUser, userSelector } from "@lib/slices/UserSlice";
 
 type IOptionType = { label: string; value: number; color?: string; isFixed?: boolean; isDisabled?: boolean };
 type IsMulti = true | false;
@@ -46,6 +46,17 @@ const SignUpForm = (): ReactElement => {
 
   const [signUpError, setSignUpError] = useState("");
   const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
+
+  const { isSuccess, isError } = useSelector(userSelector);
+
+  const onChangeFavorite = useCallback(
+    (value: ValueType<IOptionType, IsMulti>, _: ActionMeta<IOptionType>) => {
+      setFavoriteValue(value as IOptionType[]);
+      console.log(FavoriteValue);
+    },
+    [FavoriteValue],
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     if ((!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password) || password.length < 8) && password.length > 0) {
@@ -55,6 +66,21 @@ const SignUpForm = (): ReactElement => {
     }
   }, [password]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(clearState());
+    }
+
+    if (isSuccess) {
+      dispatch(clearState());
+    }
+  }, [isError, isSuccess, signUpError, signUpSuccess]);
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
@@ -88,18 +114,10 @@ const SignUpForm = (): ReactElement => {
         );
       }
     },
-    [email, name, password, passwordCheck, mismatchError],
+    [email, name, password, passwordCheck, mismatchError, FavoriteValue],
   );
 
   // const [userData] = useMyInfo();
-  const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
-  const onChangeFavorite = useCallback(
-    (value: ValueType<IOptionType, IsMulti>, _: ActionMeta<IOptionType>) => {
-      setFavoriteValue(value as IOptionType[]);
-      console.log(FavoriteValue);
-    },
-    [FavoriteValue],
-  );
 
   return (
     <SignUpFormBlock onSubmit={onSubmit}>

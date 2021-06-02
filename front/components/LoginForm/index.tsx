@@ -1,16 +1,24 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import useInput from "@hooks/useInput";
 import { LoginFormBlock, Header, LoginButton, Input, Desc, Error } from "./styles";
 import Link from "next/link";
-import axios from "axios";
-import { backUrl } from "config/config";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { clearState, loginUser, userSelector } from "@lib/slices/UserSlice";
 
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, , setPassword] = useInput("");
   const [logInError, setLogInError] = useState(false);
+  const dispatch = useDispatch();
+  const { isSuccess } = useSelector(userSelector);
   const router = useRouter();
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/");
+      dispatch(clearState());
+    }
+  }, []);
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
@@ -22,20 +30,12 @@ const LoginForm = () => {
     (e) => {
       e.preventDefault();
       setLogInError(false);
-      axios
-        .post(`/login`, {
+      dispatch(
+        loginUser({
           email,
           password,
-        })
-        .then((response) => {
-          const { accessToken, refreshToken } = response.data;
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
-          router.push("/");
-        })
-        .catch((error) => {
-          setLogInError(error.response);
-        });
+        }),
+      );
     },
     [email, password],
   );
