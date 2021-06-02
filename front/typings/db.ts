@@ -4,6 +4,7 @@ export interface IUser {
   isSuccess: boolean;
   isError: boolean;
   errorMessage: string;
+  isLoggedIn: boolean;
 }
 
 export interface LoginRequestPayload {
