@@ -95,7 +95,7 @@ export const userSlice = createSlice({
       state.isFetching = false;
       state.isError = true;
       state.isSuccess = false;
-      state.errorMessage = payload.message;
+      state.errorMessage = payload;
     });
     builder.addCase(loginUser.pending, (state) => {
       state.isFetching = true;
@@ -110,7 +110,7 @@ export const userSlice = createSlice({
       state.isFetching = false;
       state.isError = true;
       state.isSuccess = false;
-      state.errorMessage = payload.message;
+      state.errorMessage = payload;
     });
   },
 });

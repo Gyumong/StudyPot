@@ -5,20 +5,31 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, loginUser, userSelector } from "@lib/slices/UserSlice";
-
+import { push } from "connected-next-router";
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, , setPassword] = useInput("");
   const [logInError, setLogInError] = useState(false);
   const dispatch = useDispatch();
-  const { isSuccess } = useSelector(userSelector);
-  const router = useRouter();
+  const { isSuccess, isError } = useSelector(userSelector);
+
   useEffect(() => {
-    if (isSuccess) {
-      router.push("/");
+    return () => {
+      dispatch(clearState());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      console.log("로그인 에러");
       dispatch(clearState());
     }
-  }, []);
+
+    if (isSuccess) {
+      dispatch(clearState());
+      dispatch(push({ pathname: "/" }));
+    }
+  }, [isSuccess, isError]);
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
