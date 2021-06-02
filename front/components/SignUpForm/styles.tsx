@@ -3,10 +3,9 @@ import Button from "@components/common/Button";
 import palette from "@styles/palette";
 import chroma from "chroma-js";
 
-
 export const colourStyles = {
-  control: (styles:any) => ({ ...styles, backgroundColor: "white" }),
-  option: (styles:any, { data, isDisabled, isFocused, isSelected }:{data:any; isDisabled:any; isFocused:any; isSelected:any}) => {
+  control: (styles: any) => ({ ...styles, backgroundColor: "white" }),
+  option: (styles: { [x: string]: any }, { data, isDisabled, isFocused, isSelected }: any) => {
     const color = chroma(data.color);
     return {
       ...styles,
@@ -20,18 +19,18 @@ export const colourStyles = {
       },
     };
   },
-  multiValue: (styles:any, { data }:{data:any}) => {
+  multiValue: (styles: any, { data }: any) => {
     const color = chroma(data.color);
     return {
       ...styles,
       backgroundColor: color.alpha(0.1).css(),
     };
   },
-  multiValueLabel: (styles:any, { data }:{data:any}) => ({
+  multiValueLabel: (styles: any, { data }: any) => ({
     ...styles,
     color: data.color,
   }),
-  multiValueRemove: (styles:any, { data }:{data:any}) => ({
+  multiValueRemove: (styles: any, { data }: any) => ({
     ...styles,
     color: data.color,
     ":hover": {
@@ -111,14 +110,11 @@ export const SignUpButton = styled(Button)`
   margin-top: 2rem;
 `;
 
-
 export const SelfIntro = styled.p`
   color: #4f4f4f;
 `;
 
-export const SignUpInnerBox = styled.p`
-  
-`;
+export const SignUpInnerBox = styled.p``;
 
 export const Interest = styled.div`
   margin-bottom: 3rem;
@@ -130,7 +126,6 @@ export const Interest = styled.div`
 `;
 
 export const SelectBox = styled.div`
-  padding-top : 2rem;
+  padding-top: 2rem;
   font-size: 1rem;
-  
 `;

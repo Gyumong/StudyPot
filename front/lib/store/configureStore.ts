@@ -1,23 +1,26 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
-import rootReducer from "../slices";
-import createSagaMiddleware, { Task } from "redux-saga";
-import rootSaga from "../sagas";
-import { Store } from "redux";
+import { rootReducer } from "../slices";
+import { createRouterMiddleware, initialRouterState } from "connected-next-router";
+import Router from "next/router";
 
-interface SagaStore extends Store {
-  sagaTask?: Task;
-}
-
-const store = () => {
-  const sagaMiddleware = createSagaMiddleware();
-  const store = configureStore({ reducer: rootReducer, middleware: [sagaMiddleware, ...getDefaultMiddleware()] });
-  (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
-
-  return store;
+export const initStore = (context: any) => {
+  const routerMiddleware = createRouterMiddleware();
+  const { asPath } = context.ctx || Router.router || {};
+  let initialState;
+  if (asPath) {
+    initialState = {
+      router: initialRouterState(asPath),
+    };
+  }
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: initialState,
+    middleware: [routerMiddleware, ...getDefaultMiddleware()],
+  });
 };
 
-const wrapper = createWrapper(store, {
+const wrapper = createWrapper(initStore, {
   debug: process.env.NODE_ENV === "development",
 });
 

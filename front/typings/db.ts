@@ -1,8 +1,9 @@
 export interface IUser {
-  userLoading: boolean;
-  userData?: any;
-  error?: any;
-  accessToken?: string;
+  user: any;
+  isFetching: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  errorMessage: string;
 }
 
 export interface LoginRequestPayload {
