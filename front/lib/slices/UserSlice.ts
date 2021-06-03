@@ -52,7 +52,7 @@ const initialState: IUser = {
   errorMessage: "",
 };
 
-export const refreshAccessToken = createAsyncThunk<Token, Token, { rejectValue: rejectMessage }>(
+export const refreshAccessToken = createAsyncThunk<Token, any, { rejectValue: rejectMessage }>(
   "users/refreshAccessToken",
   async (thunkAPI) => {
     try {
@@ -135,6 +135,9 @@ export const userSlice = createSlice({
 
       return state;
     },
+    logOut: (state) => {
+      state.isLoggedIn = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signUpUser.pending, (state) => {
@@ -206,7 +209,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearState } = userSlice.actions;
+export const { clearState, logOut } = userSlice.actions;
 
 export const userSelector = (state: IUser) => {
   return state;

@@ -3,7 +3,7 @@ import useInput from "@hooks/useInput";
 import { LoginFormBlock, Header, LoginButton, Input, Desc, Error } from "./styles";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { clearState, loginUser, userSelector } from "@lib/slices/UserSlice";
+import { clearState, loginUser } from "@lib/slices/UserSlice";
 import { push } from "connected-next-router";
 import { useRouter } from "next/router";
 import { RootState } from "@lib/slices";
