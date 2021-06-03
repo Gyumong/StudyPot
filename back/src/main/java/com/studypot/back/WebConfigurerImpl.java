@@ -2,6 +2,7 @@ package com.studypot.back;
 
 import com.studypot.back.auth.UserIdResolver;
 import java.util.List;
+import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,6 +56,11 @@ public class WebConfigurerImpl extends WebSecurityConfigurerAdapter implements W
   @Bean
   public PasswordEncoder bCryptPasswordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public ErrorProperties errorProperties() {
+    return new ErrorProperties();
   }
 
 }

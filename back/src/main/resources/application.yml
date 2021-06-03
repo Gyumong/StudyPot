@@ -9,6 +9,8 @@ spring:
     url: jdbc:mysql://${mysql.hostServer}:3306/${mysql.databaseName}?serverTimezone=UTC&characterEncoding=UTF-8&validationQuery="select 1"
     username: root
     password: ${MYSQL_PASSWORD}
+  mvc:
+    log-resolved-exception: off
 
 jwt:
   secret: ${JWT_SECRET}
