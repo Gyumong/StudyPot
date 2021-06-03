@@ -2,46 +2,48 @@ import React, { useCallback } from "react";
 import Link from "next/link";
 import { MainFrame, Logo, MenuFrame, MenuItem, ButtonFrame, RegisterButton, LoginButton } from "./styles";
 import Image from "next/image";
-import useMyInfo from "./../../hooks/useMyInfo";
-import { mutate } from "swr";
+import { logOut } from "@lib/slices/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@lib/slices";
 
 const Header = () => {
+  const { isLoggedIn } = useSelector((state: RootState) => state.users);
   // const [userData] = useMyInfo();
-
+  const dispatch = useDispatch();
   const onLogOut = useCallback(() => {
     localStorage.removeItem("accessToken");
-    mutate("/user");
-  }, []);
-  // if (userData) {
-  //   return (
-  //     <MainFrame>
-  //       <Link href="/">
-  //         <Logo>
-  //           <Image src="/logo_621x206.png" alt="logo" width={120} height={40} />
-  //         </Logo>
-  //       </Link>
+    localStorage.removeItem("refreshToken");
+    dispatch(logOut());
+  }, [isLoggedIn]);
+  if (isLoggedIn) {
+    return (
+      <MainFrame>
+        <Link href="/">
+          <Logo>
+            <Image src="/logo_621x206.png" alt="logo" width={120} height={40} />
+          </Logo>
+        </Link>
 
-  //       <MenuFrame>
-  //         <MenuItem>
-  //           <Link href="/find">스터디찾기</Link>
-  //         </MenuItem>
+        <MenuFrame>
+          <MenuItem>
+            <Link href="/find">스터디찾기</Link>
+          </MenuItem>
 
-  //         <MenuItem>
-  //           <Link href="/recruit">스터디모집</Link>
-  //         </MenuItem>
-  //       </MenuFrame>
-  //       <ButtonFrame>
-  //         <>
-  //           <LoginButton onClick={onLogOut}>LogOut</LoginButton>
-  //         </>
-  //         <Link href="/mypage">
-  //           <RegisterButton>MyPage</RegisterButton>
-  //         </Link>
-  //       </ButtonFrame>
-  //     </MainFrame>
-  //   );
-  // }
-  // mutate("/user");
+          <MenuItem>
+            <Link href="/recruit">스터디모집</Link>
+          </MenuItem>
+        </MenuFrame>
+        <ButtonFrame>
+          <>
+            <LoginButton onClick={onLogOut}>LogOut</LoginButton>
+          </>
+          <Link href="/mypage">
+            <RegisterButton>MyPage</RegisterButton>
+          </Link>
+        </ButtonFrame>
+      </MainFrame>
+    );
+  }
   return (
     <MainFrame>
       <Link href="/">

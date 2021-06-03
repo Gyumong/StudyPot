@@ -2,17 +2,18 @@ import React, { useCallback, useState, useEffect } from "react";
 import useInput from "@hooks/useInput";
 import { LoginFormBlock, Header, LoginButton, Input, Desc, Error } from "./styles";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { clearState, loginUser, userSelector } from "@lib/slices/UserSlice";
+import { clearState, loginUser } from "@lib/slices/UserSlice";
 import { push } from "connected-next-router";
+import { useRouter } from "next/router";
+import { RootState } from "@lib/slices";
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, , setPassword] = useInput("");
   const [logInError, setLogInError] = useState(false);
   const dispatch = useDispatch();
-  const { isSuccess, isError } = useSelector(userSelector);
-
+  const router = useRouter();
+  const { isSuccess, isError } = useSelector((state: RootState) => state.users);
   useEffect(() => {
     return () => {
       dispatch(clearState());
@@ -27,7 +28,7 @@ const LoginForm = () => {
 
     if (isSuccess) {
       dispatch(clearState());
-      dispatch(push({ pathname: "/" }));
+      router.push("/");
     }
   }, [isSuccess, isError]);
   const onChangePassword = useCallback(
