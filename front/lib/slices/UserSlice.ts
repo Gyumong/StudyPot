@@ -77,7 +77,7 @@ export const loadUserByToken = createAsyncThunk<IloadUser, any, { rejectValue: r
   "users/loadUserByToken",
   async (thunkAPI) => {
     try {
-      const response = await axios.get(`${backUrl}/user`);
+      const response = await axiosWithToken.get(`/user`);
       console.log("response", response.data);
       return response.data;
     } catch (e) {
@@ -190,6 +190,7 @@ export const userSlice = createSlice({
       state.isError = true;
       state.isSuccess = false;
       state.errorMessage = payload;
+      state.isLoggedIn = false;
     });
     builder.addCase(refreshAccessToken.pending, (state) => {
       state.isFetching = true;

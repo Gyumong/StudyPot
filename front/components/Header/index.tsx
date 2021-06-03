@@ -3,8 +3,11 @@ import Link from "next/link";
 import { MainFrame, Logo, MenuFrame, MenuItem, ButtonFrame, RegisterButton, LoginButton } from "./styles";
 import Image from "next/image";
 import { logOut } from "@lib/slices/UserSlice";
-import { useDispatch } from "react-redux";
-const Header = ({ isLoggedIn }: any) => {
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@lib/slices";
+
+const Header = () => {
+  const { isLoggedIn } = useSelector((state: RootState) => state.users);
   // const [userData] = useMyInfo();
   const dispatch = useDispatch();
   const onLogOut = useCallback(() => {
