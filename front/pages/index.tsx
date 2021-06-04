@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "@components/Header";
-<<<<<<< Updated upstream
+
 import { useDispatch, useSelector } from "react-redux";
 import { loadUserByToken, refreshAccessToken } from "./../lib/slices/UserSlice";
 import { RootState } from "@lib/slices";
@@ -30,10 +30,6 @@ export default function Home() {
   //     }
   //   }
   // }, [dispatch]);
-=======
-export default function Home() {
->>>>>>> Stashed changes
-
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />

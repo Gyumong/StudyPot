@@ -2,13 +2,13 @@ import React, { useCallback } from "react";
 import Link from "next/link";
 import { MainFrame, Logo, MenuFrame, MenuItem, ButtonFrame, RegisterButton, LoginButton } from "./styles";
 import Image from "next/image";
-<<<<<<< Updated upstream
+
 import { logOut } from "@lib/slices/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@lib/slices";
-=======
+
 import { mutate } from "swr";
->>>>>>> Stashed changes
+
 
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.users);
