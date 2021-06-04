@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,9 +44,10 @@ public class Study {
 
   private String content;
 
-  private Integer maxNumber;
+  @Max(value = 19, message = "최대 19명 까지 가능합니다.")
+  private Integer maxStudyNumber;
 
-  private String thumbnail;
+  private String thumbnailUrl;
 
   @Enumerated(value = EnumType.STRING)
   private MeetingType meetingType;
