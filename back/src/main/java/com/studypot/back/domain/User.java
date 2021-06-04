@@ -49,9 +49,9 @@ public class User {
   private String introduction;
 
   @Setter
-  private String image;
+  private String imageUrl;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  private List<StudyMember> studies;
+  private List<StudyMember> participateStudyList;
 
 }

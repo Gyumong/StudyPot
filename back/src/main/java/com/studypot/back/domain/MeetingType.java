@@ -9,8 +9,8 @@ public enum MeetingType {
 
   ONLINE("온라인"),
   OFFLINE("오프라인"),
-  ONANDOFFLINE("온/오프라인");
+  ON_AND_OFFLINE("온/오프라인");
 
   private final String value;
-  
+
 }
