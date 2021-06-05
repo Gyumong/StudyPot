@@ -1,35 +1,32 @@
 package com.studypot.back.exceptions;
 
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
+@AllArgsConstructor
 public class ApiError {
 
-  private LocalDateTime timestamp;
+  private final LocalDateTime timestamp;
 
-  private HttpStatus status;
+  private final HttpStatus status;
 
-  private String message;
+  private final String errorCode;
 
-  private String location;
+  private final String message;
 
-  public ApiError(LocalDateTime timestamp, HttpStatus status, String message, String location) {
-    super();
-    this.timestamp = timestamp;
-    this.status = status;
-    this.message = message;
-    this.location = location;
-  }
+  private final String path;
 
   @Override
   public String toString() {
     return "ApiError{" + "\n" +
         "timestamp=" + timestamp +
         "," + "\n" + " status = " + status +
+        "," + "\n" + " errorCode='" + errorCode + '\'' +
         "," + "\n" + " message='" + message + '\'' +
-        "," + "\n" + " location='" + location + '\'' + "\n" +
+        "," + "\n" + " path='" + path + '\'' + "\n" +
         '}';
   }
 }
