@@ -5,8 +5,8 @@ import Header from "@components/Header"
 const AuthTemplate: FC = ({ children }) => {
   return (
     <AuthTemplateBlock>
-      <WhiteBox>
       <Header/>
+      <WhiteBox>
         {children}
         </WhiteBox>
     </AuthTemplateBlock>

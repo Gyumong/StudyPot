@@ -21,6 +21,7 @@ import {
   colourStyles,
 } from "./styles";
 import gravatar from "gravatar";
+
 import useMyInfo from "@hooks/useMyInfo";
 import Select, { ActionMeta, ValueType } from "react-select";
 
@@ -77,10 +78,12 @@ const ProfileEditForm = (): ReactElement => {
             <LocationView> {userData?.location} </LocationView>
           </Location>
 
-          <img
-            src={gravatar.url(userData?.name, { s: "24px", d: "retro" })}
+
+
+           <img
+            src={gravatar.url(userData?.name, { s: "24px", d: "monsterid" })}
             style={{ width: "70px", height: "70px", position: "absolute", right: 0 }}
-          />
+          /> 
 
           <InterestBox>
             <Interest>관심사</Interest>

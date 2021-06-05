@@ -9,7 +9,8 @@ interface Props {
 }
 export const MainFrame = styled.div`
   display: flex;
-  position: absolute;
+  position: fixed;
+  z-index: 30;
   width: 100vw;
   top: 0;
   left: 0;
@@ -35,6 +36,7 @@ export const MenuFrame = styled.ul`
 `;
 
 export const MenuItem = styled.li`
+  padding-top: 1rem;
   float: left;
   cursor: pointer;
   &:hover {
@@ -42,7 +44,7 @@ export const MenuItem = styled.li`
     color: #26de81;
   }
   & + & {
-    margin-left: 1rem;
+    margin-left: 2rem;
   }
 `;
 
