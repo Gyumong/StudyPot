@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Header from "@components/Header";
 
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserByToken, refreshAccessToken } from "./../lib/slices/UserSlice";
-import { RootState } from "@lib/slices";
+import { loadUserByToken } from "./../lib/slices/UserSlice";
+
 import * as jwt from "jsonwebtoken";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state: RootState) => state.users);
   useEffect(() => {
     dispatch(loadUserByToken(null));
   }, []);
@@ -32,7 +31,7 @@ export default function Home() {
   // }, [dispatch]);
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header />
     </>
   );
 }
