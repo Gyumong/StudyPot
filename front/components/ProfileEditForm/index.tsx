@@ -21,34 +21,15 @@ import {
   colourStyles,
 } from "./styles";
 import gravatar from "gravatar";
-import { ActionMeta, ValueType } from "react-select";
+import Select, { ActionMeta, ValueType } from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUserByToken } from "@lib/slices/UserSlice";
 import { RootState } from "@lib/slices";
 import { backUrl } from "config/config";
 import axios from "axios";
-import AsyncSelect from "react-select/async";
 
-type IOptionType = { label: string; value: number; color?: string; isFixed?: boolean; isDisabled?: boolean };
+type IOptionType = { label: string; value: number; color?: string };
 type IsMulti = true | false;
-const FavoriteOptions: IOptionType[] = [
-  { label: "IT", value: 1 },
-  { label: "Front", value: 2 },
-  { label: "IOS", value: 3 },
-  { label: "Back", value: 3 },
-];
-const Option: IOptionType[] = [
-  { value: 1, label: "IT", color: "#00B8D9", isFixed: true },
-  { value: 2, label: "Front", color: "#0052CC", isDisabled: true },
-  { value: 3, label: "React", color: "#5243AA" },
-  { value: 4, label: "Java", color: "#FF5630", isFixed: true },
-  { value: 5, label: "IOS", color: "#FF8B00" },
-  { value: 6, label: "NodeJS", color: "#FFC400" },
-  { value: 7, label: "NextJS", color: "#36B37E" },
-  { value: 8, label: "A", color: "#00875A" },
-  { value: 9, label: "B", color: "#253858" },
-  { value: 10, label: "C", color: "#666666" },
-];
 
 const colors = [
   "#00B8D9",
@@ -97,8 +78,6 @@ const ProfileEditForm = (): ReactElement => {
     },
     [FavoriteValue],
   );
-  console.log(FavoriteValue.length);
-  console.log(FavoriteValue);
 
   return (
     <ProfileEditBlock>
@@ -121,13 +100,12 @@ const ProfileEditForm = (): ReactElement => {
 
           <InterestBox>
             <Interest>관심사</Interest>
-            <AsyncSelect
+            <Select
               isMulti
               value={FavoriteValue}
-              options={Option}
+              options={defaultValue}
               onChange={onChangeFavorite}
               styles={colourStyles}
-              defaultValue={defaultValue}
             />
           </InterestBox>
 
