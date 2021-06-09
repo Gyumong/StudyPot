@@ -78,12 +78,30 @@ const ProfileEditForm = (): ReactElement => {
     },
     [FavoriteValue],
   );
-
+  const UpdateUserProfile = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (FavoriteValue.length < 3) {
+        dispatch(
+          UpdateUserProfile({
+            categories: FavoriteValue,
+            image: null,
+            introduction: null,
+            location: null,
+            name: null,
+          }),
+        );
+      } else {
+        alert("관심사는 최대 2개 까지만 설정 가능합니다.");
+      }
+    },
+    [FavoriteValue],
+  );
   return (
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
 
-      <ProfileSubmitForm>
+      <ProfileSubmitForm onSubmit={UpdateUserProfile}>
         <ProfileInputBox>
           <UserName>
             <span>이름</span>

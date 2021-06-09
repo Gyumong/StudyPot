@@ -22,7 +22,7 @@ import { RootState } from "@lib/slices";
 const Profile = (): ReactElement => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { name } = useSelector((state: RootState) => state.users?.user);
+  const { user } = useSelector((state: RootState) => state.users);
 
   useEffect(() => {
     dispatch(loadUserByToken(null));
@@ -31,7 +31,7 @@ const Profile = (): ReactElement => {
   return (
     <ProfileFormBlock>
       <DescBlock>
-        <UserName>{name}</UserName>
+        <UserName>{user.name}</UserName>
         <Location>
           <LocationPin size="28" title="Location icon" />
           <p>서울시/강남구</p>
@@ -46,7 +46,7 @@ const Profile = (): ReactElement => {
         </ProfileEditButton>
       </DescBlock>
       <ImageBlock>
-        <img src={gravatar.url(name, { s: "24px", d: "retro" })} style={{ width: "70px", height: "70px" }} />
+        <img src={gravatar.url(user.name, { s: "24px", d: "retro" })} style={{ width: "70px", height: "70px" }} />
       </ImageBlock>
     </ProfileFormBlock>
   );

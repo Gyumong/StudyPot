@@ -19,6 +19,14 @@ export interface IUser {
   isLoggedIn: boolean;
 }
 
+export interface IUserProfile {
+  categories?: string[];
+  image?: string;
+  introduction?: string;
+  location?: string;
+  name?: string;
+}
+
 export interface LoginRequestPayload {
   email: string;
   password: string;
