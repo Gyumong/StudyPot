@@ -3,7 +3,7 @@ import Button from "@components/common/Button";
 import chroma from "chroma-js";
 
 export const colourStyles = {
-  control: (styles: any) => ({ ...styles, backgroundColor: "white" }),
+  control: (styles: any) => ({ ...styles, backgroundColor: "white", width: "20rem" }),
   option: (styles: { [x: string]: any }, { data, isDisabled, isFocused, isSelected }: any) => {
     const color = chroma(data.color);
     return {
@@ -108,6 +108,7 @@ export const InterestBox = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
+  justify-content: space-between;
 `;
 
 export const Interest = styled.div`
