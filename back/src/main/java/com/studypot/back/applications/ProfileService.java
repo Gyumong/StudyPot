@@ -39,7 +39,7 @@ public class ProfileService {
         user.getLocation(),
         userCategoryList(user.getCategories()),
         user.getIntroduction(),
-        user.getImage());
+        user.getImageUrl());
   }
 
   public ProfileResponseDto updateProfile(Long userId, UpdateProfileRequestDto updateProfileRequestDto) throws IOException {
@@ -62,7 +62,7 @@ public class ProfileService {
   }
 
   private String saveImage(MultipartFile imageFile, User user) throws IOException {
-    String fileUrl = user.getImage();
+    String fileUrl = user.getImageUrl();
     if (imageFile != null) {
       return uploadToS3(imageFile);
     }
@@ -74,7 +74,7 @@ public class ProfileService {
     user.setLocation(updateProfileRequestDto.getLocation());
     updateCategories(updateProfileRequestDto.getCategories(), user);
     user.setIntroduction(updateProfileRequestDto.getIntroduction());
-    user.setImage(fileUrl);
+    user.setImageUrl(fileUrl);
     userRepository.save(user);
 
     return new ProfileResponseDto(
@@ -82,7 +82,7 @@ public class ProfileService {
         user.getLocation(),
         userCategoryList(user.getCategories()),
         user.getIntroduction(),
-        user.getImage());
+        user.getImageUrl());
 
   }
 
