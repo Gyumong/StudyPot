@@ -56,16 +56,16 @@ export const ButtonFrame = styled.div`
 
 export const RegisterButton = styled(Button)`
   position: relative;
-  width: 130px;
-  height: 15px;
+  width: 8rem;
+  height: 2rem;
   margin-left: 1rem;
   margin-top: 1rem;
 `;
 
 export const LoginButton = styled(Button)<Props>`
   position: relative;
-  width: 130px;
-  height: 15px;
+  width: 8rem;
+  height: 2rem;
   margin-top: 1rem;
   background-color: #ffffff;
   border: 1px solid #26de81;
