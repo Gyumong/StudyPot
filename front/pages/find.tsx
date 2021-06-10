@@ -1,10 +1,13 @@
 import React, { ReactElement } from "react";
-import AuthTemplate from "@layouts/auth";
+import Header from "@components/Header";
+import FindStudy from "@components/FindStudy";
 
 const find = (): ReactElement => {
   return (
-    <AuthTemplate>
-    </AuthTemplate>
+    <>
+      <Header/>
+      <FindStudy/>
+    </>
   );
 };
 
