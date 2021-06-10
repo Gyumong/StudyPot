@@ -5,6 +5,7 @@ import { Global } from "@emotion/react";
 import { globalStyles } from "./../styles/global-style";
 import { ConnectedRouter } from "connected-next-router";
 import wrapper from "@lib/store/configureStore";
+import 'tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
