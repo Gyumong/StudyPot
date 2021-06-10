@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 
+
 export const globalStyles = css`
   html,
   body {
@@ -22,5 +23,9 @@ export const globalStyles = css`
   ol,ul,li {
     list-style: none;
   }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 `;
