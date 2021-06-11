@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -28,7 +29,8 @@ public class WebConfigurerImpl extends WebSecurityConfigurerAdapter implements W
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins("*");
+        .allowedOrigins("*")
+        .allowedMethods("*");
 
   }
 
@@ -41,6 +43,8 @@ public class WebConfigurerImpl extends WebSecurityConfigurerAdapter implements W
         .headers().frameOptions().disable()
         .and()
         .authorizeRequests()
+        .requestMatchers(CorsUtils::isPreFlightRequest)
+        .permitAll()
         .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources")
         .permitAll()
         .and()
