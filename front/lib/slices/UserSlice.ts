@@ -72,7 +72,11 @@ export const UpdateUserProfile = createAsyncThunk<IUserProfile, IUserProfile, { 
   "users/UpdateUserProfile",
   async (data, thunkAPI) => {
     try {
-      const response = await axiosWithToken.patch(`${backUrl}/user`, data);
+      const response = await axiosWithToken.patch(`${backUrl}/user`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response.data;
     } catch (e) {
       console.log("Error", e);

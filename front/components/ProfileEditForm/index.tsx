@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { ReactElement, useCallback, useState, useEffect } from "react";
+import { Input } from "antd";
 import {
   ProfileEditBlock,
   Setting,
@@ -23,12 +24,12 @@ import {
 import gravatar from "gravatar";
 import Select, { ActionMeta, ValueType } from "react-select";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserByToken } from "@lib/slices/UserSlice";
+import { loadUserByToken, UpdateUserProfile } from "@lib/slices/UserSlice";
 import { RootState } from "@lib/slices";
 import { backUrl } from "config/config";
 import axios from "axios";
 
-type IOptionType = { label: string; value: number; color?: string };
+type IOptionType = { label: string; value: number; color?: string; key: string };
 type IsMulti = true | false;
 
 const colors = [
@@ -43,7 +44,7 @@ const colors = [
   "#253858",
   "#666666",
 ];
-
+const { TextArea } = Input;
 const ProfileEditForm = (): ReactElement => {
   const dispatch = useDispatch();
   const { name } = useSelector((state: RootState) => state.users?.user);
@@ -78,17 +79,17 @@ const ProfileEditForm = (): ReactElement => {
     },
     [FavoriteValue],
   );
-  const UpdateUserProfile = useCallback(
+  const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
       if (FavoriteValue.length < 3) {
         dispatch(
           UpdateUserProfile({
-            categories: FavoriteValue,
-            image: null,
-            introduction: null,
-            location: null,
-            name: null,
+            categories: FavoriteValue.map((i) => i.key),
+            image: "",
+            introduction: "",
+            location: "",
+            name: "민구",
           }),
         );
       } else {
@@ -101,7 +102,7 @@ const ProfileEditForm = (): ReactElement => {
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
 
-      <ProfileSubmitForm onSubmit={UpdateUserProfile}>
+      <ProfileSubmitForm onSubmit={onSubmit}>
         <ProfileInputBox>
           <UserName>
             <span>이름</span>
@@ -109,7 +110,9 @@ const ProfileEditForm = (): ReactElement => {
           </UserName>
           <Location>
             <span>지역</span>
-            <LocationView> </LocationView>
+            <LocationView>
+              <Input />
+            </LocationView>
           </Location>
           <img
             src={gravatar.url(name, { s: "24px", d: "monsterid" })}
@@ -129,9 +132,7 @@ const ProfileEditForm = (): ReactElement => {
 
           <SelfIntro> 자기소개</SelfIntro>
 
-          <textarea id="story" name="story">
-            It was a dark and stormy night...
-          </textarea>
+          <TextArea rows={4} />
 
           <EditButton>수정완료</EditButton>
         </ProfileInputBox>

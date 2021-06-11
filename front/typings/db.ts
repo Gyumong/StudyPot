@@ -20,11 +20,11 @@ export interface IUser {
 }
 
 export interface IUserProfile {
-  categories?: string[];
-  image?: string;
-  introduction?: string;
-  location?: string;
-  name?: string;
+  categories?: string[] | null;
+  image?: string | null;
+  introduction?: string | null;
+  location?: string | null;
+  name?: string | null;
 }
 
 export interface LoginRequestPayload {
