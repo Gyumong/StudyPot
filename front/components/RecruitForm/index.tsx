@@ -25,7 +25,7 @@ import axios from "axios";
 
     const [imageUrl, setImageUrl] = useState("");
 
-    const setFile = (e) => {
+    const setFile = (e:any) => {
         if (e.target.files[0]) {
           const img = new FormData();
           img.append("file", e.target.files[0]);
