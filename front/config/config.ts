@@ -1,1 +1,1 @@
-export const backUrl = "https://13.125.208.164";
+export const backUrl = "https://dev-api.studypot.kr";

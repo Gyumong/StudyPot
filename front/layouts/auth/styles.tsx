@@ -5,12 +5,12 @@ export const AuthTemplateBlock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  background: #e5e5e5;
+  height: 150vh;
+  background: #f2f2f2;
 `;
 
 export const WhiteBox = styled.div`

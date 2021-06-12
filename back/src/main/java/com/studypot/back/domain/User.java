@@ -43,12 +43,15 @@ public class User {
   private String location;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  private List<Category> categories;
+  private List<UserCategory> categories;
 
   @Setter
   private String introduction;
 
   @Setter
-  private String image;
+  private String imageUrl;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private List<StudyMember> participateStudyList;
 
 }

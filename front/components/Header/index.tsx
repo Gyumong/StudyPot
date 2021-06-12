@@ -2,17 +2,24 @@ import React, { useCallback } from "react";
 import Link from "next/link";
 import { MainFrame, Logo, MenuFrame, MenuItem, ButtonFrame, RegisterButton, LoginButton } from "./styles";
 import Image from "next/image";
-import useMyInfo from "./../../hooks/useMyInfo";
+
+import { logOut } from "@lib/slices/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@lib/slices";
+
 import { mutate } from "swr";
 
-const Header = () => {
-  const [userData] = useMyInfo();
 
+const Header = () => {
+  const { isLoggedIn } = useSelector((state: RootState) => state.users);
+  // const [userData] = useMyInfo();
+  const dispatch = useDispatch();
   const onLogOut = useCallback(() => {
     localStorage.removeItem("accessToken");
-    mutate("/user");
-  }, []);
-  if (userData) {
+    localStorage.removeItem("refreshToken");
+    dispatch(logOut());
+  }, [isLoggedIn]);
+  if (isLoggedIn) {
     return (
       <MainFrame>
         <Link href="/">
@@ -41,7 +48,6 @@ const Header = () => {
       </MainFrame>
     );
   }
-  mutate("/user");
   return (
     <MainFrame>
       <Link href="/">

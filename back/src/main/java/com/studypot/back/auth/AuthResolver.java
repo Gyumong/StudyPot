@@ -22,9 +22,8 @@ public abstract class AuthResolver implements HandlerMethodArgumentResolver {
     this.jwtUtil = jwtUtil;
   }
 
-   protected Authentication getAuthentication(NativeWebRequest request) {
+  protected Authentication getAuthentication(NativeWebRequest request) {
     String token = request.getHeader(AUTHORIZATION);
-    //todo: null and expired token handling
     if (token == null) {
       return null;
     }

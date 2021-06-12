@@ -8,6 +8,7 @@
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n</pattern>
     </layout>
+    <colorCoding>true</colorCoding>
   </appender>
 
   <appender name="ASYNC_SLACK" class="ch.qos.logback.classic.AsyncAppender">

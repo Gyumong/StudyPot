@@ -1,8 +1,22 @@
+export interface ITokenResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IToken {
+  expiredAt: number;
+  iat: number;
+  userId: number;
+  userName: string;
+}
+
 export interface IUser {
-  userLoading: boolean;
-  userData?: any;
-  error?: any;
-  accessToken?: string;
+  user: any;
+  isFetching: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  errorMessage: string;
+  isLoggedIn: boolean;
 }
 
 export interface LoginRequestPayload {
