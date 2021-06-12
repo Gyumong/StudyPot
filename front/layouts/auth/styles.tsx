@@ -10,7 +10,7 @@ export const AuthTemplateBlock = styled.div`
   top: 0;
   bottom: 0;
   height: 150vh;
-  background: #e5e5e5;
+  background: #f2f2f2;
 `;
 
 export const WhiteBox = styled.div`

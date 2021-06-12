@@ -2,6 +2,7 @@ package com.studypot.back.auth;
 
 import static com.studypot.back.constants.AuthConstant.AUTH_USER_ID;
 
+import com.studypot.back.exceptions.NullTokenException;
 import com.studypot.back.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.core.MethodParameter;
@@ -29,7 +30,7 @@ public class UserIdResolver extends AuthResolver {
     Authentication authentication = getAuthentication(webRequest);
 
     if (authentication == null) {
-      throw new RuntimeException("token is null");
+      throw new NullTokenException("token is null");
     }
 
     Claims claims = (Claims) authentication.getPrincipal();

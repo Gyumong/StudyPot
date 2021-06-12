@@ -17,9 +17,30 @@ import {
 import { Radio, Upload, message, Select, Cascader, Form, Input, } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
+import axios from "axios";
 
 
  const RecruitForm = (): ReactElement => {
+
+
+    const [imageUrl, setImageUrl] = useState("");
+
+    const setFile = (e:any) => {
+        if (e.target.files[0]) {
+          const img = new FormData();
+          img.append("file", e.target.files[0]);
+          axios
+            .post("http://localhost:3000/", img)
+            .then((res) => {
+              setImageUrl(res.data);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }
+      };
+
+    
 
     const { Option } = Select;
 
@@ -53,6 +74,7 @@ import 'antd/dist/antd.css';
                 <InboxOutlined/>
                 </p>
                 <p className="ant-upload-text">이미지 업로드를 위해 해당 영역을 클릭하거나 파일을 드레그 하세요</p>
+                <img src={imageUrl}/>
                 <p className="ant-upload-hint">
                 Support for a single or bulk upload. Strictly prohibit from uploading company data or other
                 band files
