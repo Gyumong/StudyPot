@@ -22,6 +22,7 @@ export const checkToken = async (config: AxiosRequestConfig): Promise<AxiosReque
           Authorization: `Bearer ${refreshToken}`,
         },
       });
+      console.log("refresh 됌");
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data.data;
       await localStorage.setItem("accessToken", newAccessToken);
       await localStorage.setItem("refreshToken", newRefreshToken);

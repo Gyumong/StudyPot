@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useState, useEffect } from "react";
+import { Input } from "antd";
 import {
   ProfileEditBlock,
   Setting,
@@ -21,33 +22,56 @@ import {
   colourStyles,
 } from "./styles";
 import gravatar from "gravatar";
-
-import useMyInfo from "@hooks/useMyInfo";
 import Select, { ActionMeta, ValueType } from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUserByToken, UpdateUserProfile } from "@lib/slices/UserSlice";
+import { RootState } from "@lib/slices";
+import { backUrl } from "config/config";
+import axios from "axios";
 
-type IOptionType = { label: string; value: number; color?: string; isFixed?: boolean; isDisabled?: boolean };
+type IOptionType = { label: string; value: number; color?: string; key: string };
 type IsMulti = true | false;
-const FavoriteOptions: IOptionType[] = [
-  { label: "IT", value: 1 },
-  { label: "Front", value: 2 },
-  { label: "IOS", value: 3 },
-  { label: "Back", value: 3 },
-];
-const Option: IOptionType[] = [
-  { value: 1, label: "IT", color: "#00B8D9", isFixed: true },
-  { value: 2, label: "Front", color: "#0052CC", isDisabled: true },
-  { value: 3, label: "React", color: "#5243AA" },
-  { value: 4, label: "Java", color: "#FF5630", isFixed: true },
-  { value: 5, label: "IOS", color: "#FF8B00" },
-  { value: 6, label: "NodeJS", color: "#FFC400" },
-  { value: 7, label: "NextJS", color: "#36B37E" },
-  { value: 8, label: "A", color: "#00875A" },
-  { value: 9, label: "B", color: "#253858" },
-  { value: 10, label: "C", color: "#666666" },
-];
 
+const colors = [
+  "#00B8D9",
+  "#0052CC",
+  "#5243AA",
+  "#FF5630",
+  "#FF8B00",
+  "#FFC400",
+  "#36B37E",
+  "#00875A",
+  "#253858",
+  "#666666",
+];
+const { TextArea } = Input;
 const ProfileEditForm = (): ReactElement => {
-  const [userData] = useMyInfo();
+  const dispatch = useDispatch();
+  const { name } = useSelector((state: RootState) => state.users?.user);
+  const [defaultValue, setDefaultValue] = useState();
+  useEffect(() => {
+    async function getCateories() {
+      try {
+        const { data } = await axios.get(`${backUrl}/categories`);
+        let number = 0;
+        for (const i of data) {
+          i.label = i.value;
+          i.color = colors[number];
+          number++;
+        }
+        console.log(data);
+        setDefaultValue(data);
+      } catch (e) {
+        console.log("error", e);
+      }
+    }
+    getCateories();
+  }, []);
+
+  useEffect(() => {
+    dispatch(loadUserByToken(null));
+  }, []);
+
   const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
   const onChangeFavorite = useCallback(
     (value: ValueType<IOptionType, IsMulti>, _: ActionMeta<IOptionType>) => {
@@ -55,46 +79,60 @@ const ProfileEditForm = (): ReactElement => {
     },
     [FavoriteValue],
   );
-  console.log(FavoriteValue);
-
-  if (userData) {
-    <div>loading...</div>;
-  }
-
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (FavoriteValue.length < 3) {
+        dispatch(
+          UpdateUserProfile({
+            categories: FavoriteValue.map((i) => i.key),
+            image: "",
+            introduction: "",
+            location: "",
+            name: "민구",
+          }),
+        );
+      } else {
+        alert("관심사는 최대 2개 까지만 설정 가능합니다.");
+      }
+    },
+    [FavoriteValue],
+  );
   return (
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
 
-      <ProfileSubmitForm>
+      <ProfileSubmitForm onSubmit={onSubmit}>
         <ProfileInputBox>
           <UserName>
             <span>이름</span>
-            <UserNameView>{userData?.name}</UserNameView>
+            <UserNameView>{name}</UserNameView>
           </UserName>
-
           <Location>
             <span>지역</span>
-
-            <LocationView> {userData?.location} </LocationView>
+            <LocationView>
+              <Input />
+            </LocationView>
           </Location>
-
-
-
-           <img
-            src={gravatar.url(userData?.name, { s: "24px", d: "monsterid" })}
+          <img
+            src={gravatar.url(name, { s: "24px", d: "monsterid" })}
             style={{ width: "70px", height: "70px", position: "absolute", right: 0 }}
-          /> 
+          />
 
           <InterestBox>
             <Interest>관심사</Interest>
-            <Select isMulti value={FavoriteValue} options={Option} onChange={onChangeFavorite} styles={colourStyles} />
+            <Select
+              isMulti
+              value={FavoriteValue}
+              options={defaultValue}
+              onChange={onChangeFavorite}
+              styles={colourStyles}
+            />
           </InterestBox>
 
-          <SelfIntro> 자기소개{userData?.introduction}</SelfIntro>
+          <SelfIntro> 자기소개</SelfIntro>
 
-          <textarea id="story" name="story">
-            It was a dark and stormy night...
-          </textarea>
+          <TextArea rows={4} />
 
           <EditButton>수정완료</EditButton>
         </ProfileInputBox>

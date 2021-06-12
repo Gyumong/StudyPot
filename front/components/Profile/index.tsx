@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import {
   ProfileFormBlock,
   Location,
@@ -10,27 +10,28 @@ import {
   ImageBlock,
 } from "./styles";
 import Link from "next/link";
-import Image from "react-bootstrap/Image";
 
 import { LocationPin } from "@styled-icons/entypo/LocationPin";
 import { LightningFill } from "@styled-icons/bootstrap/LightningFill";
 import gravatar from "gravatar";
-import useMyInfo from "@hooks/useMyInfo";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUserByToken } from "@lib/slices/UserSlice";
+import { RootState } from "@lib/slices";
 
 const Profile = (): ReactElement => {
-  const [userData, error] = useMyInfo();
   const router = useRouter();
-  // if (!userData ) {
-  //   router.push("/");
-  // }
-  if (!userData && !error) {
-    <div>loading...</div>;
-  }
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.users);
+
+  useEffect(() => {
+    dispatch(loadUserByToken(null));
+  }, [dispatch]);
+
   return (
     <ProfileFormBlock>
       <DescBlock>
-        <UserName>{userData?.name}</UserName>
+        <UserName>{user.name}</UserName>
         <Location>
           <LocationPin size="28" title="Location icon" />
           <p>서울시/강남구</p>
@@ -45,7 +46,7 @@ const Profile = (): ReactElement => {
         </ProfileEditButton>
       </DescBlock>
       <ImageBlock>
-        <img src={gravatar.url(userData?.name, { s: "24px", d: "retro" })} style={{ width: "70px", height: "70px" }} />
+        <img src={gravatar.url(user.name, { s: "24px", d: "retro" })} style={{ width: "70px", height: "70px" }} />
       </ImageBlock>
     </ProfileFormBlock>
   );
