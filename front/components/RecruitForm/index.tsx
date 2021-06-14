@@ -5,7 +5,7 @@ import {
     RecruitFormList, 
     StudyName, 
     EditButton,
-    Category,
+    CategoryBlock,
     Location,
     HeadCount,
     Type,
@@ -14,7 +14,7 @@ import {
      } from "./styles";
 
 
-import { Radio, Upload, message, Select, Cascader, Form, Input, } from 'antd';
+import { Radio, Upload, message, Select, Cascader, Form, Input } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import axios from "axios";
@@ -75,10 +75,7 @@ import axios from "axios";
                 </p>
                 <p className="ant-upload-text">이미지 업로드를 위해 해당 영역을 클릭하거나 파일을 드레그 하세요</p>
                 <img src={imageUrl}/>
-                <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-                band files
-                </p>
+            
             </Dragger>
         
 
@@ -88,18 +85,17 @@ import axios from "axios";
                         <Input style={{ width: '40%', height: '2rem' }}/>
                     </StudyName>
 
-                    <Category>
-                     <RecruitFormList>카테고리</RecruitFormList>
+                    <CategoryBlock>
+                        <RecruitFormList>카테고리</RecruitFormList>
 
-                     <Form.Item  style={{ width: '40%' }}>        
-                        <Select mode="multiple" placeholder="카테고리 설정">
-                            <Option value="red">Red</Option>
-                            <Option value="green">Green</Option>
-                            <Option value="blue">Blue</Option>
-                        </Select>
-                    </Form.Item>
-
-                    </Category>
+                        <Form.Item  style={{ width: '40%' }}>        
+                            <Select mode="multiple" placeholder="카테고리 설정">
+                                <Option value="red">Red</Option>
+                                <Option value="green">Green</Option>
+                                <Option value="blue">Blue</Option>
+                            </Select>
+                        </Form.Item>
+                    </CategoryBlock>
 
                     
                     <Location>
