@@ -6,6 +6,7 @@ const find = (): ReactElement => {
   return (
     <>
       <Header/>
+     
       <FindStudy/>
     </>
   );

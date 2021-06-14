@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import Button from "../common/Button";
 
+
+
+
+
 export const BoxModel = styled.div`
 margin-top: 0.5rem;
 margin-bottom: 0.5rem;
@@ -11,6 +15,7 @@ padding-right: 1rem;
 padding-top: 2rem;
 padding-bottom: 2rem;
 max-width: 36rem;
+
 `;
 
 export const SettingBox = styled.div`
