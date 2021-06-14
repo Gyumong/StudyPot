@@ -1,6 +1,22 @@
 import styled from "@emotion/styled";
 import Button from "@components/common/Button";
 
+interface Props {
+  onClick?: (e: Event) => void;
+}
+
+export const colors = [
+  "#00B8D9",
+  "#0052CC",
+  "#5243AA",
+  "#FF5630",
+  "#FF8B00",
+  "#FFC400",
+  "#36B37E",
+  "#00875A",
+  "#253858",
+  "#666666",
+];
 export const ProfileEditBlock = styled.div`
   width: 50vw;
   margin-bottom: 2rem;
@@ -42,20 +58,16 @@ export const ProfileListBlock = styled.p`
   margin-bottom: 2rem;
   width: 20rem;
   height: 2rem;
-
-
 `;
 
-
-export const EditButton = styled(Button)`
-font-size: 0.875rem;
-line-height: 1.25rem;
-font-weight: 500;
-width: 8rem;
-height: 2rem;
-margin-top: 2rem;
+export const EditButton = styled(Button)<Props>`
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  width: 8rem;
+  height: 2rem;
+  margin-top: 2rem;
 `;
-
 
 export const AccountSetting = styled.div`
   width: 100%;
@@ -93,15 +105,15 @@ export const AccountSettingButton = styled.p`
   background-color: transparent;
   border-radius: 0.25rem;
 
-    &:hover {
-      --tw-text-opacity: 1;
-      color: rgba(17, 24, 39, var(--tw-text-opacity));
-      }
+  &:hover {
+    --tw-text-opacity: 1;
+    color: rgba(17, 24, 39, var(--tw-text-opacity));
+  }
 
-    &:focus {
-      outline: 2px solid transparent;
-      outline-offset: 2px;
-      }
+  &:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
 `;
 
 // export const Category = styled.div`
@@ -120,7 +132,7 @@ export const TextArea = styled.textarea`
   height: 7rem;
   appearance: none;
   padding-top: 1rem;
-  padding-bottom: 1rem; 
+  padding-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
   border-width: 1px;
@@ -140,17 +152,15 @@ export const LocationBlock = styled.div`
 `;
 
 export const ProfileSettingList = styled.div`
-width: 6rem;
-margin-right: 1.875rem;
-margin-bottom: 1rem;
-
+  width: 6rem;
+  margin-right: 1.875rem;
+  margin-bottom: 1rem;
 `;
 
 export const SelfIntro = styled.p`
-    color: #4f4f4f;
-    margin-bottom: 1rem;
-  `;
-  
+  color: #4f4f4f;
+  margin-bottom: 1rem;
+`;
 
 export const ProfileImage = styled.div`
   position: absolute;
@@ -158,7 +168,7 @@ export const ProfileImage = styled.div`
 
   & > button {
     display: inline-flex;
-    border : 1px solid;
+    border: 1px solid;
     border-radius: 0.5rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
@@ -179,22 +189,22 @@ export const ProfileImage = styled.div`
 `;
 
 export const ImageEdit = styled.div`
-position: relative;
-margin-left: auto;
-margin-right: auto;
-width: 6rem;
-height: 6rem;
-margin-bottom: 0.5rem;
-border-width: 1px;
-border-radius: 9999px;
---tw-bg-opacity: 1;
-background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
-margin-bottom: 1rem;
-
-& > img {
-  object-fit: cover;
-  width: 100%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 6rem;
   height: 6rem;
+  margin-bottom: 0.5rem;
+  border-width: 1px;
   border-radius: 9999px;
-}
+  --tw-bg-opacity: 1;
+  background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+  margin-bottom: 1rem;
+
+  & > img {
+    object-fit: cover;
+    width: 100%;
+    height: 6rem;
+    border-radius: 9999px;
+  }
 `;
