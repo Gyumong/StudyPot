@@ -24,11 +24,13 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   &:hover {
-    background: #70e0a8;
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
   cursor: pointer;
   transition: 0.125s all ease-in;
   &:focus {
+    outline: none;
     box-shadow: 0px 2px 12px #00000030;
   }
   
