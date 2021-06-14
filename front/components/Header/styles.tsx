@@ -36,6 +36,7 @@ export const MenuFrame = styled.ul`
 `;
 
 export const MenuItem = styled.li`
+  font-size: 1rem;
   padding-top: 1rem;
   float: left;
   cursor: pointer;

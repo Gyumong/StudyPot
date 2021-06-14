@@ -13,3 +13,7 @@ export const AuthTemplateBlock = styled.div`
   background: #f2f2f2;
 `;
 
+export const GridBox = styled.div`
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+`;
