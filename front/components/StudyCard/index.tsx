@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    
     BoxModel,
     SettingBox,
     Shrink,
@@ -67,6 +68,7 @@ const StudyCard = () => {
                     </TextBox>
                 </SettingBox>
             </BoxModel>
+            
   );
 };
 
