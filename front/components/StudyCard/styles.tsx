@@ -42,7 +42,9 @@ padding-bottom: 0.5rem;
 margin-top: 0.5rem;
 position: relative;
 `;
-
+export const TitleBox = styled.div`
+display: flex;
+`;
 
 export const Title = styled.h2`
 font-weight: 700;
@@ -52,6 +54,21 @@ line-height: 1.75rem;
 color: rgba(31, 41, 55, var(--tw-text-opacity));
 letter-spacing: 0em;
 `;
+
+export const LikeButton = styled.button`
+display: block;
+margin-left: 0.75rem;
+text-align:center;
+width: 4em;
+padding: 0.375rem;
+border: 1px solid #26DE81;
+border-radius: 0.25rem;
+margin-bottom:0;
+font-size: 0.75rem;
+line-height: 1rem;
+
+`;
+
 
 export const Category = styled.p`
 display: block;
@@ -80,6 +97,8 @@ padding-right: 0.75rem;
 margin-right: 0.25rem;
 `;
 
+
+
 export const LocationBox = styled.div`
 display: flex;
 align-items: center;
@@ -99,17 +118,27 @@ line-height: 1rem;
 margin-left: -0.2rem;
 `;
 
-export const LikeButton = styled.a`
-display: flex;
---tw-text-opacity: 1;
-color: rgba(55, 65, 81, var(--tw-text-opacity));
 
+
+
+export const UserImgBox = styled.div`
+
+
+
+& > img {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 9999px;
+  margin-right: 1rem;
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 `;
 
 
 export const UserNameBox = styled.div`
 display: flex;
-margin: 0.75rem;
 margin-top: 0.75rem;
 margin-bottom: 0.75rem;
 margin-left: 0rem;
@@ -135,11 +164,12 @@ line-height: 1rem;
 
 export const JoinButton = styled(Button)`
   position: absolute;
-  right: 2rem;
+  right: 1rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
   width: 8rem;
   height: 2rem;
   margin-top: 0.25rem;
+
 `;
