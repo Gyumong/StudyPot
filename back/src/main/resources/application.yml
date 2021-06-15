@@ -8,7 +8,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${mysql.hostServer}:3306/${mysql.databaseName}?serverTimezone=UTC&characterEncoding=UTF-8&validationQuery="select 1"
-    username: root
+    username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
   mvc:
     throw-exception-if-no-handler-found: true
