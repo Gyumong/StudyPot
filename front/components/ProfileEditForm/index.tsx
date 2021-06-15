@@ -76,6 +76,15 @@ const ProfileEditForm = (): ReactElement => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      dispatch(
+        UpdateUserProfile({
+          categories: selectedValue,
+          image: "",
+          introduction: Introduction,
+          location: 지역,
+          name: ChangeUserName,
+        }),
+      );
       console.log(ChangeUserName, 지역, Introduction, selectedValue);
     },
     [ChangeUserName, 지역, Introduction, selectedValue],
@@ -85,7 +94,7 @@ const ProfileEditForm = (): ReactElement => {
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
 
-      <AccountSetting>
+      <AccountSetting onSubmit={onSubmit}>
         <ProfileListBlock>
           <ProfileSettingList>이름</ProfileSettingList>
           <Input style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={setChangeUserName} />
@@ -177,7 +186,7 @@ const ProfileEditForm = (): ReactElement => {
         <SelfIntro> 자기소개</SelfIntro>
         <Input.TextArea style={{ width: "90%" }} value={Introduction} onChange={handleChange자기소개} />
 
-        <EditButton onClick={onSubmit}>수정완료</EditButton>
+        <EditButton>수정완료</EditButton>
       </AccountSetting>
 
       <Setting>계정 설정</Setting>
