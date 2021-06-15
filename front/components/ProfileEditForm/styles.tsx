@@ -69,7 +69,7 @@ export const EditButton = styled(Button)<Props>`
   margin-top: 2rem;
 `;
 
-export const AccountSetting = styled.div`
+export const AccountSetting = styled.form`
   width: 100%;
   padding: 3rem;
   display: flex;
