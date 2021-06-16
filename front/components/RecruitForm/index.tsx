@@ -19,7 +19,11 @@ import "antd/dist/antd.css";
 import axios from "axios";
 import { backUrl } from "config/config";
 import useInput from "@hooks/useInput";
+import { useDispatch } from "react-redux";
+import { MakeStudy } from "@lib/slices/StudySlice";
 
+type IStudyState = "OPEN" | "CLOSE";
+type IStudyType = "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
 const RecruitForm = (): ReactElement => {
   const [imageUrl, setImageUrl] = useState("");
   const [StudyTitle, handleChangeStudyTitle] = useInput("");
@@ -27,10 +31,11 @@ const RecruitForm = (): ReactElement => {
   const [selectedValue, setSelectedValue] = useState([]);
   const [LocatedAt, setLocatedAt] = useState([]);
   const [MaxMember, setMaxMember] = useState(0);
-  const [StudyType, setStudyType] = useState("");
-  const [StudyState, setStudyState] = useState("");
+  const [StudyType, setStudyType] = useState<IStudyType>("ONLINE");
+  const [StudyState, setStudyState] = useState<IStudyState>("OPEN");
   const [StudyContent, setStudyContent] = useState("");
 
+  const dispatch = useDispatch();
   useEffect(() => {
     async function getCategories() {
       try {
@@ -93,6 +98,22 @@ const RecruitForm = (): ReactElement => {
     [LocatedAt],
   );
 
+  const onSubmitMakeStudy = useCallback(() => {
+    dispatch(
+      MakeStudy({
+        titile: StudyTitle,
+        content: StudyContent,
+        status: StudyState,
+        categories: selectedValue,
+        image: "",
+        meetingType: StudyType,
+        locatedAt: LocatedAt[1],
+        maxStudyNumber: MaxMember,
+      }),
+    );
+    console.log(StudyTitle, StudyContent, StudyState, StudyType, LocatedAt[1], MaxMember, selectedValue);
+  }, [StudyTitle, StudyContent, StudyState, StudyType, MaxMember, LocatedAt, selectedValue]);
+
   const setFile = (e: any) => {
     if (e.target.files[0]) {
       const img = new FormData();
@@ -142,7 +163,7 @@ const RecruitForm = (): ReactElement => {
         <img src={imageUrl} />
       </Dragger>
 
-      <RecruitSubmitForm>
+      <RecruitSubmitForm onFinish={onSubmitMakeStudy}>
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
           <Input style={{ width: "40%", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
@@ -242,7 +263,7 @@ const RecruitForm = (): ReactElement => {
           <Radio.Group
             optionType={"button"}
             buttonStyle={"outline"}
-            defaultValue={"Online"}
+            defaultValue={StudyType}
             size={"middle"}
             options={["Online", "Offline", "On/Offline"]}
             onChange={handleChangeStudyType}
@@ -254,7 +275,7 @@ const RecruitForm = (): ReactElement => {
           <Radio.Group
             optionType={"button"}
             buttonStyle={"outline"}
-            defaultValue={"Open"}
+            defaultValue={StudyState}
             size={"middle"}
             options={["Open", "Close"]}
             onChange={handleChangeStudyState}
