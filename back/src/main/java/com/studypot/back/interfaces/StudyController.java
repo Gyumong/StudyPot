@@ -22,10 +22,6 @@ public class StudyController {
       @UserId Long userId,
       StudyCreateRequestDto studyCreateRequestDto
   ) throws IOException {
-
     studyService.addStudy(userId, studyCreateRequestDto);
-
   }
-
-
 }

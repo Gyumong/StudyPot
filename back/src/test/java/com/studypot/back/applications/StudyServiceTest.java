@@ -8,8 +8,6 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 import com.studypot.back.domain.CategoryName;
 import com.studypot.back.domain.Study;
-import com.studypot.back.domain.StudyCategoryRepository;
-import com.studypot.back.domain.StudyMemberRepository;
 import com.studypot.back.domain.StudyRepository;
 import com.studypot.back.domain.StudyStatus;
 import com.studypot.back.domain.User;
@@ -35,18 +33,12 @@ class StudyServiceTest {
   private UserRepository userRepository;
 
   @Mock
-  private StudyMemberRepository studyMemberRepository;
-
-  @Mock
-  private StudyCategoryRepository studyCategoryRepository;
-
-  @Mock
   private S3Service s3Service;
 
   @BeforeEach
   public void setUp() {
     openMocks(this);
-    this.studyService = new StudyService(studyRepository, userRepository, studyMemberRepository, studyCategoryRepository, s3Service);
+    this.studyService = new StudyService(studyRepository, s3Service);
   }
 
   @Test
