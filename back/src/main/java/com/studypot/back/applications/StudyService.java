@@ -8,10 +8,7 @@ import com.studypot.back.domain.StudyCategoryRepository;
 import com.studypot.back.domain.StudyMember;
 import com.studypot.back.domain.StudyMemberRepository;
 import com.studypot.back.domain.StudyRepository;
-import com.studypot.back.domain.User;
-import com.studypot.back.domain.UserRepository;
 import com.studypot.back.dto.study.StudyCreateRequestDto;
-import com.studypot.back.exceptions.UserNotFoundException;
 import com.studypot.back.s3.S3Service;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,8 +26,6 @@ public class StudyService {
 
   private final StudyRepository studyRepository;
 
-  private final UserRepository userRepository;
-
   private final StudyMemberRepository studyMemberRepository;
 
   private final StudyCategoryRepository studyCategoryRepository;
@@ -39,26 +34,25 @@ public class StudyService {
 
 
   public Study addStudy(Long userId, StudyCreateRequestDto studyCreateRequestDto) throws IOException {
+    String thumbnailUrl = createImageUrlOrNull(studyCreateRequestDto.getThumbnail());
+    Study savedStudy = studyRepository.save(studyCreateRequestDto.buildStudy(userId, thumbnailUrl));
 
-    String thumbnailUrl;
-    if (studyCreateRequestDto.getThumbnail() != null) {
-      thumbnailUrl = uploadToS3(studyCreateRequestDto.getThumbnail());
-    } else {
-      thumbnailUrl = null;
-    }
-
-    Study savedStudy = studyRepository.save(studyCreateRequestDto.studyBuilder(userId, thumbnailUrl));
-
-    User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-    studyMemberRepository.save(StudyMember.builder().study(savedStudy).user(user).build());
-    updateCategories(studyCreateRequestDto.getCategories(), savedStudy);
+    studyMemberRepository.save(StudyMember.builder().study(savedStudy).userId(userId).build());
+    saveStudyCategories(studyCreateRequestDto.getCategories(), savedStudy);
 
     return savedStudy;
-
   }
 
-  private void updateCategories(List<CategoryName> categories, Study study) {
+  private String createImageUrlOrNull(MultipartFile thumbnail) throws IOException {
+    if (thumbnail != null) {
+      return uploadToS3(thumbnail);
+    }
+    return null;
+  }
+
+  private void saveStudyCategories(List<CategoryName> categories, Study study) {
     Set<StudyCategory> studyCategorySet = new HashSet<>();
+
     for (CategoryName categoryName : categories) {
 
       studyCategorySet.add(

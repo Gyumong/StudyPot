@@ -27,7 +27,7 @@ public class StudyCreateRequestDto {
 
   private MultipartFile thumbnail;
 
-  public Study studyBuilder(Long userId, String thumbnailUrl) {
+  public Study buildStudy(Long userId, String thumbnailUrl) {
     return Study.builder()
         .locatedAt(this.locatedAt)
         .title(this.title)
