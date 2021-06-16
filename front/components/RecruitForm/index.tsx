@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState, useEffect } from "react";
+import React, { ReactElement, useCallback, useState, useEffect, useRef } from "react";
 import {
   RecruitFormBlock,
   RecruitSubmitForm,
@@ -25,6 +25,7 @@ import { MakeStudy } from "@lib/slices/StudySlice";
 type IStudyState = "OPEN" | "CLOSE";
 type IStudyType = "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
 const RecruitForm = (): ReactElement => {
+  const imageInput = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [StudyTitle, handleChangeStudyTitle] = useInput("");
   const [defaultValue, setDefaultValue] = useState([]);
@@ -34,15 +35,16 @@ const RecruitForm = (): ReactElement => {
   const [StudyType, setStudyType] = useState<IStudyType>("ONLINE");
   const [StudyState, setStudyState] = useState<IStudyState>("OPEN");
   const [StudyContent, setStudyContent] = useState("");
+  const [StudyThumbnail, setStudyThumnail] = useState([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
     async function getCategories() {
       try {
         const { data } = await axios.get(`${backUrl}/categories`);
-        const defaultCategoriesValue = data.map((e: { value: string }) => e.value);
-        console.log(defaultCategoriesValue);
-        setDefaultValue(defaultCategoriesValue);
+        // const defaultCategoriesValue = data.map((e: { value: string }) => e.value);
+        console.log(data);
+        setDefaultValue(data);
       } catch (e) {
         console.log("getCategories Error", e);
       }
@@ -97,23 +99,48 @@ const RecruitForm = (): ReactElement => {
     },
     [LocatedAt],
   );
+  const onClickImageUpload = useCallback(() => {
+    if (imageInput?.current) {
+      imageInput.current.click();
+    }
+  }, [imageInput.current]);
+  const handleChangeImage = useCallback(
+    (e) => {
+      console.log("image", e.target.files);
+      //   setStudyThumnail(e.target.files);
+      //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
+      [].forEach.call(e.target.files, (f) => {
+        setStudyThumnail(f);
+      });
+    },
+    [StudyThumbnail],
+  );
 
   const onSubmitMakeStudy = useCallback(() => {
-    dispatch(
-      MakeStudy({
-        titile: StudyTitle,
-        content: StudyContent,
-        status: StudyState,
-        categories: selectedValue,
-        image: "",
-        meetingType: StudyType,
-        locatedAt: LocatedAt[1],
-        maxStudyNumber: MaxMember,
-      }),
-    );
+    const formData = new FormData();
+    console.log(StudyThumbnail);
+    //   formData.append("title",StudyTitle)
+    //   formData.append("categories",JSON.stringify(selectedValue))
+    //   formData.append("thumbnail",JSON.stringify(StudyThumbnail))
+    //   formData.append("title",StudyTitle)
+    //   formData.append("title",StudyTitle)
+    //   formData.append("title",StudyTitle)
+    //   formData.append("title",StudyTitle)
+    //   formData.append("title",StudyTitle)
+    // dispatch(
+    //   MakeStudy({
+    //     titile: StudyTitle,
+    //     content: StudyContent,
+    //     status: StudyState,
+    //     categories: selectedValue,
+    //     image: "",
+    //     meetingType: StudyType,
+    //     locatedAt: LocatedAt[1],
+    //     maxStudyNumber: MaxMember,
+    //   }),
+    // );
     console.log(StudyTitle, StudyContent, StudyState, StudyType, LocatedAt[1], MaxMember, selectedValue);
   }, [StudyTitle, StudyContent, StudyState, StudyType, MaxMember, LocatedAt, selectedValue]);
-
   const setFile = (e: any) => {
     if (e.target.files[0]) {
       const img = new FormData();
@@ -163,9 +190,13 @@ const RecruitForm = (): ReactElement => {
         <img src={imageUrl} />
       </Dragger>
 
-      <RecruitSubmitForm onFinish={onSubmitMakeStudy}>
+      <RecruitSubmitForm encType="multipart/form-data" onFinish={onSubmitMakeStudy}>
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
+          <div style={{ width: "40%", height: "2rem" }}>
+            <input type="file" ref={imageInput} hidden onChange={handleChangeImage} />
+            <button onClick={onClickImageUpload}>이미지 업로드</button>
+          </div>
           <Input style={{ width: "40%", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
         </StudyName>
 
@@ -175,8 +206,8 @@ const RecruitForm = (): ReactElement => {
           <Form.Item style={{ width: "40%" }}>
             <Select mode="multiple" placeholder="관심사 설정" onChange={handleChangeCategories}>
               {defaultValue &&
-                defaultValue.map((e) => {
-                  return <Option value={e}>{e}</Option>;
+                defaultValue.map((e: any) => {
+                  return <Option value={e.key}>{e.value}</Option>;
                 })}
             </Select>
           </Form.Item>

@@ -28,11 +28,7 @@ export const MakeStudy = createAsyncThunk<IMakeStudy, IMakeStudy, { rejectValue:
   "study/MakeStudy",
   async (data, thunkAPI) => {
     try {
-      const response = await axiosWithToken.post(`${backUrl}/study`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosWithToken.post(`${backUrl}/study`, data, {});
       return response.data;
     } catch (e) {
       console.log("Error", e);
