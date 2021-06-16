@@ -1,14 +1,12 @@
 package com.studypot.back.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,13 +51,4 @@ public class User {
   @Setter
   private String imageUrl;
 
-  @Getter(AccessLevel.PROTECTED)
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  private List<StudyMember> studyMemberList;
-
-  public List<Study> getParticipateStudyList() {
-    return this.studyMemberList.stream()
-        .map(StudyMember::getStudy)
-        .collect(Collectors.toList());
-  }
 }

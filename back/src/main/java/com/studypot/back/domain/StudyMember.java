@@ -30,8 +30,7 @@ public class StudyMember {
   @ManyToOne
   private Study study;
 
-  @ManyToOne
-  private User user;
+  private Long userId;
 
   @CreatedDate
   private LocalDateTime createdAt;
