@@ -34,7 +34,7 @@ const ProfileEditForm = (): ReactElement => {
   const [defaultValue, setDefaultValue] = useState([]);
   const [selectedValue, setSelectedValue] = useState([]);
 
-  const [ChangeUserName, setChangeUserName] = useInput("");
+  const [ChangeUserName, handleChangeUserName] = useInput("");
   const [지역, set지역] = useState("");
   const [Introduction, setIntroduction] = useState("");
 
@@ -97,7 +97,7 @@ const ProfileEditForm = (): ReactElement => {
       <AccountSetting onSubmit={onSubmit}>
         <ProfileListBlock>
           <ProfileSettingList>이름</ProfileSettingList>
-          <Input style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={setChangeUserName} />
+          <Input style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={handleChangeUserName} />
         </ProfileListBlock>
 
         {/* <ProfileImage> 
