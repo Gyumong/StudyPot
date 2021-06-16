@@ -19,6 +19,13 @@ export interface IUser {
   isLoggedIn: boolean;
 }
 
+export interface IStudy {
+  data: null;
+  isFetching: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  errorMessage: string;
+}
 export interface IUserProfile {
   categories?: string[] | null;
   image?: string | null;
