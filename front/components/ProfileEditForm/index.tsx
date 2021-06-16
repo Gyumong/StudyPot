@@ -81,11 +81,11 @@ const ProfileEditForm = (): ReactElement => {
           categories: selectedValue,
           image: "",
           introduction: Introduction,
-          location: 지역,
+          location: 지역[1],
           name: ChangeUserName,
         }),
       );
-      console.log(ChangeUserName, 지역, Introduction, selectedValue);
+      console.log(ChangeUserName, 지역[1], Introduction, selectedValue);
     },
     [ChangeUserName, 지역, Introduction, selectedValue],
   );
