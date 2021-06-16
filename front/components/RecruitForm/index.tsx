@@ -61,7 +61,7 @@ const RecruitForm = (): ReactElement => {
   const handleChangeMaxMember = useCallback(
     (value) => {
       console.log(value);
-      setMaxMember(value);
+      setMaxMember(parseInt(value));
     },
     [MaxMember],
   );
