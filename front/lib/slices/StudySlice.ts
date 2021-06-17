@@ -7,14 +7,15 @@ interface rejectMessage {
 }
 
 interface IMakeStudy {
-  titile: string;
-  categories: string[];
-  image: string;
-  content: string;
-  locatedAt: string;
-  maxStudyNumber: number;
-  meetingType: "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
-  status: "OPEN" | "CLOSE";
+  // titile: string;
+  // categories: string[];
+  // image: string;
+  // content: string;
+  // locatedAt: string;
+  // maxStudyNumber: number | string;
+  // meetingType: "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
+  // status: "OPEN" | "CLOSE";
+  data: FormData;
 }
 
 const initialState = {
@@ -28,6 +29,7 @@ export const MakeStudy = createAsyncThunk<IMakeStudy, IMakeStudy, { rejectValue:
   "study/MakeStudy",
   async (data, thunkAPI) => {
     try {
+      console.log(data);
       const response = await axiosWithToken.post(`${backUrl}/study`, data, {});
       return response.data;
     } catch (e) {

@@ -31,7 +31,7 @@ const RecruitForm = (): ReactElement => {
   const [defaultValue, setDefaultValue] = useState([]);
   const [selectedValue, setSelectedValue] = useState([]);
   const [LocatedAt, setLocatedAt] = useState([]);
-  const [MaxMember, setMaxMember] = useState(0);
+  const [MaxMember, setMaxMember] = useState("");
   const [StudyType, setStudyType] = useState<IStudyType>("ONLINE");
   const [StudyState, setStudyState] = useState<IStudyState>("OPEN");
   const [StudyContent, setStudyContent] = useState("");
@@ -63,7 +63,7 @@ const RecruitForm = (): ReactElement => {
   const handleChangeMaxMember = useCallback(
     (value) => {
       console.log(value);
-      setMaxMember(parseInt(value));
+      setMaxMember(value);
     },
     [MaxMember],
   );
@@ -106,7 +106,7 @@ const RecruitForm = (): ReactElement => {
   }, [imageInput.current]);
   const handleChangeImage = useCallback(
     (e) => {
-      console.log("image", e.target.files);
+      console.log("image", e.target.files[0]);
       //   setStudyThumnail(e.target.files);
       //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
       [].forEach.call(e.target.files, (f) => {
@@ -119,28 +119,21 @@ const RecruitForm = (): ReactElement => {
   const onSubmitMakeStudy = useCallback(() => {
     const formData = new FormData();
     console.log(StudyThumbnail);
-    //   formData.append("title",StudyTitle)
-    //   formData.append("categories",JSON.stringify(selectedValue))
-    //   formData.append("thumbnail",JSON.stringify(StudyThumbnail))
-    //   formData.append("title",StudyTitle)
-    //   formData.append("title",StudyTitle)
-    //   formData.append("title",StudyTitle)
-    //   formData.append("title",StudyTitle)
-    //   formData.append("title",StudyTitle)
-    // dispatch(
-    //   MakeStudy({
-    //     titile: StudyTitle,
-    //     content: StudyContent,
-    //     status: StudyState,
-    //     categories: selectedValue,
-    //     image: "",
-    //     meetingType: StudyType,
-    //     locatedAt: LocatedAt[1],
-    //     maxStudyNumber: MaxMember,
-    //   }),
-    // );
+    formData.append("title", StudyTitle);
+    formData.append("categories", JSON.stringify(selectedValue));
+    formData.append("thumbnail", JSON.stringify(StudyThumbnail));
+    formData.append("locatedAt", JSON.stringify(LocatedAt));
+    formData.append("content", StudyContent);
+    formData.append("maxStudyNumber", MaxMember);
+    formData.append("meetingType", StudyType);
+    formData.append("status", StudyState);
+    dispatch(
+      MakeStudy({
+        data: formData,
+      }),
+    );
     console.log(StudyTitle, StudyContent, StudyState, StudyType, LocatedAt[1], MaxMember, selectedValue);
-  }, [StudyTitle, StudyContent, StudyState, StudyType, MaxMember, LocatedAt, selectedValue]);
+  }, [StudyTitle, StudyContent, StudyState, StudyType, MaxMember, LocatedAt, selectedValue, StudyThumbnail]);
   const setFile = (e: any) => {
     if (e.target.files[0]) {
       const img = new FormData();
