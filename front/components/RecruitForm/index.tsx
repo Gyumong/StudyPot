@@ -14,7 +14,6 @@ import {
 } from "./styles";
 
 import { Radio, Upload, message, Select, Cascader, Form, Input } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import axios from "axios";
 import { backUrl } from "config/config";
@@ -32,10 +31,10 @@ const RecruitForm = (): ReactElement => {
   const [selectedValue, setSelectedValue] = useState([]);
   const [LocatedAt, setLocatedAt] = useState([]);
   const [MaxMember, setMaxMember] = useState("");
-  const [StudyType, setStudyType] = useState<IStudyType>("ONLINE");
-  const [StudyState, setStudyState] = useState<IStudyState>("OPEN");
+  const [StudyType, setStudyType] = useState("ONLINE");
+  const [StudyState, setStudyState] = useState("OPEN");
   const [StudyContent, setStudyContent] = useState("");
-  const [StudyThumbnail, setStudyThumnail] = useState([]);
+  const [StudyThumbnail, setStudyThumnail] = useState<Blob>();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -106,11 +105,16 @@ const RecruitForm = (): ReactElement => {
   }, [imageInput.current]);
   const handleChangeImage = useCallback(
     (e) => {
+      const form = new FormData();
       console.log("image", e.target.files[0]);
       //   setStudyThumnail(e.target.files);
       //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
       [].forEach.call(e.target.files, (f) => {
         setStudyThumnail(f);
+        form.append("image", f);
+      });
+      form.forEach((value, key) => {
+        console.log("key %s: value %s", key, value);
       });
     },
     [StudyThumbnail],
@@ -120,69 +124,28 @@ const RecruitForm = (): ReactElement => {
     const formData = new FormData();
     console.log(StudyThumbnail);
     formData.append("title", StudyTitle);
-    formData.append("categories", JSON.stringify(selectedValue));
-    formData.append("thumbnail", JSON.stringify(StudyThumbnail));
-    formData.append("locatedAt", JSON.stringify(LocatedAt));
+    formData.append("categories", selectedValue[0]);
+    if (StudyThumbnail !== undefined) {
+      formData.append("thumbnail", StudyThumbnail);
+    }
+    formData.append("locatedAt", LocatedAt[1]);
     formData.append("content", StudyContent);
     formData.append("maxStudyNumber", MaxMember);
     formData.append("meetingType", StudyType);
     formData.append("status", StudyState);
-    dispatch(
-      MakeStudy({
-        data: formData,
-      }),
-    );
+    formData.forEach((value, key) => {
+      console.log("key %s: value %s", key, value);
+    });
+    console.log(formData.has("locatedAt"));
+    console.log(formData.has("thumbnail"));
+    dispatch(MakeStudy(formData));
     console.log(StudyTitle, StudyContent, StudyState, StudyType, LocatedAt[1], MaxMember, selectedValue);
   }, [StudyTitle, StudyContent, StudyState, StudyType, MaxMember, LocatedAt, selectedValue, StudyThumbnail]);
-  const setFile = (e: any) => {
-    if (e.target.files[0]) {
-      const img = new FormData();
-      img.append("file", e.target.files[0]);
-      axios
-        .post("http://localhost:3000/", img)
-        .then((res) => {
-          setImageUrl(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  };
 
   const { Option } = Select;
 
-  const { Dragger } = Upload;
-
-  const props = {
-    name: "file",
-    multiple: true,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange(info: any) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-    onDrop(e: any) {
-      console.log("Dropped files", e.dataTransfer.files);
-    },
-  };
-
   return (
     <RecruitFormBlock>
-      <Dragger {...props}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">이미지 업로드를 위해 해당 영역을 클릭하거나 파일을 드레그 하세요</p>
-        <img src={imageUrl} />
-      </Dragger>
-
       <RecruitSubmitForm encType="multipart/form-data" onFinish={onSubmitMakeStudy}>
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
@@ -289,7 +252,7 @@ const RecruitForm = (): ReactElement => {
             buttonStyle={"outline"}
             defaultValue={StudyType}
             size={"middle"}
-            options={["Online", "Offline", "On/Offline"]}
+            options={["ONLINE", "Offline", "On/Offline"]}
             onChange={handleChangeStudyType}
           />
         </Type>
@@ -301,7 +264,7 @@ const RecruitForm = (): ReactElement => {
             buttonStyle={"outline"}
             defaultValue={StudyState}
             size={"middle"}
-            options={["Open", "Close"]}
+            options={["OPEN", "ClOSE"]}
             onChange={handleChangeStudyState}
           />
         </State>
