@@ -7,14 +7,15 @@ interface rejectMessage {
 }
 
 interface IMakeStudy {
-  titile: string;
-  categories: string[];
-  image: string;
-  content: string;
-  locatedAt: string;
-  maxStudyNumber: number;
-  meetingType: "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
-  status: "OPEN" | "CLOSE";
+  // titile: string;
+  // categories: string[];
+  // image: string;
+  // content: string;
+  // locatedAt: string;
+  // maxStudyNumber: number | string;
+  // meetingType: "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
+  // status: "OPEN" | "CLOSE";
+  formData: FormData;
 }
 
 const initialState = {
@@ -24,11 +25,16 @@ const initialState = {
   errorMessage: "",
   data: null,
 };
-export const MakeStudy = createAsyncThunk<IMakeStudy, IMakeStudy, { rejectValue: rejectMessage }>(
+export const MakeStudy = createAsyncThunk<IMakeStudy, FormData, { rejectValue: rejectMessage }>(
   "study/MakeStudy",
-  async (data, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      const response = await axiosWithToken.post(`${backUrl}/study`, data, {});
+      console.log(formData);
+      const response = await axiosWithToken.post(`${backUrl}/study`, formData, {
+        // headers: {
+        //   "Content-Type": `multipart/form-data`,
+        // },
+      });
       return response.data;
     } catch (e) {
       console.log("Error", e);
