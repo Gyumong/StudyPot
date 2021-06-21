@@ -25,7 +25,7 @@ public class StudyService {
     String thumbnailUrl = createImageUrlOrNull(studyCreateRequestDto.getThumbnail());
 
     Study study = studyCreateRequestDto.buildStudy(userId, thumbnailUrl);
-    study.createStudyMemberList(userId);
+    study.addToStudyMemberList(userId);
     study.createStudyCategoryList(studyCreateRequestDto.getCategories());
 
     return studyRepository.save(study);

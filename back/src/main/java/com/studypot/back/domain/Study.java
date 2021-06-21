@@ -59,17 +59,23 @@ public class Study {
   private Long leaderUserId;
 
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
-  private final List<StudyMember> members = new ArrayList<>();
+  private List<StudyMember> members;
 
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
-  private final List<StudyCategory> categories = new ArrayList<>();
+  private List<StudyCategory> categories;
 
-  public void createStudyMemberList(Long userId) {
+  public void addToStudyMemberList(Long userId) {
+    if (members == null) {
+      this.members = new ArrayList<>();
+    }
+
     this.members.add(StudyMember.builder().study(this).userId(userId).build());
   }
 
-  public void createStudyCategoryList(List<CategoryName> categories) {
-    categories.stream()
+  public void createStudyCategoryList(List<CategoryName> categoryNames) {
+    this.categories = new ArrayList<>();
+
+    categoryNames.stream()
         .map(categoryName -> StudyCategory.builder()
             .study(this)
             .category(categoryName)

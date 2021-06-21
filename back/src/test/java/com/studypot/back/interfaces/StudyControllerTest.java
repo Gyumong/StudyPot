@@ -9,6 +9,7 @@ import com.studypot.back.applications.StudyService;
 import com.studypot.back.dto.study.StudyCreateRequestDto;
 import com.studypot.back.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ class StudyControllerTest {
   }
 
   @Test
+  @DisplayName("스터디_생성_컨트롤러_테스트")
   public void addStudy() throws Exception {
 
     mvc.perform(post("/study")
