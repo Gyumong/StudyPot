@@ -152,7 +152,11 @@ const RecruitForm = (): ReactElement => {
             <Select mode="multiple" placeholder="관심사 설정" onChange={handleChangeCategories}>
               {defaultValue &&
                 defaultValue.map((e: any) => {
-                  return <Option value={e.key}>{e.value}</Option>;
+                  return (
+                    <Option value={e.key} key={e.key}>
+                      {e.value}
+                    </Option>
+                  );
                 })}
             </Select>
           </Form.Item>
