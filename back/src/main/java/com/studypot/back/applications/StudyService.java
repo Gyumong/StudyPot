@@ -3,7 +3,12 @@ package com.studypot.back.applications;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.studypot.back.domain.Study;
 import com.studypot.back.domain.StudyRepository;
+import com.studypot.back.domain.User;
+import com.studypot.back.domain.UserRepository;
 import com.studypot.back.dto.study.StudyCreateRequestDto;
+import com.studypot.back.dto.study.StudyDetailResponseDto;
+import com.studypot.back.exceptions.StudyNotFoundException;
+import com.studypot.back.exceptions.UserNotFoundException;
 import com.studypot.back.s3.S3Service;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +25,8 @@ public class StudyService {
 
   private final S3Service s3Service;
 
+  private final UserRepository userRepository;
+
 
   public Study addStudy(Long userId, StudyCreateRequestDto studyCreateRequestDto) throws IOException {
     String thumbnailUrl = createImageUrlOrNull(studyCreateRequestDto.getThumbnail());
@@ -29,6 +36,13 @@ public class StudyService {
     study.createStudyCategoryList(studyCreateRequestDto.getCategories());
 
     return studyRepository.save(study);
+  }
+
+  public StudyDetailResponseDto getStudy(Long id) {
+    Study study = studyRepository.findById(id).orElseThrow(StudyNotFoundException::new);
+    User leader = userRepository.findById(study.getLeaderUserId()).orElseThrow(UserNotFoundException::new);
+
+    return new StudyDetailResponseDto(study, leader);
   }
 
   private String createImageUrlOrNull(MultipartFile thumbnail) throws IOException {
