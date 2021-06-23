@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { ReactElement, useCallback, useState, useEffect } from "react";
+import React, { ReactElement, useCallback, useState, useEffect, useRef } from "react";
 import {
   ProfileEditBlock,
   Setting,
@@ -28,14 +28,14 @@ import useInput from "@hooks/useInput";
 
 const ProfileEditForm = (): ReactElement => {
   const { Option } = Select;
-
+  const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const { name } = useSelector((state: RootState) => state.users?.user);
   const [defaultValue, setDefaultValue] = useState([]);
+  const [UserImage, setUserImage] = useState<Blob>();
   const [selectedValue, setSelectedValue] = useState([]);
-
   const [ChangeUserName, handleChangeUserName] = useInput("");
-  const [지역, set지역] = useState("");
+  const [지역, set지역] = useState([]);
   const [Introduction, setIntroduction] = useState("");
 
   useEffect(() => {
@@ -64,49 +64,62 @@ const ProfileEditForm = (): ReactElement => {
     },
     [selectedValue],
   );
+
   const handleChange자기소개 = useCallback((e) => {
     setIntroduction(e.target.value);
     console.log(e.target.value);
   }, []);
+
   const handleChange지역 = useCallback((value) => {
     set지역(value);
     console.log(value);
   }, []);
 
-  const onSubmit = useCallback(
+  const onClickImageUpload = useCallback(() => {
+    if (imageInput?.current) {
+      imageInput.current.click();
+    }
+  }, [imageInput.current]);
+
+  const handleChangeImage = useCallback(
     (e) => {
-      e.preventDefault();
-      dispatch(
-        UpdateUserProfile({
-          categories: selectedValue,
-          image: "",
-          introduction: Introduction,
-          location: 지역[1],
-          name: ChangeUserName,
-        }),
-      );
-      console.log(ChangeUserName, 지역[1], Introduction, selectedValue);
+      console.log("image", e.target.files[0]);
+      //   setStudyThumnail(e.target.files);
+      //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
+      [].forEach.call(e.target.files, (f) => {
+        setUserImage(f);
+      });
     },
-    [ChangeUserName, 지역, Introduction, selectedValue],
+    [UserImage],
   );
+
+  const onSubmit = useCallback(() => {
+    const formData = new FormData();
+    if (UserImage !== undefined) {
+      formData.append("image", UserImage);
+    }
+    formData.append("location", 지역[1]);
+    formData.append("introduction", Introduction);
+    formData.append("name", ChangeUserName);
+    for (const categorie of selectedValue) {
+      formData.append("categories", categorie);
+    }
+    dispatch(UpdateUserProfile(formData));
+  }, [ChangeUserName, 지역, Introduction, selectedValue, UserImage]);
 
   return (
     <ProfileEditBlock>
       <Setting>프로필 설정</Setting>
 
-      <AccountSetting onSubmit={onSubmit}>
+      <AccountSetting encType="multipart/form-data" onFinish={onSubmit}>
+        <div style={{ width: "40%", height: "2rem" }}>
+          <input type="file" ref={imageInput} hidden onChange={handleChangeImage} />
+          <button onClick={onClickImageUpload}>이미지 업로드</button>
+        </div>
         <ProfileListBlock>
           <ProfileSettingList>이름</ProfileSettingList>
           <Input style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={handleChangeUserName} />
         </ProfileListBlock>
-
-        {/* <ProfileImage> 
-            <ImageEdit>
-              <img id="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Souvenir_silhouette_post_card._Toledo%27s_greatest_store%3B_Tiedtke%27s._The_store_for_all_the_people_-_DPLA_-_f00a78fe61c216236a13cdebf588d3c3_%28page_1%29.jpg/220px-Souvenir_silhouette_post_card._Toledo%27s_greatest_store%3B_Tiedtke%27s._The_store_for_all_the_people_-_DPLA_-_f00a78fe61c216236a13cdebf588d3c3_%28page_1%29.jpg" />
-            </ImageEdit>
-            <button>사진 바꾸기</button>
-          </ProfileImage>  */}
-
         <ProfileListBlock>
           <ProfileSettingList>지역</ProfileSettingList>
           <Form.Item style={{ width: "50%" }}>

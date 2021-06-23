@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Button from "@components/common/Button";
-
+import { Form } from "antd";
 interface Props {
   onClick?: (e: Event) => void;
 }
@@ -69,7 +69,7 @@ export const EditButton = styled(Button)<Props>`
   margin-top: 2rem;
 `;
 
-export const AccountSetting = styled.form`
+export const AccountSetting = styled(Form)`
   width: 100%;
   padding: 3rem;
   display: flex;

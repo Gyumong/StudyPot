@@ -66,6 +66,10 @@ border-radius: 0.25rem;
 margin-bottom:0;
 font-size: 0.75rem;
 line-height: 1rem;
+&:hover {
+  background: #70e0a8;
+  color: #ffffff;
+}
 
 `;
 

@@ -25,7 +25,6 @@ type IStudyState = "OPEN" | "CLOSE";
 type IStudyType = "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
 const RecruitForm = (): ReactElement => {
   const imageInput = useRef<HTMLInputElement>(null);
-  const [imageUrl, setImageUrl] = useState("");
   const [StudyTitle, handleChangeStudyTitle] = useInput("");
   const [defaultValue, setDefaultValue] = useState([]);
   const [selectedValue, setSelectedValue] = useState([]);
@@ -105,16 +104,10 @@ const RecruitForm = (): ReactElement => {
   }, [imageInput.current]);
   const handleChangeImage = useCallback(
     (e) => {
-      const form = new FormData();
-      console.log("image", e.target.files[0]);
       //   setStudyThumnail(e.target.files);
       //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
       [].forEach.call(e.target.files, (f) => {
         setStudyThumnail(f);
-        form.append("image", f);
-      });
-      form.forEach((value, key) => {
-        console.log("key %s: value %s", key, value);
       });
     },
     [StudyThumbnail],
@@ -122,7 +115,6 @@ const RecruitForm = (): ReactElement => {
 
   const onSubmitMakeStudy = useCallback(() => {
     const formData = new FormData();
-    console.log(StudyThumbnail);
     formData.append("title", StudyTitle);
     formData.append("categories", selectedValue[0]);
     if (StudyThumbnail !== undefined) {
@@ -136,10 +128,7 @@ const RecruitForm = (): ReactElement => {
     formData.forEach((value, key) => {
       console.log("key %s: value %s", key, value);
     });
-    console.log(formData.has("locatedAt"));
-    console.log(formData.has("thumbnail"));
     dispatch(MakeStudy(formData));
-    console.log(StudyTitle, StudyContent, StudyState, StudyType, LocatedAt[1], MaxMember, selectedValue);
   }, [StudyTitle, StudyContent, StudyState, StudyType, MaxMember, LocatedAt, selectedValue, StudyThumbnail]);
 
   const { Option } = Select;
@@ -163,7 +152,11 @@ const RecruitForm = (): ReactElement => {
             <Select mode="multiple" placeholder="관심사 설정" onChange={handleChangeCategories}>
               {defaultValue &&
                 defaultValue.map((e: any) => {
-                  return <Option value={e.key}>{e.value}</Option>;
+                  return (
+                    <Option value={e.key} key={e.key}>
+                      {e.value}
+                    </Option>
+                  );
                 })}
             </Select>
           </Form.Item>
