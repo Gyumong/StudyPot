@@ -51,7 +51,4 @@ public class User {
   @Setter
   private String imageUrl;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  private List<StudyMember> participateStudyList;
-
 }
