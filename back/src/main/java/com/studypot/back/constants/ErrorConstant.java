@@ -18,6 +18,8 @@ public class ErrorConstant {
 
   public static final String PAGE_NOT_FOUND = "2004";
 
+  public static final String STUDY_NOT_FOUND = "2005";
+
   public static final String METHOD_NOT_SUPPORTED = "2005";
 
 }
