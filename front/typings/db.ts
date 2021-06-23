@@ -27,11 +27,7 @@ export interface IStudy {
   errorMessage: string;
 }
 export interface IUserProfile {
-  categories?: string[] | null;
-  image?: string | null;
-  introduction?: string | null;
-  location?: string | null;
-  name?: string | null;
+  formData: FormData;
 }
 
 export interface LoginRequestPayload {

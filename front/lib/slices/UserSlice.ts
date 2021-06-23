@@ -68,15 +68,11 @@ export const loadUserByToken = createAsyncThunk<IloadUser, any, { rejectValue: r
   },
 );
 
-export const UpdateUserProfile = createAsyncThunk<IUserProfile, IUserProfile, { rejectValue: rejectMessage }>(
+export const UpdateUserProfile = createAsyncThunk<IUserProfile, FormData, { rejectValue: rejectMessage }>(
   "users/UpdateUserProfile",
-  async (data, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      const response = await axiosWithToken.patch(`${backUrl}/user`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosWithToken.patch(`${backUrl}/user`, formData, {});
       return response.data;
     } catch (e) {
       console.log("Error", e);
@@ -194,11 +190,6 @@ export const userSlice = createSlice({
       state.isFetching = true;
     });
     builder.addCase(UpdateUserProfile.fulfilled, (state, { payload }) => {
-      state.user.name = payload.name;
-      state.user.categories = payload.categories;
-      state.user.image = payload.image;
-      state.user.introduction = payload.introduction;
-      state.user.location = payload.location;
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
