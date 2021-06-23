@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const AuthTemplateBlock = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
