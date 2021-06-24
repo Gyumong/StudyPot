@@ -6,6 +6,7 @@ export const globalStyles = css`
     margin: 0;
     font-family: "Noto Sans KR", sans-serif;
     box-sizing: border-box;
+    overflow-x : hidden;
   }
   a {
     text-decoration: none;
