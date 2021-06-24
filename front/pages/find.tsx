@@ -39,13 +39,9 @@ const find = (): ReactElement => {
       <Header />
       <AuthTemplateBlock>
         <GridBox>
-          <StudyCard />
-          <StudyCard />
-          <StudyCard />
-          <StudyCard />
-          <StudyCard />
-          <StudyCard />
-          <StudyCard />
+          {study.map((post) => {
+            return <StudyCard />;
+          })}
         </GridBox>
       </AuthTemplateBlock>
     </>
