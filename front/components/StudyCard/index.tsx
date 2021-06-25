@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BoxModel,
   SettingBox,
@@ -19,10 +18,25 @@ import {
 
 import { LocationPin } from "@styled-icons/entypo";
 import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
+import { LoadOneStudy } from "@lib/slices/StudySlice";
+import { useDispatch } from "react-redux";
+import { useCallback } from "react";
+interface StudyCardProps {
+  studyId: number;
+}
 
-const StudyCard = () => {
+const StudyCard: React.FC<StudyCardProps> = ({ studyId }) => {
+  const dispatch = useDispatch();
+  const exampleOnClick = useCallback(() => {
+    dispatch(
+      LoadOneStudy({
+        studyId: studyId,
+      }),
+    );
+    console.log(studyId);
+  }, []);
   return (
-    <BoxModel>
+    <BoxModel onClick={exampleOnClick}>
       <SettingBox>
         <Shrink>
           <img
