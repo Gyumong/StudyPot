@@ -3,6 +3,7 @@ import Header from "@components/Header";
 import { AuthTemplateBlock } from "@components/FindStudy/styles";
 import { GridBox } from "@components/FindStudy/styles";
 import StudyCard from "@components/StudyCard";
+import MainSelect from "@components/MainSelect";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, LoadOneStudy, LoadStudy } from "@lib/slices/StudySlice";
 import { RootState } from "@lib/slices";
@@ -47,6 +48,7 @@ const find = (): ReactElement => {
     <>
       <Header />
       <AuthTemplateBlock>
+        <MainSelect/>
         <GridBox>
           {study.map((post) => {
             return (
