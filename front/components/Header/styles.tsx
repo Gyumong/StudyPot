@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import palette from "@styles/palette";
 import Button from "../common/Button";
 
 interface Props {
@@ -17,6 +16,9 @@ export const MainFrame = styled.div`
   height: 5rem;
   background-color: white;
   border-bottom: 1px solid #eeefee;
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 `;
 
 export const Logo = styled.a`
@@ -36,6 +38,7 @@ export const MenuFrame = styled.ul`
 `;
 
 export const MenuItem = styled.li`
+  font-size: 1rem;
   padding-top: 1rem;
   float: left;
   cursor: pointer;
@@ -68,7 +71,7 @@ export const LoginButton = styled(Button)<Props>`
   height: 2rem;
   margin-top: 1rem;
   background-color: #ffffff;
-  border: 1px solid #26de81;
+  border: 2px solid #26de81;
   color: #26de81;
   &:hover {
     background: #70e0a8;

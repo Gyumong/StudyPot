@@ -19,6 +19,17 @@ export interface IUser {
   isLoggedIn: boolean;
 }
 
+export interface IStudy {
+  data: null;
+  isFetching: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  errorMessage: string;
+}
+export interface IUserProfile {
+  formData: FormData;
+}
+
 export interface LoginRequestPayload {
   email: string;
   password: string;

@@ -1,6 +1,7 @@
 package com.studypot.back.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -63,4 +64,22 @@ public class Study {
   @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
   private List<StudyCategory> categories;
 
+  public void addToStudyMemberList(Long userId) {
+    if (members == null) {
+      this.members = new ArrayList<>();
+    }
+
+    this.members.add(StudyMember.builder().study(this).userId(userId).build());
+  }
+
+  public void createStudyCategoryList(List<CategoryName> categoryNames) {
+    this.categories = new ArrayList<>();
+
+    categoryNames.stream()
+        .map(categoryName -> StudyCategory.builder()
+            .study(this)
+            .category(categoryName)
+            .build())
+        .forEach(this.categories::add);
+  }
 }

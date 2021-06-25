@@ -1,12 +1,12 @@
 import { css } from "@emotion/react";
 
-
 export const globalStyles = css`
   html,
   body {
     margin: 0;
     font-family: "Noto Sans KR", sans-serif;
     box-sizing: border-box;
+    overflow-x : hidden;
   }
   a {
     text-decoration: none;
@@ -20,12 +20,13 @@ export const globalStyles = css`
     outline: none;
     border: none;
   }
-  ol,ul,li {
+  ol,
+  ul,
+  li {
     list-style: none;
   }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
 `;

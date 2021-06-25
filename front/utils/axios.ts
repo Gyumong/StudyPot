@@ -10,29 +10,81 @@ export const axiosWithToken: AxiosInstance = axios.create({
   },
 });
 
-export const checkToken = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
-  const accessToken = localStorage.getItem("accessToken") as string;
-  const refreshToken = localStorage.getItem("refreshToken") as string;
-  if (accessToken) {
-    const decode = jwt.decode(accessToken) as IToken;
-    const nowDate = new Date().getTime() / 1000;
-    if (decode.expiredAt < nowDate) {
+axiosWithToken.interceptors.request.use(
+  async (config) => {
+    const accessToken = localStorage.getItem("accessToken") as string;
+    const refreshToken = localStorage.getItem("refreshToken") as string;
+    if (accessToken) {
+      const decode = jwt.decode(accessToken) as IToken;
+      const nowDate = new Date().getTime() / 1000;
+      if (decode.expiredAt < nowDate) {
+        const { data } = await axios.get(`${backUrl}/refresh`, {
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        });
+        console.log("refresh 됌");
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data.data;
+        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem("refreshToken", newRefreshToken);
+      }
+      config.headers["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  },
+);
+
+axiosWithToken.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async function (error) {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      console.log("토큰 만료");
+      originalRequest._retry = true;
+      const refreshToken = window.localStorage.getItem("refreshToken");
       const { data } = await axios.get(`${backUrl}/refresh`, {
         headers: {
           Authorization: `Bearer ${refreshToken}`,
         },
       });
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data.data;
-      await localStorage.setItem("accessToken", newAccessToken);
-      await localStorage.setItem("refreshToken", newRefreshToken);
+      localStorage.setItem("accessToken", newAccessToken);
+      localStorage.setItem("refreshToken", newRefreshToken);
+      return axios(originalRequest);
     }
-    config.headers["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
-  }
+    return Promise.reject(error);
+  },
+);
+// export const checkToken = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+//   const accessToken = localStorage.getItem("accessToken") as string;
+//   const refreshToken = localStorage.getItem("refreshToken") as string;
+//   if (accessToken) {
+//     const decode = jwt.decode(accessToken) as IToken;
+//     const nowDate = new Date().getTime() / 1000;
+//     if (decode.expiredAt < nowDate) {
+//       const { data } = await axios.get(`${backUrl}/refresh`, {
+//         headers: {
+//           Authorization: `Bearer ${refreshToken}`,
+//         },
+//       });
+//       console.log("refresh 됌");
+//       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data.data;
+//       await localStorage.setItem("accessToken", newAccessToken);
+//       await localStorage.setItem("refreshToken", newRefreshToken);
+//     }
+//     config.headers["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+//   }
 
-  return config;
-};
+//   return config;
+// };
 
-axiosWithToken.interceptors.request.use(checkToken);
+// axiosWithToken.interceptors.request.use(checkToken);
 // export const checkToken = async (config:AxiosRequestConfig) =>{
 //     let accessToken
 // }

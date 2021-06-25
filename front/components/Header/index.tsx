@@ -7,9 +7,6 @@ import { logOut } from "@lib/slices/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@lib/slices";
 
-import { mutate } from "swr";
-
-
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.users);
   // const [userData] = useMyInfo();
@@ -39,10 +36,10 @@ const Header = () => {
         </MenuFrame>
         <ButtonFrame>
           <>
-            <LoginButton onClick={onLogOut}>LogOut</LoginButton>
+            <LoginButton onClick={onLogOut}>로그아웃</LoginButton>
           </>
           <Link href="/mypage">
-            <RegisterButton>MyPage</RegisterButton>
+            <RegisterButton>마이페이지</RegisterButton>
           </Link>
         </ButtonFrame>
       </MainFrame>
@@ -66,11 +63,11 @@ const Header = () => {
 
       <ButtonFrame>
         <Link href="/login">
-          <LoginButton>Log in</LoginButton>
+          <LoginButton>로그인</LoginButton>
         </Link>
 
         <Link href="/signup">
-          <RegisterButton>Register</RegisterButton>
+          <RegisterButton>회원가입</RegisterButton>
         </Link>
       </ButtonFrame>
     </MainFrame>

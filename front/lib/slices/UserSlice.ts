@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { backUrl } from "../../config/config";
-import { IUser } from "@typings/db";
+import { IUserProfile, IUser } from "@typings/db";
 import axiosWithToken from "@utils/axios";
 
 interface Token {
@@ -52,27 +52,6 @@ const initialState: IUser = {
   errorMessage: "",
 };
 
-export const refreshAccessToken = createAsyncThunk<Token, any, { rejectValue: rejectMessage }>(
-  "users/refreshAccessToken",
-  async (thunkAPI) => {
-    try {
-      if (localStorage.getItem("refreshToken")) {
-        const refreshToken = localStorage.getItem("refreshToken");
-        const { accessToken }: { accessToken: string } = await axios.get(`${backUrl}/refresh`, {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        });
-        await localStorage.setItem("accessToken", accessToken);
-      }
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        errorMessage: "쿠키반환에 실패했습니다.",
-      });
-    }
-  },
-);
-
 export const loadUserByToken = createAsyncThunk<IloadUser, any, { rejectValue: rejectMessage }>(
   "users/loadUserByToken",
   async (thunkAPI) => {
@@ -84,6 +63,21 @@ export const loadUserByToken = createAsyncThunk<IloadUser, any, { rejectValue: r
       console.log("error");
       return thunkAPI.rejectWithValue({
         errorMessage: "로그인에 실패했습니다.",
+      });
+    }
+  },
+);
+
+export const UpdateUserProfile = createAsyncThunk<IUserProfile, FormData, { rejectValue: rejectMessage }>(
+  "users/UpdateUserProfile",
+  async (formData, thunkAPI) => {
+    try {
+      const response = await axiosWithToken.patch(`${backUrl}/user`, formData, {});
+      return response.data;
+    } catch (e) {
+      console.log("Error", e);
+      return thunkAPI.rejectWithValue({
+        errorMessage: "유저 정보수정에 실패했습니다.",
       });
     }
   },
@@ -192,16 +186,15 @@ export const userSlice = createSlice({
       state.errorMessage = payload;
       state.isLoggedIn = false;
     });
-    builder.addCase(refreshAccessToken.pending, (state) => {
+    builder.addCase(UpdateUserProfile.pending, (state) => {
       state.isFetching = true;
     });
-    builder.addCase(refreshAccessToken.fulfilled, (state, { payload }) => {
-      console.log("payload", payload);
+    builder.addCase(UpdateUserProfile.fulfilled, (state, { payload }) => {
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
     });
-    builder.addCase(refreshAccessToken.rejected, (state, { payload }: any) => {
+    builder.addCase(UpdateUserProfile.rejected, (state, { payload }: any) => {
       state.isFetching = false;
       state.isError = true;
       state.isSuccess = false;

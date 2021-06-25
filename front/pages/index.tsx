@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
 import Header from "@components/Header";
+import Main from "@components/Main";
+import HotStudy from "@components/HotStudy";
+import MainJoinBox from "@components/MainJoinBox";
+import Footer from "@components/Footer";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loadUserByToken } from "./../lib/slices/UserSlice";
+
 
 import * as jwt from "jsonwebtoken";
 
@@ -32,6 +37,10 @@ export default function Home() {
   return (
     <>
       <Header />
+      <Main/>
+      <HotStudy/>
+      <MainJoinBox/>
+      <Footer/>
     </>
   );
 }
