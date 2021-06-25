@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import Header from "@components/Header";
-import { AuthTemplateBlock } from "@components/FindStudy/styles";
+import { StudyCardContainer } from "@components/FindStudy/styles";
 import { GridBox } from "@components/FindStudy/styles";
 import StudyCard from "@components/StudyCard";
 import MainSelect from "@components/MainSelect";
@@ -36,29 +36,22 @@ const find = (): ReactElement => {
       window.removeEventListener("scroll", onScroll);
     };
   }, [study, last, isFetching]);
+  console.log(study);
 
-  const exampleOnClick = useCallback((id) => {
-    dispatch(
-      LoadOneStudy({
-        studyId: id,
-      }),
-    );
-  }, []);
   return (
     <>
       <Header />
       <AuthTemplateBlock>
         <MainSelect/>
+
+      <StudyCardContainer>
+
         <GridBox>
           {study.map((post) => {
-            return (
-              <div key={post.id} onClick={() => exampleOnClick(post.id)}>
-                <StudyCard />
-              </div>
-            );
+            return <StudyCard key={post.id} studyId={post.id} />;
           })}
         </GridBox>
-      </AuthTemplateBlock>
+      </StudyCardContainer>
     </>
   );
 };
