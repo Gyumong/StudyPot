@@ -35,25 +35,15 @@ const find = (): ReactElement => {
       window.removeEventListener("scroll", onScroll);
     };
   }, [study, last, isFetching]);
+  console.log(study);
 
-  const exampleOnClick = useCallback((id) => {
-    dispatch(
-      LoadOneStudy({
-        studyId: id,
-      }),
-    );
-  }, []);
   return (
     <>
       <Header />
       <AuthTemplateBlock>
         <GridBox>
           {study.map((post) => {
-            return (
-              <div key={post.id} onClick={() => exampleOnClick(post.id)}>
-                <StudyCard />
-              </div>
-            );
+            return <StudyCard key={post.id} studyId={post.id} />;
           })}
         </GridBox>
       </AuthTemplateBlock>
