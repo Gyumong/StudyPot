@@ -84,6 +84,12 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     return apiErrorResponse(e, webRequest, HttpStatus.NOT_FOUND, ErrorConstant.USER_NOT_FOUND);
   }
 
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ExceptionHandler(StudyNotFoundException.class)
+  public ApiError handleStudyNotFound(StudyNotFoundException e, WebRequest webRequest) {
+    return apiErrorResponse(e, webRequest, HttpStatus.NOT_FOUND, ErrorConstant.STUDY_NOT_FOUND);
+  }
+
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Object> handleException(Exception e, HttpServletRequest webRequest) throws IOException {
