@@ -7,9 +7,6 @@ import { logOut } from "@lib/slices/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@lib/slices";
 
-import { mutate } from "swr";
-
-
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.users);
   // const [userData] = useMyInfo();

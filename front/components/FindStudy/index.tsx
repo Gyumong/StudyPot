@@ -1,24 +1,19 @@
-import {AuthTemplateBlock} from "./styles";
+import { useEffect } from "react";
+import { AuthTemplateBlock } from "./styles";
 import StudyCard from "@components/StudyCard";
-import {GridBox} from "./styles";
-import MainSelect from "@components/MainSelect";
-
+import { GridBox } from "./styles";
+import { useSelector, useDispatch } from "react-redux";
+import { LoadStudy } from "@lib/slices/StudySlice";
 const FindStudy = () => {
- 
-    return (
-       <AuthTemplateBlock>
-           <MainSelect/>
-           <GridBox>
-                <StudyCard/>
-                <StudyCard/>
-                <StudyCard/>
-                <StudyCard/>
-                <StudyCard/>
-                <StudyCard/>
-                <StudyCard/>
-           </GridBox>
-       </AuthTemplateBlock>
-    )
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(LoadStudy());
+  }, []);
+  return (
+    <AuthTemplateBlock>
+      <GridBox></GridBox>
+    </AuthTemplateBlock>
+  );
 };
 
 export default FindStudy;
