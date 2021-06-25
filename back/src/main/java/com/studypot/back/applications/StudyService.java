@@ -38,8 +38,8 @@ public class StudyService {
     return studyRepository.save(study);
   }
 
-  public StudyDetailResponseDto getStudy(Long id) {
-    Study study = studyRepository.findById(id).orElseThrow(StudyNotFoundException::new);
+  public StudyDetailResponseDto getStudy(Long studyId) {
+    Study study = studyRepository.findById(studyId).orElseThrow(StudyNotFoundException::new);
     User leader = userRepository.findById(study.getLeaderUserId()).orElseThrow(UserNotFoundException::new);
 
     return new StudyDetailResponseDto(study, leader);

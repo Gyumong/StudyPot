@@ -28,8 +28,8 @@ public class StudyController {
     studyService.addStudy(userId, studyCreateRequestDto);
   }
 
-  @GetMapping("/study/{id}")
-  public StudyDetailResponseDto studyDetail(@PathVariable("id") Long id) {
-    return studyService.getStudy(id);
+  @GetMapping("/study/{studyId}")
+  public StudyDetailResponseDto studyDetail(@PathVariable("studyId") Long studyId) {
+    return studyService.getStudy(studyId);
   }
 }

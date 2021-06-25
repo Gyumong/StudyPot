@@ -32,21 +32,21 @@ public class StudyDetailResponseDto {
   public StudyDetailResponseDto(Study study, User leader) {
     this.thumbnailUrl = study.getThumbnailUrl();
     this.createdAt = study.getCreatedAt();
-    this.categories = studyCategoryList(study.getCategories());
+    this.categories = getCategoryNameList(study.getCategories());
     this.maxStudyNumber = study.getMaxStudyNumber();
-    this.participatingNumber = memberCount(study.getMembers());
+    this.participatingNumber = countMember(study.getMembers());
     this.title = study.getTitle();
     this.content = study.getContent();
     this.leader = getLeaderInformation(leader);
   }
 
-  private List<CategoryResponseDto> studyCategoryList(List<StudyCategory> categories) {
+  private List<CategoryResponseDto> getCategoryNameList(List<StudyCategory> categories) {
     return categories.stream()
         .map(category -> new CategoryResponseDto(category.getCategory()))
         .collect(Collectors.toList());
   }
 
-  private int memberCount(List<StudyMember> studyMembers) {
+  private int countMember(List<StudyMember> studyMembers) {
     return studyMembers.size();
   }
 
