@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import Header from "@components/Header";
-import { AuthTemplateBlock } from "@components/FindStudy/styles";
+import { StudyCardContainer } from "@components/FindStudy/styles";
 import { GridBox } from "@components/FindStudy/styles";
 import StudyCard from "@components/StudyCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,13 +40,13 @@ const find = (): ReactElement => {
   return (
     <>
       <Header />
-      <AuthTemplateBlock>
+      <StudyCardContainer>
         <GridBox>
           {study.map((post) => {
             return <StudyCard key={post.id} studyId={post.id} />;
           })}
         </GridBox>
-      </AuthTemplateBlock>
+      </StudyCardContainer>
     </>
   );
 };
