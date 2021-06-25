@@ -11,15 +11,7 @@ const FindStudy = () => {
   }, []);
   return (
     <AuthTemplateBlock>
-      <GridBox>
-        <StudyCard />
-        <StudyCard />
-        <StudyCard />
-        <StudyCard />
-        <StudyCard />
-        <StudyCard />
-        <StudyCard />
-      </GridBox>
+      <GridBox></GridBox>
     </AuthTemplateBlock>
   );
 };

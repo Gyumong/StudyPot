@@ -4,8 +4,9 @@ import { AuthTemplateBlock } from "@components/FindStudy/styles";
 import { GridBox } from "@components/FindStudy/styles";
 import StudyCard from "@components/StudyCard";
 import { useDispatch, useSelector } from "react-redux";
-import { clearState, LoadStudy } from "@lib/slices/StudySlice";
+import { clearState, LoadOneStudy, LoadStudy } from "@lib/slices/StudySlice";
 import { RootState } from "@lib/slices";
+import { useCallback } from "react";
 
 const find = (): ReactElement => {
   const { study, lastIdOfStudyList, last, isFetching } = useSelector((state: RootState) => state.study);
@@ -34,13 +35,25 @@ const find = (): ReactElement => {
       window.removeEventListener("scroll", onScroll);
     };
   }, [study, last, isFetching]);
+
+  const exampleOnClick = useCallback((id) => {
+    dispatch(
+      LoadOneStudy({
+        studyId: id,
+      }),
+    );
+  }, []);
   return (
     <>
       <Header />
       <AuthTemplateBlock>
         <GridBox>
           {study.map((post) => {
-            return <StudyCard />;
+            return (
+              <div key={post.id} onClick={() => exampleOnClick(post.id)}>
+                <StudyCard />
+              </div>
+            );
           })}
         </GridBox>
       </AuthTemplateBlock>

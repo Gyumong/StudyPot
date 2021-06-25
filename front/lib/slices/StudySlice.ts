@@ -2,7 +2,6 @@ import { backUrl } from "../../config/config";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosWithToken from "@utils/axios";
 import axios, { AxiosRequestConfig } from "axios";
-import { isNull } from "util";
 
 interface rejectMessage {
   errorMessage: string;
@@ -30,6 +29,29 @@ interface ILoadStudy {
   last: boolean;
 }
 
+interface ILoadOneStudy {
+  categories: [
+    {
+      key: string;
+      value: string;
+    },
+  ];
+  content: string;
+  createdAt: string;
+  leader: {
+    imageUrl: string;
+    name: string;
+  };
+  maxNumber: number;
+  participatingNumber: number;
+  thumbnail: string;
+  title: string;
+}
+
+interface ILoadOneStudyPayload {
+  studyId: number;
+}
+
 interface ILoadStudyPayload extends AxiosRequestConfig {
   size?: number | null;
   lastId?: number | null;
@@ -48,6 +70,7 @@ interface StudyInitialType {
   study: Array<contentArray>;
   lastIdOfStudyList: number;
   last: boolean;
+  singleStudy: ILoadOneStudy | null;
 }
 
 const initialState: StudyInitialType = {
@@ -58,7 +81,24 @@ const initialState: StudyInitialType = {
   study: [],
   lastIdOfStudyList: 0,
   last: false,
+  singleStudy: null,
 };
+
+export const LoadOneStudy = createAsyncThunk<
+  ILoadOneStudy,
+  ILoadOneStudyPayload | undefined,
+  { rejectValue: rejectMessage }
+>("study/LoadOneStudy", async (data, thunkAPI) => {
+  try {
+    const response = await axios.get(`${backUrl}/study/${data?.studyId}`);
+    return response.data;
+  } catch (e) {
+    console.log("Error", e);
+    return thunkAPI.rejectWithValue({
+      errorMessage: "스터디 불러오기에 실패했습니다.",
+    });
+  }
+});
 
 export const LoadStudy = createAsyncThunk<ILoadStudy, ILoadStudyPayload | undefined, { rejectValue: rejectMessage }>(
   "study/LoadStudy",
@@ -134,6 +174,22 @@ export const studySlice = createSlice({
       state.isError = false;
     });
     builder.addCase(LoadStudy.rejected, (state, { payload }: any) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.errorMessage = payload;
+    });
+    builder.addCase(LoadOneStudy.pending, (state) => {
+      state.isFetching = true;
+    });
+    builder.addCase(LoadOneStudy.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      state.singleStudy = payload;
+      state.isFetching = false;
+      state.isSuccess = true;
+      state.isError = false;
+    });
+    builder.addCase(LoadOneStudy.rejected, (state, { payload }: any) => {
       state.isFetching = false;
       state.isError = true;
       state.isSuccess = false;
