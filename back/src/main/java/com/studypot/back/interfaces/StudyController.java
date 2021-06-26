@@ -2,6 +2,8 @@ package com.studypot.back.interfaces;
 
 import com.studypot.back.applications.StudyService;
 import com.studypot.back.auth.UserId;
+import com.studypot.back.dto.study.InfinityScrollResponseDto;
+import com.studypot.back.dto.study.PageableRequestDto;
 import com.studypot.back.dto.study.StudyCreateRequestDto;
 import com.studypot.back.dto.study.StudyDetailResponseDto;
 import java.io.IOException;
@@ -31,5 +33,12 @@ public class StudyController {
   @GetMapping("/study/{studyId}")
   public StudyDetailResponseDto studyDetail(@PathVariable("studyId") Long studyId) {
     return studyService.getStudy(studyId);
+  }
+
+  @GetMapping("/study")
+  public InfinityScrollResponseDto studyList(
+      PageableRequestDto pageableRequestDto
+  ) {
+    return studyService.getStudyList(pageableRequestDto);
   }
 }
