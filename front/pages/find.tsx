@@ -53,7 +53,7 @@ const find = (): ReactElement => {
           {study.map((post) => {
             return (
               <div key={post.id} onClick={() => exampleOnClick(post.id)}>
-                <StudyCard />
+                <StudyCard/>
               </div>
             );
           })}
