@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const AuthTemplateBlock = styled.div`
+export const StudyCardContainer = styled.div`
   display: flex;
   margin-top: 5rem;
   justify-content: space-between;
@@ -14,7 +14,7 @@ export const AuthTemplateBlock = styled.div`
 `;
 
 export const GridBox = styled.div`
-display: grid;
-grid-template-columns: repeat(3, minmax(0, 1fr));
-margin-top: 8rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 8rem;
 `;
