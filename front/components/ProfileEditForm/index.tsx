@@ -15,12 +15,12 @@ import {
   ImageEdit,
   colors,
 } from "./styles";
-
+import { useRouter } from "next/router";
 import { Select, Cascader, Form, Input, Tag } from "antd";
 import "antd/dist/antd.css";
 import gravatar from "gravatar";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserByToken, UpdateUserProfile } from "@lib/slices/UserSlice";
+import { clearState, loadUserByToken, UpdateUserProfile } from "@lib/slices/UserSlice";
 import { RootState } from "@lib/slices";
 import { backUrl } from "config/config";
 import axios from "axios";
@@ -31,10 +31,11 @@ interface IdefaultValue {
 }
 
 const ProfileEditForm = (): ReactElement => {
+  const router = useRouter();
   const { Option } = Select;
   const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const { name } = useSelector((state: RootState) => state.users?.user);
+  const { isSuccess } = useSelector((state: RootState) => state.users);
   const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
   const [UserImage, setUserImage] = useState<Blob>();
   const [selectedValue, setSelectedValue] = useState([]);
@@ -44,6 +45,9 @@ const ProfileEditForm = (): ReactElement => {
 
   useEffect(() => {
     dispatch(loadUserByToken(null));
+    return () => {
+      dispatch(clearState());
+    };
   }, []);
 
   useEffect(() => {
@@ -109,6 +113,7 @@ const ProfileEditForm = (): ReactElement => {
       formData.append("categories", categorie);
     }
     dispatch(UpdateUserProfile(formData));
+    router.push("/mypage");
   }, [ChangeUserName, 지역, Introduction, selectedValue, UserImage]);
 
   return (

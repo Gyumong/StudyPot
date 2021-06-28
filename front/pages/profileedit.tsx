@@ -3,11 +3,14 @@ import AuthTemplate from "@layouts/auth";
 import Header from "@components/Header";
 import ProfileEditForm from "@components/ProfileEditForm";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserByToken } from "@lib/slices/UserSlice";
+import { clearState, loadUserByToken } from "@lib/slices/UserSlice";
 const ProfileEdit = (): ReactElement => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUserByToken(null));
+    return () => {
+      dispatch(clearState());
+    };
   }, []);
   return (
     <>
