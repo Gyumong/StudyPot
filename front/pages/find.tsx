@@ -12,7 +12,10 @@ const find = (): ReactElement => {
   const { study, lastIdOfStudyList, last, isFetching } = useSelector((state: RootState) => state.study);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(LoadStudy());
+    async function GetLoadSutdy() {
+      await dispatch(LoadStudy());
+    }
+    GetLoadSutdy();
   }, []);
 
   useEffect(() => {
