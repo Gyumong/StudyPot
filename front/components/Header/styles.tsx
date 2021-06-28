@@ -16,9 +16,8 @@ export const MainFrame = styled.div`
   height: 5rem;
   background-color: white;
   border-bottom: 1px solid #eeefee;
-  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
---tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 `;
 
 export const Logo = styled.a`

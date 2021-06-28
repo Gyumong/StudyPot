@@ -1,13 +1,17 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import AuthTemplate from "@layouts/auth";
-import RecruitForm from "@components/RecruitForm"
-
-
+import RecruitForm from "@components/RecruitForm";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUserByToken } from "@lib/slices/UserSlice";
 
 const Recruit = (): ReactElement => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUserByToken(null));
+  }, [dispatch]);
   return (
     <AuthTemplate>
-      <RecruitForm/>
+      <RecruitForm />
     </AuthTemplate>
   );
 };
