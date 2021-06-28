@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, ReactElement, EffectCallback } from "react";
 import useInput from "@hooks/useInput";
 import { LoginFormBlock, Header, LoginButton, Input, Desc, Error } from "./styles";
 import Link from "next/link";
@@ -7,6 +7,8 @@ import { clearState, loginUser } from "@lib/slices/UserSlice";
 import { push } from "connected-next-router";
 import { useRouter } from "next/router";
 import { RootState } from "@lib/slices";
+import Modal from "@components/common/Modal";
+import { clearModal, popModal } from "@lib/slices/ModalSlice";
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, , setPassword] = useInput("");
@@ -17,20 +19,44 @@ const LoginForm = () => {
   useEffect(() => {
     return () => {
       dispatch(clearState());
+      dispatch(clearModal());
     };
   }, []);
 
   useEffect(() => {
+    async function LoginSuccess() {
+      await dispatch(clearState());
+      await dispatch(
+        popModal({
+          title: "로그인 성공하였습니다",
+        }),
+      );
+      setTimeout(() => {
+        dispatch(clearModal());
+        router.push("/");
+      }, 3000);
+    }
+
+    async function LoginFail() {
+      await dispatch(clearState());
+      await dispatch(
+        popModal({
+          title: "로그인 실패하였습니다",
+        }),
+      );
+      setTimeout(() => {
+        dispatch(clearModal());
+      }, 3000);
+    }
     if (isError) {
-      console.log("로그인 에러");
-      dispatch(clearState());
+      LoginFail();
     }
 
     if (isSuccess) {
-      dispatch(clearState());
-      router.push("/");
+      LoginSuccess();
     }
   }, [isSuccess, isError]);
+
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
@@ -42,6 +68,7 @@ const LoginForm = () => {
     (e) => {
       e.preventDefault();
       setLogInError(false);
+
       dispatch(
         loginUser({
           email,
@@ -65,6 +92,7 @@ const LoginForm = () => {
           <a>회원 가입</a>
         </Link>
       </Desc>
+      <Modal />
     </LoginFormBlock>
   );
 };

@@ -3,6 +3,15 @@ export interface ITokenResponse {
   refreshToken: string;
 }
 
+export interface ModalList {
+  title: string;
+}
+
+export interface IModal {
+  modalList: ModalList | null;
+  show: boolean;
+}
+
 export interface IToken {
   expiredAt: number;
   iat: number;

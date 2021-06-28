@@ -131,6 +131,9 @@ export const userSlice = createSlice({
     },
     logOut: (state) => {
       state.isLoggedIn = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.isError = false;
     },
   },
   extraReducers: (builder) => {
