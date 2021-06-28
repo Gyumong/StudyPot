@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearState, LoadOneStudy, LoadStudy } from "@lib/slices/StudySlice";
 import { RootState } from "@lib/slices";
 import { useCallback } from "react";
+import { loadUserByToken } from "@lib/slices/UserSlice";
 
 const find = (): ReactElement => {
   const { study, lastIdOfStudyList, last, isFetching } = useSelector((state: RootState) => state.study);
@@ -16,6 +17,9 @@ const find = (): ReactElement => {
       await dispatch(LoadStudy());
     }
     GetLoadSutdy();
+  }, []);
+  useEffect(() => {
+    dispatch(loadUserByToken(null));
   }, []);
 
   useEffect(() => {
