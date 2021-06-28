@@ -27,11 +27,15 @@ const Header = () => {
 
         <MenuFrame>
           <MenuItem>
-            <Link href="/find">스터디찾기</Link>
+            <Link href="/find">
+              <a>스터디찾기</a>
+            </Link>
           </MenuItem>
 
           <MenuItem>
-            <Link href="/recruit">스터디모집</Link>
+            <Link href="/recruit">
+              <a>스터디모집</a>
+            </Link>
           </MenuItem>
         </MenuFrame>
         <ButtonFrame>

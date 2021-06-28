@@ -42,7 +42,9 @@ const Profile = (): ReactElement => {
         </Interest>
         <SelfIntro>UI/UX 디자인에 관심이 많은 주니어 프론트엔드 개발자 입니다.</SelfIntro>
         <ProfileEditButton>
-          <Link href="/profileedit">프로필 수정</Link>
+          <Link href="/profileedit">
+            <a>프로필 수정</a>
+          </Link>
         </ProfileEditButton>
       </DescBlock>
       <ImageBlock>
