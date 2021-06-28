@@ -26,12 +26,16 @@ import { backUrl } from "config/config";
 import axios from "axios";
 import useInput from "@hooks/useInput";
 
+interface IdefaultValue {
+  [key: string]: string;
+}
+
 const ProfileEditForm = (): ReactElement => {
   const { Option } = Select;
   const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const { name } = useSelector((state: RootState) => state.users?.user);
-  const [defaultValue, setDefaultValue] = useState([]);
+  const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
   const [UserImage, setUserImage] = useState<Blob>();
   const [selectedValue, setSelectedValue] = useState([]);
   const [ChangeUserName, handleChangeUserName] = useInput("");
@@ -46,7 +50,7 @@ const ProfileEditForm = (): ReactElement => {
     async function getCategories() {
       try {
         const { data } = await axios.get(`${backUrl}/categories`);
-        const defaultCategoriesValue = data.map((e: { value: string }) => e.value);
+        const defaultCategoriesValue = data;
         console.log(defaultCategoriesValue);
         setDefaultValue(defaultCategoriesValue);
       } catch (e) {
@@ -190,7 +194,7 @@ const ProfileEditForm = (): ReactElement => {
             <Select mode="multiple" placeholder="관심사 설정" onChange={handleChange관심사}>
               {defaultValue &&
                 defaultValue.map((e) => {
-                  return <Option value={e}>{e}</Option>;
+                  return <Option value={e.key}>{e.value}</Option>;
                 })}
             </Select>
           </Form.Item>
