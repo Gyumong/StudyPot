@@ -6,17 +6,16 @@ import StudyCard from "@components/StudyCard";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, LoadOneStudy, LoadStudy } from "@lib/slices/StudySlice";
 import { RootState } from "@lib/slices";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { loadUserByToken } from "@lib/slices/UserSlice";
+import _ from "lodash";
 
 const find = (): ReactElement => {
   const { study, lastIdOfStudyList, last, isFetching } = useSelector((state: RootState) => state.study);
   const dispatch = useDispatch();
+  const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 5000), [dispatch]);
   useEffect(() => {
-    async function GetLoadSutdy() {
-      await dispatch(LoadStudy());
-    }
-    GetLoadSutdy();
+    throttleGetLoadStudy();
   }, []);
   useEffect(() => {
     dispatch(loadUserByToken(null));
@@ -33,7 +32,7 @@ const find = (): ReactElement => {
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 150) {
         if (!last && !isFetching) {
           const lastId = study[study.length - 1]?.id;
-          dispatch(LoadStudy({ lastId }));
+          throttleGetLoadStudy({ lastId });
         }
       }
     }
