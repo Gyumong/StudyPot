@@ -13,9 +13,9 @@ import _ from "lodash";
 const find = (): ReactElement => {
   const { study, lastIdOfStudyList, last, isFetching } = useSelector((state: RootState) => state.study);
   const dispatch = useDispatch();
-  const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 5000), [dispatch]);
+  const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 2000), [dispatch]);
   useEffect(() => {
-    throttleGetLoadStudy();
+    throttleGetLoadStudy(null);
   }, []);
   useEffect(() => {
     dispatch(loadUserByToken(null));
