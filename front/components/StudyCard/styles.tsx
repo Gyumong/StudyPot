@@ -16,6 +16,8 @@ padding-top: 2rem;
 padding-bottom: 2rem;
 max-width: 36rem;
 
+cursor : pointer;
+
 `;
 
 export const SettingBox = styled.div`
