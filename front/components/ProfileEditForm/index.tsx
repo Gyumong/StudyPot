@@ -18,7 +18,6 @@ import {
 import { useRouter } from "next/router";
 import { Select, Cascader, Form, Input, Tag } from "antd";
 import "antd/dist/antd.css";
-import gravatar from "gravatar";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, loadUserByToken, UpdateUserProfile } from "@lib/slices/UserSlice";
 import { RootState } from "@lib/slices";
@@ -121,10 +120,10 @@ const ProfileEditForm = (): ReactElement => {
       <Setting>프로필 설정</Setting>
 
       <AccountSetting encType="multipart/form-data" onFinish={onSubmit}>
-        <div style={{ width: "40%", height: "2rem" }}>
+        <ProfileImage>
           <input type="file" ref={imageInput} hidden onChange={handleChangeImage} />
           <button onClick={onClickImageUpload}>이미지 업로드</button>
-        </div>
+        </ProfileImage>
         <ProfileListBlock>
           <ProfileSettingList>이름</ProfileSettingList>
           <Input style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={handleChangeUserName} />

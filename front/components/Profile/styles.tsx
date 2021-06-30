@@ -4,19 +4,22 @@ import Button from "@components/common/Button";
 export const ProfileFormBlock = styled.div`
   padding: 0;
   display: flex;
+  position: relative;
 `;
 
 export const DescBlock = styled.div`
   display: flex;
-  flex: 3;
   flex-direction: column;
+  
 `;
 export const ImageBlock = styled.div`
-  flex: 2;
+ 
   display: flex;
-  justify-content: flex-end;
+  position: absolute;
+  right: 0;
   & > img {
-    border-radius: 50%;
+   
+    border-radius: 9999px;
   }
 `;
 
