@@ -71,18 +71,36 @@ interface StudyInitialType {
   lastIdOfStudyList: number;
   last: boolean;
   singleStudy: ILoadOneStudy | null;
+  joinStudyLoading: boolean;
+  joinStudySuccess: boolean;
+  joinStudyError: boolean;
 }
 
 const initialState: StudyInitialType = {
   isFetching: false,
   isSuccess: false,
   isError: false,
+  joinStudyLoading: false,
+  joinStudySuccess: false,
+  joinStudyError: false,
   errorMessage: "",
   study: [],
   lastIdOfStudyList: 0,
   last: false,
   singleStudy: null,
 };
+
+export const JoinStudy = createAsyncThunk("study/JoinStudy", async (data, thunkAPI) => {
+  try {
+    const response = await axiosWithToken.post(`/study/${data.studyId}`);
+    return response.data;
+  } catch (e) {
+    console.log("스터디 가입 에러", e);
+    return thunkAPI.rejectWithValue({
+      errorMessage: "스터디 조인에 실패했습니다.",
+    });
+  }
+});
 
 export const LoadOneStudy = createAsyncThunk<
   ILoadOneStudy,
@@ -193,6 +211,21 @@ export const studySlice = createSlice({
       state.isFetching = false;
       state.isError = true;
       state.isSuccess = false;
+      state.errorMessage = payload;
+    });
+    builder.addCase(JoinStudy.pending, (state) => {
+      state.joinStudyLoading = true;
+    });
+    builder.addCase(JoinStudy.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      state.joinStudyLoading = false;
+      state.joinStudySuccess = true;
+      state.joinStudyError = false;
+    });
+    builder.addCase(JoinStudy.rejected, (state, { payload }) => {
+      state.joinStudyLoading = false;
+      state.joinStudyError = true;
+      state.joinStudySuccess = false;
       state.errorMessage = payload;
     });
   },
