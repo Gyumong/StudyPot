@@ -6,7 +6,7 @@ import {
   RecruitFormList,
   StudyName,
   EditButton,
-  CategoryBlock,
+  CategoryFormBlock,
   CategoryList,
   Location,
   HeadCount,
@@ -153,7 +153,7 @@ const RecruitForm = (): ReactElement => {
           <Input style={{ width: "40%", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
         </StudyName>
 
-        <CategoryBlock>
+        <CategoryFormBlock>
           <CategoryList>카테고리</CategoryList>
 
           <Form.Item style={{ width: "13rem" }}>
@@ -168,7 +168,7 @@ const RecruitForm = (): ReactElement => {
                 })}
             </Select>
           </Form.Item>
-        </CategoryBlock>
+        </CategoryFormBlock>
 
         <Location>
           <RecruitFormList>지역</RecruitFormList>

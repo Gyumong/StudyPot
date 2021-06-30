@@ -67,7 +67,7 @@ export const StudyName = styled.p`
   }
 `;
 
-export const CategoryBlock = styled.div`
+export const CategoryFormBlock = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
