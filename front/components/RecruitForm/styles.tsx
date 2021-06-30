@@ -25,6 +25,36 @@ export const RecruitSubmitForm = styled(Form)`
   position: relative;
 `;
 
+export const  ImageUploader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0
+  margin-bottom: 0;
+  height: 10rem;
+
+  width: 115%;
+  text-align: center;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+
+  & > input {
+    margin-left: 10rem;
+    width: 15rem;
+    text-align: center;
+  }
+
+  &:hover {
+    border-color: #70e0a8;
+  }
+
+`;
+
+
 export const StudyName = styled.p`
   display: flex;
   margin-top: 2rem;
@@ -41,6 +71,12 @@ export const CategoryBlock = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
+`;
+
+export const CategoryList = styled.div`
+width: 4rem;
+margin-bottom: 1rem;
+margin-right: 3rem;
 `;
 
 export const Location = styled.div`

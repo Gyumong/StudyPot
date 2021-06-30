@@ -2,10 +2,12 @@ import React, { ReactElement, useCallback, useState, useEffect, useRef } from "r
 import {
   RecruitFormBlock,
   RecruitSubmitForm,
+  ImageUploader,
   RecruitFormList,
   StudyName,
   EditButton,
   CategoryBlock,
+  CategoryList,
   Location,
   HeadCount,
   Type,
@@ -13,7 +15,8 @@ import {
   Description,
 } from "./styles";
 
-import { Radio, Upload, message, Select, Cascader, Form, Input } from "antd";
+import { Radio,  Select, Cascader, Form, Input } from "antd";
+import { InboxOutlined } from '@ant-design/icons';
 import "antd/dist/antd.css";
 import axios from "axios";
 import { backUrl } from "config/config";
@@ -136,19 +139,24 @@ const RecruitForm = (): ReactElement => {
   return (
     <RecruitFormBlock>
       <RecruitSubmitForm encType="multipart/form-data" onFinish={onSubmitMakeStudy}>
+          <ImageUploader>
+              <p style={{ width: "15rem", marginBottom:"0", color:"#70e0a8", fontSize: "3rem" }} className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <input type="file" ref={imageInput} />
+            {/* <button onClick={onClickImageUpload}>image</button> */}
+          </ImageUploader>
+
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
-          <div style={{ width: "40%", height: "2rem" }}>
-            <input type="file" ref={imageInput} hidden onChange={handleChangeImage} />
-            <button onClick={onClickImageUpload}>이미지 업로드</button>
-          </div>
+         
           <Input style={{ width: "40%", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
         </StudyName>
 
         <CategoryBlock>
-          <RecruitFormList>카테고리</RecruitFormList>
+          <CategoryList>카테고리</CategoryList>
 
-          <Form.Item style={{ width: "40%" }}>
+          <Form.Item style={{ width: "13rem" }}>
             <Select mode="multiple" placeholder="관심사 설정" onChange={handleChangeCategories}>
               {defaultValue &&
                 defaultValue.map((e: any) => {
@@ -245,7 +253,7 @@ const RecruitForm = (): ReactElement => {
             buttonStyle={"outline"}
             defaultValue={StudyType}
             size={"middle"}
-            options={["ONLINE", "Offline", "On/Offline"]}
+            options={["ONLINE", "OFFLINE", "ON/OFFLINE"]}
             onChange={handleChangeStudyType}
           />
         </Type>
