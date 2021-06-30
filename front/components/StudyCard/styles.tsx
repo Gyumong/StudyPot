@@ -18,6 +18,10 @@ max-width: 36rem;
 
 cursor : pointer;
 
+&:hover {
+  transform: translateY(-10px);
+}
+
 `;
 
 export const SettingBox = styled.div`
