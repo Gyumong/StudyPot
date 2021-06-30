@@ -13,6 +13,7 @@ import {
   SignUpInnerBox,
   SelectBox,
 } from "./styles";
+import { useRouter } from "next/router";
 import useInput from "@hooks/useInput";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +38,7 @@ const Option: IOptionType[] = [
 ];
 
 const SignUpForm = (): ReactElement => {
+  const router = useRouter();
   const [email, onChangeEmail] = useInput("");
   const [name, onChangeName] = useInput("");
   const [password, , setPassword] = useInput("");
@@ -78,6 +80,7 @@ const SignUpForm = (): ReactElement => {
     }
 
     if (isSuccess) {
+      router.push("/login");
       dispatch(clearState());
     }
   }, [isError, isSuccess, signUpError, signUpSuccess]);

@@ -27,6 +27,8 @@ const Profile = (): ReactElement => {
   useEffect(() => {
     dispatch(loadUserByToken(null));
   }, [dispatch]);
+  console.log(user);
+  console.log(user.image);
 
   return (
     <ProfileFormBlock>
@@ -34,19 +36,27 @@ const Profile = (): ReactElement => {
         <UserName>{user.name}</UserName>
         <Location>
           <LocationPin size="28" title="Location icon" />
-          <p>서울시/강남구</p>
+          <p>{user.location}</p>
         </Location>
         <Interest>
           <LightningFill size="26" title="Interest icon" />
-          <p>컴퓨터/IT/웹개발</p>
+          {user.categories.map((value: any) => {
+            return <p>{value.value}</p>;
+          })}
         </Interest>
-        <SelfIntro>UI/UX 디자인에 관심이 많은 주니어 프론트엔드 개발자 입니다.</SelfIntro>
+        <SelfIntro>{user.introduction}</SelfIntro>
         <ProfileEditButton>
-          <Link href="/profileedit">프로필 수정</Link>
+          <Link href="/profileedit">
+            <a>프로필 수정</a>
+          </Link>
         </ProfileEditButton>
       </DescBlock>
       <ImageBlock>
-        <img src={gravatar.url(user.name, { s: "24px", d: "retro" })} style={{ width: "70px", height: "70px" }} />
+        {user.image ? (
+          <img src={`${user.image}`} style={{ width: "70px", height: "70px" }} />
+        ) : (
+          <img src={gravatar.url(user.name, { s: "24px", d: "retro" })} style={{ width: "70px", height: "70px" }} />
+        )}
       </ImageBlock>
     </ProfileFormBlock>
   );

@@ -6,8 +6,7 @@ import MainJoinBox from "@components/MainJoinBox";
 import Footer from "@components/Footer";
 
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserByToken } from "./../lib/slices/UserSlice";
-
+import { clearState, loadUserByToken } from "@lib/slices/UserSlice";
 
 import * as jwt from "jsonwebtoken";
 
@@ -15,6 +14,9 @@ export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUserByToken(null));
+    return () => {
+      dispatch(clearState());
+    };
   }, []);
   // useEffect(() => {
   //   if (localStorage.getItem("accessToken")) {
@@ -37,10 +39,10 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Main/>
-      <HotStudy/>
-      <MainJoinBox/>
-      <Footer/>
+      <Main />
+      <HotStudy />
+      <MainJoinBox />
+      <Footer />
     </>
   );
 }
