@@ -15,7 +15,7 @@ const LoginForm = () => {
   const [logInError, setLogInError] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isSuccess, isError } = useSelector((state: RootState) => state.users);
+  const { isSuccess, isError, loadUserError } = useSelector((state: RootState) => state.users);
   useEffect(() => {
     return () => {
       dispatch(clearState());

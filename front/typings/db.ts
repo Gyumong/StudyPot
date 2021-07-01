@@ -26,6 +26,9 @@ export interface IUser {
   isError: boolean;
   errorMessage: string;
   isLoggedIn: boolean;
+  loadUserLoading: boolean;
+  loadUserSuccess: boolean;
+  loadUserError: boolean;
 }
 
 export interface IStudy {

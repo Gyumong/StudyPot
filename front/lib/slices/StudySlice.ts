@@ -222,11 +222,10 @@ export const studySlice = createSlice({
       state.joinStudySuccess = true;
       state.joinStudyError = false;
     });
-    builder.addCase(JoinStudy.rejected, (state, { payload }) => {
+    builder.addCase(JoinStudy.rejected, (state) => {
       state.joinStudyLoading = false;
       state.joinStudyError = true;
       state.joinStudySuccess = false;
-      state.errorMessage = payload;
     });
   },
 });
