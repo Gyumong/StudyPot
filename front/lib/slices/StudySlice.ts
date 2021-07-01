@@ -7,20 +7,17 @@ interface rejectMessage {
   errorMessage: string;
 }
 
-interface contentArray {
-  id: any;
-  [index: number]: {
-    id: number;
-    thumbnail: string;
-    categories: any[];
-    title: string;
-    content: string;
-    locatedAt: string;
-    meetingType: string;
-    maxNumber: number;
-    participatingNumber: number;
-    leaderUserId: number;
-  };
+export interface contentArray {
+  id: number;
+  thumbnail: string;
+  categories: any[];
+  title: string;
+  content: string;
+  locatedAt: string;
+  meetingType: string;
+  maxNumber: number;
+  participatingNumber: number;
+  leaderUserId: number;
 }
 
 interface ILoadStudy {
@@ -29,7 +26,7 @@ interface ILoadStudy {
   last: boolean;
 }
 
-interface ILoadOneStudy {
+export interface ILoadOneStudy {
   categories: [
     {
       key: string;

@@ -21,11 +21,14 @@ import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
 import { LoadOneStudy } from "@lib/slices/StudySlice";
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
+import { contentArray } from "@lib/slices/StudySlice";
 interface StudyCardProps {
   studyId: number;
+  study: contentArray;
 }
 
-const StudyCard: React.FC<StudyCardProps> = ({ studyId }) => {
+const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
+  console.log(study);
   const dispatch = useDispatch();
   const exampleOnClick = useCallback(() => {
     dispatch(
@@ -39,25 +42,23 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId }) => {
     <BoxModel onClick={exampleOnClick}>
       <SettingBox>
         <Shrink>
-          <img
-            src="https://ik.imagekit.io/q5edmtudmz/post1_fOFO9VDzENE.jpg"
-            alt="mountains"
-            className="w-full h-64 rounded-lg rounded-b-none"
-          />
+          <img src={`${study.thumbnail}`} alt="mountains" className="w-full h-64 rounded-lg rounded-b-none" />
         </Shrink>
         <TextBox>
-          <Category>자격증/시험</Category>
+          {study.categories.map((category) => {
+            return <Category key={category.key}>{category.value}</Category>;
+          })}
           <LocationButton>
             <LocationPin size="18" title="Location icon" />
-            서울특별시 강남구
+            {study.locatedAt}
           </LocationButton>
 
           <TitleBox>
-            <Title>인문학,심리학,뇌과학 같이 공부하실분</Title>
+            <Title>{study.title}</Title>
             <LikeButton>💚 &nbsp; 2</LikeButton>
           </TitleBox>
 
-          <Detail>인문학, 심리학, 뇌과학 관심있고 공부하실분들 매일 공부한것 인증샷 게시판에 올려주세요.</Detail>
+          <Detail>{study.content}</Detail>
 
           <UserNameBox>
             <UserImgBox>
@@ -73,7 +74,7 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId }) => {
             <JoinButton>
               {" "}
               <PeopleFill size="20" />
-              &nbsp; 3 / 19
+              &nbsp; {study.participatingNumber}/ {study.maxNumber}
             </JoinButton>
           </UserNameBox>
         </TextBox>

@@ -53,7 +53,7 @@ const find = (): ReactElement => {
       <StudyCardContainer>
         <GridBox>
           {study.map((post) => {
-            return <StudyCard key={post.id} studyId={post.id} />;
+            return <StudyCard key={post.id} studyId={post.id} study={post} />;
           })}
         </GridBox>
       </StudyCardContainer>
