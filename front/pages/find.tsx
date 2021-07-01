@@ -12,7 +12,9 @@ import { loadUserByToken } from "@lib/slices/UserSlice";
 import _ from "lodash";
 
 const find = (): ReactElement => {
-  const { study, lastIdOfStudyList, last, isFetching } = useSelector((state: RootState) => state.study);
+  const { study, lastIdOfStudyList, last, isFetching, filterMeetingType, filterStudy } = useSelector(
+    (state: RootState) => state.study,
+  );
   const dispatch = useDispatch();
   const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 3000), [dispatch]);
   useEffect(() => {
@@ -46,15 +48,21 @@ const find = (): ReactElement => {
   }, [study, last, isFetching]);
   console.log(study);
 
+  const selectStudy = study.filter((value) => value.meetingType === filterMeetingType);
+
   return (
     <>
       <Header />
       <MainSelect />
       <StudyCardContainer>
         <GridBox>
-          {study.map((post) => {
-            return <StudyCard key={post.id} studyId={post.id} study={post} />;
-          })}
+          {filterStudy
+            ? selectStudy.map((post) => {
+                return <StudyCard key={post.id} studyId={post.id} study={post} filterMeetingType={filterMeetingType} />;
+              })
+            : study.map((post) => {
+                return <StudyCard key={post.id} studyId={post.id} study={post} filterMeetingType={filterMeetingType} />;
+              })}
         </GridBox>
       </StudyCardContainer>
     </>

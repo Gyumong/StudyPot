@@ -65,12 +65,14 @@ interface StudyInitialType {
   isError: boolean;
   errorMessage: string;
   study: Array<contentArray>;
+  filterMeetingType: string;
   lastIdOfStudyList: number;
   last: boolean;
   singleStudy: ILoadOneStudy | null;
   joinStudyLoading: boolean;
   joinStudySuccess: boolean;
   joinStudyError: boolean;
+  filterStudy: boolean;
 }
 
 const initialState: StudyInitialType = {
@@ -81,6 +83,8 @@ const initialState: StudyInitialType = {
   joinStudySuccess: false,
   joinStudyError: false,
   errorMessage: "",
+  filterMeetingType: "",
+  filterStudy: false,
   study: [],
   lastIdOfStudyList: 0,
   last: false,
@@ -160,6 +164,15 @@ export const studySlice = createSlice({
 
       return state;
     },
+    filterMeetingType: (state, action) => {
+      console.log(action.payload);
+      console.log(state.study);
+      state.filterStudy = true;
+      state.filterMeetingType = action.payload.data;
+    },
+    resetStudy: (state) => {
+      state.filterStudy = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(MakeStudy.pending, (state) => {
@@ -227,6 +240,6 @@ export const studySlice = createSlice({
   },
 });
 
-export const { clearState } = studySlice.actions;
+export const { clearState, filterMeetingType, resetStudy } = studySlice.actions;
 
 export default studySlice.reducer;
