@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@lib/slices";
 import { deleteModal } from "@lib/slices/ModalSlice";
 
+import StudyModal from "@components/StudyModal";
+
 const Modal: React.FC = ({ children }) => {
   const [isBrowser, setIsBrowser] = useState(false);
   const dispatch = useDispatch();
@@ -19,16 +21,8 @@ const Modal: React.FC = ({ children }) => {
   };
 
   const modalContent = show ? (
-    <StyledModalOverlay>
-      <StyledModal>
-        <StyledModalHeader>
-          <a href="#" onClick={handleCloseClick}>
-            x
-          </a>
-        </StyledModalHeader>
-        {modalList?.title && <StyledModalTitle>{modalList?.title}</StyledModalTitle>}
-        <StyledModalBody>{children}</StyledModalBody>
-      </StyledModal>
+    <StyledModalOverlay onClick={()=>{dispatch(deleteModal())}}>
+      <StudyModal/>
     </StyledModalOverlay>
   ) : null;
 
@@ -39,25 +33,6 @@ const Modal: React.FC = ({ children }) => {
   }
 };
 
-const StyledModalTitle = styled.div``;
-
-const StyledModalBody = styled.div`
-  padding-top: 10px;
-`;
-
-const StyledModalHeader = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  font-size: 25px;
-`;
-
-const StyledModal = styled.div`
-  background: white;
-  width: 300px;
-  height: 300px;
-  border-radius: 15px;
-  padding: 15px;
-`;
 const StyledModalOverlay = styled.div`
   top: 0;
   right: 0;
