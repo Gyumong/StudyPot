@@ -13,6 +13,7 @@ import {
   Type,
   State,
   Description,
+  RecruitInput
 } from "./styles";
 
 import { Radio,  Select, Cascader, Form, Input } from "antd";
@@ -108,7 +109,7 @@ const RecruitForm = (): ReactElement => {
   const handleChangeImage = useCallback(
     (e) => {
       //   setStudyThumnail(e.target.files);
-      //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
+      //유사 배열을 배열처럼 쓰려고 forEach call 빌려옴
       [].forEach.call(e.target.files, (f) => {
         setStudyThumnail(f);
       });
@@ -139,18 +140,18 @@ const RecruitForm = (): ReactElement => {
   return (
     <RecruitFormBlock>
       <RecruitSubmitForm encType="multipart/form-data" onFinish={onSubmitMakeStudy}>
-          <ImageUploader>
+          <ImageUploader onClick={onClickImageUpload}>
               <p style={{ width: "15rem", marginBottom:"0", color:"#70e0a8", fontSize: "3rem" }} className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <input type="file" ref={imageInput} />
+              <input onChange={handleChangeImage} type="file" hidden ref={imageInput} />
             {/* <button onClick={onClickImageUpload}>image</button> */}
           </ImageUploader>
 
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
          
-          <Input style={{ width: "40%", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
+          <RecruitInput maxLength={32} value={StudyTitle} onChange={handleChangeStudyTitle} />
         </StudyName>
 
         <CategoryFormBlock>
@@ -204,32 +205,7 @@ const RecruitForm = (): ReactElement => {
                     },
                   ],
                 },
-                {
-                  value: "부산광역시",
-                  label: "부산광역시",
-                  children: [
-                    {
-                      value: "강서구",
-                      label: "강서구",
-                    },
-                    {
-                      value: "금정구",
-                      label: "금정구",
-                    },
-                    {
-                      value: "기장군",
-                      label: "기장군",
-                    },
-                    {
-                      value: "남구",
-                      label: "남구",
-                    },
-                    {
-                      value: "동구",
-                      label: "동구",
-                    },
-                  ],
-                },
+                
               ]}
             />
           </Form.Item>
@@ -272,7 +248,7 @@ const RecruitForm = (): ReactElement => {
 
         <Description> 스터디 설명</Description>
 
-        <Input.TextArea value={StudyContent} onChange={handleChangeStudyContent} />
+        <Input.TextArea showCount maxLength={255} value={StudyContent} onChange={handleChangeStudyContent} />
 
         <EditButton>등록</EditButton>
       </RecruitSubmitForm>
