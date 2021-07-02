@@ -32,8 +32,10 @@ const Profile = (): ReactElement => {
 
   return (
     <ProfileFormBlock>
+      
       <DescBlock>
         <UserName>{user.name}</UserName>
+
         <Location>
           <LocationPin size="28" title="Location icon" />
           <p>{user.location}</p>
@@ -44,20 +46,24 @@ const Profile = (): ReactElement => {
             return <p>{value.value}</p>;
           })}
         </Interest>
+
         <SelfIntro>{user.introduction}</SelfIntro>
+
         <ProfileEditButton>
           <Link href="/profileedit">
             <a>프로필 수정</a>
           </Link>
         </ProfileEditButton>
       </DescBlock>
+
       <ImageBlock>
         {user.image ? (
-          <img src={`${user.image}`} style={{ width: "70px", height: "70px" }} />
+          <img src={`${user.image}`} style={{ width: "100px", height: "100px" }} />
         ) : (
           <img src={gravatar.url(user.name, { s: "24px", d: "retro" })} style={{ width: "70px", height: "70px" }} />
         )}
       </ImageBlock>
+
     </ProfileFormBlock>
   );
 };

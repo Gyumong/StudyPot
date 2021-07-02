@@ -48,11 +48,13 @@ export const Interest = styled.div`
 `;
 
 export const SelfIntro = styled.p`
+margin-top: 3rem;
+margin-bottom: 3rem;
   color: #4f4f4f;
 `;
 
 export const ProfileEditButton = styled(Button)`
-  margin-top: 1rem;
+  
   width: 8rem;
   height: 2rem;
 `;
