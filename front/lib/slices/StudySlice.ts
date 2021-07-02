@@ -67,7 +67,7 @@ interface StudyInitialType {
   isError: boolean;
   errorMessage: string;
   study: Array<contentArray>;
-  filterMeetingType: string;
+  filterCategory: string;
   lastIdOfStudyList: number;
   selected: boolean;
   last: boolean;
@@ -75,7 +75,7 @@ interface StudyInitialType {
   joinStudyLoading: boolean;
   joinStudySuccess: boolean;
   joinStudyError: boolean;
-  filterStudy: string;
+  selectedCategory: string;
   filteredStudy: Array<contentArray>;
 }
 
@@ -87,8 +87,8 @@ const initialState: StudyInitialType = {
   joinStudySuccess: false,
   joinStudyError: false,
   errorMessage: "",
-  filterMeetingType: "",
-  filterStudy: "",
+  filterCategory: "",
+  selectedCategory: "",
   study: [],
   selected: false,
   filteredStudy: [],
@@ -127,19 +127,37 @@ export const LoadOneStudy = createAsyncThunk<
 
 // ${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}
 
+export const LoadDetailStudy = createAsyncThunk<
+  ILoadStudy,
+  ILoadStudyPayload | undefined,
+  { rejectValue: rejectMessage }
+>("study/LoadDetailStudy", async (data, thunkAPI) => {
+  try {
+    if (data?.categoryName) {
+      const response = await axios.get(
+        `${backUrl}/study?size=3${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}${
+          data?.lastId ? `&lastId=${data?.lastId}` : ""
+        }`,
+      );
+      return response.data;
+    }
+  } catch (e) {
+    console.log("Error", e);
+    return thunkAPI.rejectWithValue({
+      errorMessage: "스터디 불러오기에 실패했습니다.",
+    });
+  }
+});
+
 export const LoadStudy = createAsyncThunk<ILoadStudy, ILoadStudyPayload | undefined, { rejectValue: rejectMessage }>(
   "study/LoadStudy",
   async (data, thunkAPI) => {
     try {
-      if (data?.categoryName) {
-        const response = await axios.get(
-          `${backUrl}/study?size=3${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}${
-            data?.lastId ? `&lastId=${data?.lastId}` : ""
-          }`,
-        );
-        return response.data;
-      }
-      const response = await axios.get(`${backUrl}/study?size=3${data?.lastId ? `&lastId=${data?.lastId}` : ""}`);
+      const query = data?.categoryName === "" ? "" : `&categoryName=${data?.categoryName}`;
+      const response = await axios.get(
+        `${backUrl}/study?size=3${query}${data?.lastId ? `&lastId=${data?.lastId}` : ""}`,
+      );
+
       return response.data;
     } catch (e) {
       console.log("Error", e);
@@ -180,13 +198,15 @@ export const studySlice = createSlice({
 
       return state;
     },
-    filterMeetingType: (state, action) => {
+    filterCategory: (state, action) => {
       console.log(action.payload);
       console.log(state.study);
-      state.filterStudy = action.payload;
+      state.selectedCategory = action.payload;
+      state.selected = true;
+      if (state.last) state.last = false;
     },
     resetStudy: (state) => {
-      state.filterStudy = "";
+      state.selectedCategory = "";
     },
   },
   extraReducers: (builder) => {
@@ -208,8 +228,15 @@ export const studySlice = createSlice({
       state.isFetching = true;
     });
     builder.addCase(LoadStudy.fulfilled, (state, { payload }) => {
-      console.log(payload.contents.map((v) => v.categories.map((v) => v.key)[0]));
+      const Chocie = state.selectedCategory === "" ? null : state.selectedCategory;
+      const current = state.selected;
+      if (Chocie && current) {
+        state.study = [];
+        state.selected = false;
+        console.log("change");
+      }
       state.study = state.study.concat(payload.contents);
+
       state.last = payload.last;
       state.lastIdOfStudyList = payload.lastIdOfStudyList;
       state.isFetching = false;
@@ -255,6 +282,6 @@ export const studySlice = createSlice({
   },
 });
 
-export const { clearState, filterMeetingType, resetStudy } = studySlice.actions;
+export const { clearState, filterCategory, resetStudy } = studySlice.actions;
 
 export default studySlice.reducer;

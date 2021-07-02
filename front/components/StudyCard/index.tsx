@@ -28,7 +28,6 @@ interface StudyCardProps {
 }
 
 const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
-  console.log(study);
   const dispatch = useDispatch();
   const exampleOnClick = useCallback(() => {
     dispatch(

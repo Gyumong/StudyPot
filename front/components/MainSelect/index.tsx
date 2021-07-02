@@ -8,15 +8,16 @@ import { backUrl } from "config/config";
 import axios from "axios";
 import { RootState } from "@lib/slices";
 import _ from "lodash";
-import { filterMeetingType, LoadStudy } from "@lib/slices/StudySlice";
+import { filterCategory, LoadDetailStudy, LoadStudy } from "@lib/slices/StudySlice";
 interface IdefaultValue {
   [key: string]: string;
 }
 
 const MainSelect = () => {
   const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
+  const [change, setChange] = useState(false);
   const dispatch = useDispatch();
-  const { study, lastIdOfStudyList, last, isFetching, filterStudy } = useSelector((state: RootState) => state.study);
+  const { study, selectedCategory } = useSelector((state: RootState) => state.study);
   const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 3000), [dispatch]);
 
   useEffect(() => {
@@ -33,20 +34,25 @@ const MainSelect = () => {
     getCategories();
   }, []);
 
-  const Selected = useCallback((props) => {
-    dispatch(filterMeetingType(props.key));
-  }, []);
+  const Selected = useCallback(
+    (props) => {
+      dispatch(filterCategory(props.key));
+      setChange(true);
+    },
+    [change],
+  );
 
   const onSubmit = useCallback(() => {
-    const lastId = study[study.length - 1]?.id;
-    throttleGetLoadStudy({ lastId, categoryName: filterStudy });
-  }, [filterStudy]);
+    const lastId = change ? null : study[study.length - 1]?.id;
+    throttleGetLoadStudy({ lastId, categoryName: selectedCategory });
+    setChange(false);
+  }, [selectedCategory, change]);
   const [dropdown, setDropdown] = useState(false);
   const typeValue = ["온라인", "오프라인", "온/오프라인"];
 
   const [categoryDrop, setCategoryDrop] = useState(false);
   const SelectMeetingType = useCallback((props) => {
-    dispatch(filterMeetingType(props.value));
+    dispatch(filterCategory(props.value));
   }, []);
   function ListTypeItem(props: any) {
     return <ListTypeValue onClick={() => SelectMeetingType(props)}>{props.value}</ListTypeValue>;

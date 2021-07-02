@@ -10,26 +10,21 @@ import { RootState } from "@lib/slices";
 import { useCallback, useMemo } from "react";
 import { loadUserByToken } from "@lib/slices/UserSlice";
 import _ from "lodash";
-import { createSelector } from "@reduxjs/toolkit";
 
 const find = (): ReactElement => {
-  const { study, lastIdOfStudyList, last, isFetching, filterStudy } = useSelector((state: RootState) => state.study);
+  const { study, last, isFetching, selectedCategory } = useSelector((state: RootState) => state.study);
 
   const dispatch = useDispatch();
   const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 3000), [dispatch]);
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (filterStudy) {
-      const lastId = study[study.length - 1]?.id;
-      throttleGetLoadStudy({ lastId, categoryName: filterStudy });
-    } else {
-      const lastId = study[study.length - 1]?.id;
-      throttleGetLoadStudy({ lastId });
-    }
+
+    const lastId = study[study.length - 1]?.id;
+    throttleGetLoadStudy({ lastId, categoryName: selectedCategory });
   }, []);
   useEffect(() => {
     dispatch(loadUserByToken(null));
-  }, [filterStudy]);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -41,13 +36,8 @@ const find = (): ReactElement => {
     function onScroll() {
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (!last && !isFetching) {
-          if (filterStudy) {
-            const lastId = study[study.length - 1]?.id;
-            throttleGetLoadStudy({ lastId, categoryName: filterStudy });
-          } else {
-            const lastId = study[study.length - 1]?.id;
-            throttleGetLoadStudy({ lastId });
-          }
+          const lastId = study[study.length - 1]?.id;
+          throttleGetLoadStudy({ lastId, categoryName: selectedCategory });
         }
       }
     }
@@ -55,12 +45,7 @@ const find = (): ReactElement => {
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
-  }, [study, last, isFetching]);
-
-  const TestCategory = useCallback(() => {
-    const lastId = study[study.length - 1]?.id;
-    throttleGetLoadStudy({ categoryName: "COMPUTER_IT", lastId });
-  }, []);
+  }, [study, last, isFetching, selectedCategory]);
 
   return (
     <>
