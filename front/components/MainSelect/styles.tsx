@@ -5,7 +5,7 @@ export const BoxModel = styled.div`
   display: flex;
   position: absolute;
   justify-content: space-between;
- 
+  z-index:20;
   padding-right: 1rem;
   align-items: center;
   top: 7rem;
