@@ -90,6 +90,8 @@ const ProfileEditForm = (): ReactElement => {
 
   const handleChangeImage = useCallback(
     (e) => {
+      e.preventDefault();
+      console.log("dddd");
       console.log("image", e.target.files[0]);
       //   setStudyThumnail(e.target.files);
       //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
@@ -112,7 +114,7 @@ const ProfileEditForm = (): ReactElement => {
       formData.append("categories", categorie);
     }
     dispatch(UpdateUserProfile(formData));
-    router.push("/mypage");
+    // router.push("/mypage");
   }, [ChangeUserName, 지역, Introduction, selectedValue, UserImage]);
 
   return (

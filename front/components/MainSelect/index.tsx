@@ -1,34 +1,63 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 
-import { BoxModel, OnOffline, OnOffList, Type, TypeInner, TypeDropDown, FindButton } from "./styles";
+import { BoxModel, OnOffline, OnOffList, Type, TypeInner, TypeDropDown, FindButton, ListTypeValue } from "./styles";
 
 import { MagnifyingGlass } from "@styled-icons/entypo";
-import { useDispatch } from "react-redux";
-import { filterMeetingType, resetStudy } from "@lib/slices/StudySlice";
+import { useDispatch, useSelector } from "react-redux";
+import { backUrl } from "config/config";
+import axios from "axios";
+import { RootState } from "@lib/slices";
+import _ from "lodash";
+import { filterMeetingType, LoadStudy } from "@lib/slices/StudySlice";
+interface IdefaultValue {
+  [key: string]: string;
+}
 
 const MainSelect = () => {
+  const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
   const dispatch = useDispatch();
+  const { study, lastIdOfStudyList, last, isFetching, filterStudy } = useSelector((state: RootState) => state.study);
+  const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 3000), [dispatch]);
+
+  useEffect(() => {
+    async function getCategories() {
+      try {
+        const { data } = await axios.get(`${backUrl}/categories`);
+        const defaultCategoriesValue = data;
+        console.log(defaultCategoriesValue);
+        setDefaultValue(defaultCategoriesValue);
+      } catch (e) {
+        console.log("getCategories Error", e);
+      }
+    }
+    getCategories();
+  }, []);
+
+  const Selected = useCallback((props) => {
+    dispatch(filterMeetingType(props.key));
+  }, []);
+
+  const onSubmit = useCallback(() => {
+    const lastId = study[study.length - 1]?.id;
+    throttleGetLoadStudy({ lastId, categoryName: filterStudy });
+  }, [filterStudy]);
   const [dropdown, setDropdown] = useState(false);
+  const typeValue = ["온라인", "오프라인", "온/오프라인"];
 
   const [categoryDrop, setCategoryDrop] = useState(false);
-
-  const onClickSelectbar = useCallback((e) => {
-    console.log(e.target.innerText);
-    if (e.target.innerText === "온라인") {
-      dispatch(filterMeetingType({ data: "온라인" }));
-    } else {
-      dispatch(resetStudy());
-    }
+  const SelectMeetingType = useCallback((props) => {
+    dispatch(filterMeetingType(props.value));
   }, []);
+  function ListTypeItem(props: any) {
+    return <ListTypeValue onClick={() => SelectMeetingType(props)}>{props.value}</ListTypeValue>;
+  }
 
   function PopModal() {
     return (
-      <OnOffList onClick={onClickSelectbar}>
-        <li style={{ marginTop: "1rem" }} value={"온라인"}>
-          온라인
-        </li>
-        <li>오프라인</li>
-        <li>온/오프라인</li>
+      <OnOffList>
+        {typeValue.map((type, i) => {
+          return <ListTypeItem key={i} value={type} />;
+        })}
       </OnOffList>
     );
   }
@@ -37,9 +66,13 @@ const MainSelect = () => {
     return (
       <TypeDropDown>
         <li style={{ marginTop: "1rem" }}>전체</li>
-        <li>자격증</li>
-        <li>어학</li>
-        <li>입시</li>
+        {defaultValue.map((category) => {
+          return (
+            <li key={category.key} value={category.value} onClick={() => Selected(category)}>
+              {category.value}
+            </li>
+          );
+        })}
       </TypeDropDown>
     );
   }
@@ -68,7 +101,7 @@ const MainSelect = () => {
         {categoryDrop === true ? <CategoryDrop /> : null}
       </Type>
 
-      <FindButton>
+      <FindButton onClick={onSubmit}>
         <MagnifyingGlass size="34" title="MagnifyingGlass" />
       </FindButton>
     </BoxModel>

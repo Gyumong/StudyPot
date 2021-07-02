@@ -6,11 +6,15 @@ import axios, { AxiosRequestConfig } from "axios";
 interface rejectMessage {
   errorMessage: string;
 }
-
+interface categoriestype {
+  map(arg0: (v: any) => any): any;
+  key: string;
+  value: string;
+}
 export interface contentArray {
   id: number;
   thumbnail: string;
-  categories: any[];
+  categories: categoriestype;
   title: string;
   content: string;
   locatedAt: string;
@@ -27,12 +31,10 @@ interface ILoadStudy {
 }
 
 export interface ILoadOneStudy {
-  categories: [
-    {
-      key: string;
-      value: string;
-    },
-  ];
+  categories: {
+    key: string;
+    value: string;
+  };
   content: string;
   createdAt: string;
   leader: {
@@ -67,12 +69,14 @@ interface StudyInitialType {
   study: Array<contentArray>;
   filterMeetingType: string;
   lastIdOfStudyList: number;
+  selected: boolean;
   last: boolean;
   singleStudy: ILoadOneStudy | null;
   joinStudyLoading: boolean;
   joinStudySuccess: boolean;
   joinStudyError: boolean;
-  filterStudy: boolean;
+  filterStudy: string;
+  filteredStudy: Array<contentArray>;
 }
 
 const initialState: StudyInitialType = {
@@ -84,8 +88,10 @@ const initialState: StudyInitialType = {
   joinStudyError: false,
   errorMessage: "",
   filterMeetingType: "",
-  filterStudy: false,
+  filterStudy: "",
   study: [],
+  selected: false,
+  filteredStudy: [],
   lastIdOfStudyList: 0,
   last: false,
   singleStudy: null,
@@ -119,10 +125,20 @@ export const LoadOneStudy = createAsyncThunk<
   }
 });
 
+// ${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}
+
 export const LoadStudy = createAsyncThunk<ILoadStudy, ILoadStudyPayload | undefined, { rejectValue: rejectMessage }>(
   "study/LoadStudy",
   async (data, thunkAPI) => {
     try {
+      if (data?.categoryName) {
+        const response = await axios.get(
+          `${backUrl}/study?size=3${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}${
+            data?.lastId ? `&lastId=${data?.lastId}` : ""
+          }`,
+        );
+        return response.data;
+      }
       const response = await axios.get(`${backUrl}/study?size=3${data?.lastId ? `&lastId=${data?.lastId}` : ""}`);
       return response.data;
     } catch (e) {
@@ -167,11 +183,10 @@ export const studySlice = createSlice({
     filterMeetingType: (state, action) => {
       console.log(action.payload);
       console.log(state.study);
-      state.filterStudy = true;
-      state.filterMeetingType = action.payload.data;
+      state.filterStudy = action.payload;
     },
     resetStudy: (state) => {
-      state.filterStudy = false;
+      state.filterStudy = "";
     },
   },
   extraReducers: (builder) => {
@@ -193,7 +208,7 @@ export const studySlice = createSlice({
       state.isFetching = true;
     });
     builder.addCase(LoadStudy.fulfilled, (state, { payload }) => {
-      console.log(payload);
+      console.log(payload.contents.map((v) => v.categories.map((v) => v.key)[0]));
       state.study = state.study.concat(payload.contents);
       state.last = payload.last;
       state.lastIdOfStudyList = payload.lastIdOfStudyList;

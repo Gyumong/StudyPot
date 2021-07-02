@@ -38,6 +38,7 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
     );
     console.log(studyId);
   }, []);
+
   return (
     <BoxModel onClick={exampleOnClick}>
       <SettingBox>
@@ -50,7 +51,7 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
           })}
           <LocationButton>
             <LocationPin size="18" title="Location icon" />
-            {study.locatedAt}
+            {study.locatedAt}/{study.meetingType}
           </LocationButton>
 
           <TitleBox>
