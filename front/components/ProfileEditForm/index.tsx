@@ -126,7 +126,7 @@ const ProfileEditForm = (): ReactElement => {
         </ProfileImage>
         <ProfileListBlock>
           <ProfileSettingList>이름</ProfileSettingList>
-          <Input style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={handleChangeUserName} />
+          <Input maxLength={8} style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={handleChangeUserName} />
         </ProfileListBlock>
         <ProfileListBlock>
           <ProfileSettingList>지역</ProfileSettingList>
@@ -205,7 +205,7 @@ const ProfileEditForm = (): ReactElement => {
         </ProfileListBlock>
 
         <SelfIntro> 자기소개</SelfIntro>
-        <Input.TextArea style={{ width: "90%" }} value={Introduction} onChange={handleChange자기소개} />
+        <Input.TextArea showCount maxLength={127} style={{ width: "90%" }} value={Introduction} onChange={handleChange자기소개} />
 
         <EditButton>수정완료</EditButton>
       </AccountSetting>
