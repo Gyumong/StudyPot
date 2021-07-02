@@ -69,7 +69,7 @@ export const LikeButton = styled.button`
 display: block;
 margin-left: 0.375rem;
 text-align:center;
-width: 3rem;
+width: 3.5rem;
 height: 2rem;
 padding: 0.375rem;
 border: 1px solid #26DE81;
