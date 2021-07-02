@@ -15,47 +15,20 @@ const LoginForm = () => {
   const [logInError, setLogInError] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isSuccess, isError } = useSelector((state: RootState) => state.users);
+  const { isSuccess, isError, loadUserError } = useSelector((state: RootState) => state.users);
   useEffect(() => {
     return () => {
       dispatch(clearState());
-      dispatch(clearModal());
     };
   }, []);
 
   useEffect(() => {
-    async function LoginSuccess() {
-      await dispatch(clearState());
-      await dispatch(
-        popModal({
-          title: "로그인 성공하였습니다",
-        }),
-      );
-      setTimeout(() => {
-        dispatch(clearModal());
-        router.push("/");
-      }, 3000);
-    }
-
-    async function LoginFail() {
-      await dispatch(clearState());
-      await dispatch(
-        popModal({
-          title: "로그인 실패하였습니다",
-        }),
-      );
-      setTimeout(() => {
-        dispatch(clearModal());
-      }, 3000);
-    }
-    if (isError) {
-      LoginFail();
-    }
 
     if (isSuccess) {
-      LoginSuccess();
+      dispatch(clearState());
+        router.push("/");
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess]);
 
   const onChangePassword = useCallback(
     (e) => {
