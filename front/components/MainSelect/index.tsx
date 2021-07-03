@@ -15,6 +15,7 @@ interface IdefaultValue {
 
 const MainSelect = () => {
   const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
+  const [categoryName, setCategoryName] = useState("");
   const [change, setChange] = useState(false);
   const dispatch = useDispatch();
   const { study, selectedCategory } = useSelector((state: RootState) => state.study);
@@ -38,8 +39,9 @@ const MainSelect = () => {
     (props) => {
       dispatch(filterCategory(props.key));
       setChange(true);
+      setCategoryName(props.value);
     },
-    [change],
+    [change, categoryName],
   );
 
   const onSubmit = useCallback(() => {
@@ -102,7 +104,7 @@ const MainSelect = () => {
       >
         <TypeInner>
           <p>카테고리</p>
-          <span>스터디 종류를 선택하세요</span>
+          <span>{categoryName === "" ? "스터디 종류를 선택하세요" : categoryName}</span>
         </TypeInner>
         {categoryDrop === true ? <CategoryDrop /> : null}
       </Type>
