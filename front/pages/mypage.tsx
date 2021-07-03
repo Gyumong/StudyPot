@@ -12,14 +12,14 @@ const Mypage = (): ReactElement => {
   const { isLoggedIn } = useSelector((state: RootState) => state.users);
   useEffect(() => {
     dispatch(loadUserByToken(null));
+    if (!isLoggedIn) {
+      router.push("/");
+    }
     return () => {
       dispatch(clearState());
     };
   }, [dispatch, isLoggedIn]);
 
-  if (!isLoggedIn) {
-    router.push("/");
-  }
   return (
     <>
       <Header />

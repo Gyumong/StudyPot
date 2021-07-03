@@ -12,14 +12,14 @@ const ProfileEdit = (): ReactElement => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUserByToken(null));
+    if (!isLoggedIn) {
+      router.push("/");
+    }
     return () => {
       dispatch(clearState());
     };
   }, [dispatch, isLoggedIn]);
 
-  if (!isLoggedIn) {
-    router.push("/");
-  }
   return (
     <>
       <Header />
