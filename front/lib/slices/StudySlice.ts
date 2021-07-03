@@ -97,17 +97,17 @@ const initialState: StudyInitialType = {
   singleStudy: null,
 };
 
-export const JoinStudy = createAsyncThunk("study/JoinStudy", async (data, thunkAPI) => {
-  try {
-    const response = await axiosWithToken.post(`/study/${data.studyId}`);
-    return response.data;
-  } catch (e) {
-    console.log("스터디 가입 에러", e);
-    return thunkAPI.rejectWithValue({
-      errorMessage: "스터디 조인에 실패했습니다.",
-    });
-  }
-});
+// export const JoinStudy = createAsyncThunk("study/JoinStudy", async (data, thunkAPI) => {
+//   try {
+//     const response = await axiosWithToken.post(`/study/${data.studyId}`);
+//     return response.data;
+//   } catch (e) {
+//     console.log("스터디 가입 에러", e);
+//     return thunkAPI.rejectWithValue({
+//       errorMessage: "스터디 조인에 실패했습니다.",
+//     });
+//   }
+// });
 
 export const LoadOneStudy = createAsyncThunk<
   ILoadOneStudy,
@@ -126,28 +126,6 @@ export const LoadOneStudy = createAsyncThunk<
 });
 
 // ${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}
-
-export const LoadDetailStudy = createAsyncThunk<
-  ILoadStudy,
-  ILoadStudyPayload | undefined,
-  { rejectValue: rejectMessage }
->("study/LoadDetailStudy", async (data, thunkAPI) => {
-  try {
-    if (data?.categoryName) {
-      const response = await axios.get(
-        `${backUrl}/study?size=3${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}${
-          data?.lastId ? `&lastId=${data?.lastId}` : ""
-        }`,
-      );
-      return response.data;
-    }
-  } catch (e) {
-    console.log("Error", e);
-    return thunkAPI.rejectWithValue({
-      errorMessage: "스터디 불러오기에 실패했습니다.",
-    });
-  }
-});
 
 export const LoadStudy = createAsyncThunk<ILoadStudy, ILoadStudyPayload | undefined, { rejectValue: rejectMessage }>(
   "study/LoadStudy",
