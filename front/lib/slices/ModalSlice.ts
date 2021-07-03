@@ -14,7 +14,6 @@ const ModalSlice = createSlice({
   reducers: {
     /* Modal pop */
     popModal(state, action) {
-      console.log("떠라떠라떠라 제발ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ", action.payload);
       state.show = true;
       state.modalList = action.payload;
     },
@@ -23,13 +22,9 @@ const ModalSlice = createSlice({
       state.show = false;
       state.modalList = null;
     },
-    clearModal(state) {
-      state.show = false;
-      state.modalList = null;
-    },
   },
 });
 
-export const { popModal, deleteModal, clearModal } = ModalSlice.actions;
+export const { popModal, deleteModal } = ModalSlice.actions;
 
 export default ModalSlice.reducer;
