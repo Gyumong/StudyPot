@@ -49,7 +49,7 @@ export const ProfileImage = styled.div`
   position: absolute;
   top: 0;
   right: 5rem;
-  color: #4F4F4F;
+  color: #4f4f4f;
 
   &:hover {
     border-color: #70e0a8;
