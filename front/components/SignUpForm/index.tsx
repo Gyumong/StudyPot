@@ -54,6 +54,7 @@ const SignUpForm = (): ReactElement => {
   const [signUpUserError, setSignUpUserError] = useState("");
   const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
   const { signUpSuccess, signUpError, errorMessage } = useSelector((state: RootState) => state.users);
+  const [allow, setAllow] = useState(true);
 
   const onChangeFavorite = useCallback(
     (value: ValueType<IOptionType, IsMulti>) => {
@@ -125,7 +126,11 @@ const SignUpForm = (): ReactElement => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      if (!passwordError && !mismatchError && name) {
+      if (!email || !name || !FavoriteValue || !passwordError || !mismatchError) {
+        setAllow(false);
+      }
+
+      if (!passwordError && !mismatchError && name && FavoriteValue && email && allow) {
         setSignUpUserError("");
         dispatch(
           signUpUser({
@@ -137,7 +142,7 @@ const SignUpForm = (): ReactElement => {
         );
       }
     },
-    [email, name, password, passwordCheck, mismatchError, FavoriteValue],
+    [email, name, password, passwordCheck, mismatchError, FavoriteValue, allow],
   );
 
   // const [userData] = useMyInfo();
@@ -173,7 +178,7 @@ const SignUpForm = (): ReactElement => {
       {mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}
       {signUpError && <Error>{signUpUserError}</Error>}
       {signUpSuccess && <Success>회원가입되었습니다! 로그인해주세요.</Success>}
-
+      {!allow && <Error>모든 정보를 입력해주세요</Error>}
       <SignUpButton>계정 만들기</SignUpButton>
       <Desc style={{ marginTop: "1rem" }}>
         이미 가입하셨다면?&nbsp;
