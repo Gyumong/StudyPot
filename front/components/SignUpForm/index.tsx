@@ -19,6 +19,7 @@ import { clearState, signUpUser } from "@lib/slices/UserSlice";
 import { RootState } from "@lib/slices";
 import axios from "axios";
 import { backUrl } from "config/config";
+import { useRouter } from "next/router";
 
 type IOptionType = {
   label: string;
@@ -44,6 +45,7 @@ const colorArray = [
 ];
 
 const SignUpForm = (): ReactElement => {
+  const router = useRouter();
   const [email, onChangeEmail] = useInput("");
   const [name, onChangeName] = useInput("");
   const [password, , setPassword] = useInput("");
@@ -53,7 +55,7 @@ const SignUpForm = (): ReactElement => {
   const [defaultValue, setDefaultValue] = useState([] as IOptionType[]);
   const [signUpUserError, setSignUpUserError] = useState("");
   const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
-  const { signUpSuccess, signUpError, errorMessage } = useSelector((state: RootState) => state.users);
+  const { signUpSuccess, signUpError, errorMessage, isLoggedIn } = useSelector((state: RootState) => state.users);
   const [allow, setAllow] = useState(true);
 
   const onChangeFavorite = useCallback(
@@ -94,6 +96,9 @@ const SignUpForm = (): ReactElement => {
   }, [password]);
 
   useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
     return () => {
       dispatch(clearState());
     };
