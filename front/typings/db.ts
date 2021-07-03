@@ -29,6 +29,9 @@ export interface IUser {
   loadUserLoading: boolean;
   loadUserSuccess: boolean;
   loadUserError: boolean;
+  signUpLoading: boolean;
+  signUpSuccess: boolean;
+  signUpError: boolean;
 }
 
 export interface IStudy {

@@ -52,6 +52,9 @@ const initialState: IUser = {
   loadUserLoading: false,
   loadUserSuccess: false,
   loadUserError: false,
+  signUpLoading: false,
+  signUpSuccess: false,
+  signUpError: false,
   errorMessage: "",
 };
 
@@ -141,18 +144,18 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signUpUser.pending, (state) => {
-      state.isFetching = true;
+      state.signUpLoading = true;
     });
     builder.addCase(signUpUser.fulfilled, (state, { payload }) => {
       console.log("payload", payload);
-      state.isFetching = false;
-      state.isSuccess = true;
-      state.isError = false;
+      state.signUpLoading = false;
+      state.signUpSuccess = true;
+      state.signUpError = false;
     });
     builder.addCase(signUpUser.rejected, (state, { payload }: any) => {
-      state.isFetching = false;
-      state.isError = true;
-      state.isSuccess = false;
+      state.signUpLoading = false;
+      state.signUpError = true;
+      state.signUpSuccess = false;
       state.errorMessage = payload.errorMessage;
     });
     builder.addCase(loginUser.pending, (state) => {
