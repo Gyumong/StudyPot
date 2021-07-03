@@ -243,20 +243,20 @@ export const studySlice = createSlice({
       state.isSuccess = false;
       state.errorMessage = payload;
     });
-    builder.addCase(JoinStudy.pending, (state) => {
-      state.joinStudyLoading = true;
-    });
-    builder.addCase(JoinStudy.fulfilled, (state, { payload }) => {
-      console.log(payload);
-      state.joinStudyLoading = false;
-      state.joinStudySuccess = true;
-      state.joinStudyError = false;
-    });
-    builder.addCase(JoinStudy.rejected, (state) => {
-      state.joinStudyLoading = false;
-      state.joinStudyError = true;
-      state.joinStudySuccess = false;
-    });
+    // builder.addCase(JoinStudy.pending, (state) => {
+    //   state.joinStudyLoading = true;
+    // });
+    // builder.addCase(JoinStudy.fulfilled, (state, { payload }) => {
+    //   console.log(payload);
+    //   state.joinStudyLoading = false;
+    //   state.joinStudySuccess = true;
+    //   state.joinStudyError = false;
+    // });
+    // builder.addCase(JoinStudy.rejected, (state) => {
+    //   state.joinStudyLoading = false;
+    //   state.joinStudyError = true;
+    //   state.joinStudySuccess = false;
+    // });
   },
 });
 
