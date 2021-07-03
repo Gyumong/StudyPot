@@ -8,7 +8,7 @@ import { backUrl } from "config/config";
 import axios from "axios";
 import { RootState } from "@lib/slices";
 import _ from "lodash";
-import { filterCategory, LoadDetailStudy, LoadStudy } from "@lib/slices/StudySlice";
+import { filterCategory, LoadStudy } from "@lib/slices/StudySlice";
 interface IdefaultValue {
   [key: string]: string;
 }
