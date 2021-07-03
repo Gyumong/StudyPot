@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Select, { ActionMeta, ValueType } from "react-select";
 import useMyInfo from "@hooks/useMyInfo";
 import { clearState, signUpUser, userSelector } from "@lib/slices/UserSlice";
+import { RootState } from "@lib/slices";
 
 type IOptionType = { label: string; value: number; color?: string; isFixed?: boolean; isDisabled?: boolean };
 type IsMulti = true | false;
@@ -49,8 +50,7 @@ const SignUpForm = (): ReactElement => {
   const [signUpError, setSignUpError] = useState("");
   const [signUpSuccess, setSignUpSuccess] = useState(false);
   const [FavoriteValue, setFavoriteValue] = useState([] as IOptionType[]);
-
-  const { isSuccess, isError } = useSelector(userSelector);
+  const { isSuccess, isError, errorMessage } = useSelector((state: RootState) => state.users);
 
   const onChangeFavorite = useCallback(
     (value: ValueType<IOptionType, IsMulti>, _: ActionMeta<IOptionType>) => {
@@ -76,14 +76,14 @@ const SignUpForm = (): ReactElement => {
 
   useEffect(() => {
     if (isError) {
-      dispatch(clearState());
+      setSignUpError(errorMessage ? errorMessage : "회원가입에 실패 했습니다.");
+      console.log("로그인 에러");
+      console.log(errorMessage);
     }
-
     if (isSuccess) {
       router.push("/login");
-      dispatch(clearState());
     }
-  }, [isError, isSuccess, signUpError, signUpSuccess]);
+  }, [isSuccess, isError]);
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
@@ -136,10 +136,6 @@ const SignUpForm = (): ReactElement => {
           onChange={onChangePassword}
         />
         <Input type="password" placeholder="비밀번호 체크" value={passwordCheck} onChange={onChangePasswordCheck} />
-        {passwordError && <Error>비밀번호는 문자,숫자조합 8자 이상만 가능합니다.</Error>}
-        {mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}
-        {signUpError && <Error>{signUpError}</Error>}
-        {signUpSuccess && <Success>회원가입되었습니다! 로그인해주세요.</Success>}
 
         <SelectBox>
           <Select
@@ -154,10 +150,11 @@ const SignUpForm = (): ReactElement => {
         </SelectBox>
       </SignUpInnerBox>
 
-      <Desc>
-        계정 만들기 버튼을 클릭하면, <strong>스터디팟</strong> 의 <u>회원약관</u>에 동의하며 <br />
-        쿠키 사용을 포함한 <u>개인정보처리방침</u>을 읽었음을 인정하게 됩니다.
-      </Desc>
+      {passwordError && <Error>비밀번호는 문자,숫자조합 8자 이상만 가능합니다.</Error>}
+      {mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}
+      {isError && <Error>{signUpError}</Error>}
+      {signUpSuccess && <Success>회원가입되었습니다! 로그인해주세요.</Success>}
+
       <SignUpButton>계정 만들기</SignUpButton>
       <Desc style={{ marginTop: "1rem" }}>
         이미 가입하셨다면?&nbsp;
