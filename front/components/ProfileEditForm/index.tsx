@@ -15,23 +15,27 @@ import {
   ImageEdit,
   colors,
 } from "./styles";
-
+import { useRouter } from "next/router";
 import { Select, Cascader, Form, Input, Tag } from "antd";
 import "antd/dist/antd.css";
-import gravatar from "gravatar";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserByToken, UpdateUserProfile } from "@lib/slices/UserSlice";
+import { clearState, loadUserByToken, UpdateUserProfile } from "@lib/slices/UserSlice";
 import { RootState } from "@lib/slices";
 import { backUrl } from "config/config";
 import axios from "axios";
 import useInput from "@hooks/useInput";
 
+interface IdefaultValue {
+  [key: string]: string;
+}
+
 const ProfileEditForm = (): ReactElement => {
+  const router = useRouter();
   const { Option } = Select;
   const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const { name } = useSelector((state: RootState) => state.users?.user);
-  const [defaultValue, setDefaultValue] = useState([]);
+  const { isSuccess } = useSelector((state: RootState) => state.users);
+  const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
   const [UserImage, setUserImage] = useState<Blob>();
   const [selectedValue, setSelectedValue] = useState([]);
   const [ChangeUserName, handleChangeUserName] = useInput("");
@@ -40,13 +44,16 @@ const ProfileEditForm = (): ReactElement => {
 
   useEffect(() => {
     dispatch(loadUserByToken(null));
+    return () => {
+      dispatch(clearState());
+    };
   }, []);
 
   useEffect(() => {
     async function getCategories() {
       try {
         const { data } = await axios.get(`${backUrl}/categories`);
-        const defaultCategoriesValue = data.map((e: { value: string }) => e.value);
+        const defaultCategoriesValue = data;
         console.log(defaultCategoriesValue);
         setDefaultValue(defaultCategoriesValue);
       } catch (e) {
@@ -83,6 +90,8 @@ const ProfileEditForm = (): ReactElement => {
 
   const handleChangeImage = useCallback(
     (e) => {
+      e.preventDefault();
+      console.log("dddd");
       console.log("image", e.target.files[0]);
       //   setStudyThumnail(e.target.files);
       //유사 배열을 배열처럼 쓰려고 forEacth call 빌려옴
@@ -105,6 +114,7 @@ const ProfileEditForm = (): ReactElement => {
       formData.append("categories", categorie);
     }
     dispatch(UpdateUserProfile(formData));
+    // router.push("/mypage");
   }, [ChangeUserName, 지역, Introduction, selectedValue, UserImage]);
 
   return (
@@ -112,10 +122,10 @@ const ProfileEditForm = (): ReactElement => {
       <Setting>프로필 설정</Setting>
 
       <AccountSetting encType="multipart/form-data" onFinish={onSubmit}>
-        <div style={{ width: "40%", height: "2rem" }}>
+        <ProfileImage>
           <input type="file" ref={imageInput} hidden onChange={handleChangeImage} />
           <button onClick={onClickImageUpload}>이미지 업로드</button>
-        </div>
+        </ProfileImage>
         <ProfileListBlock>
           <ProfileSettingList>이름</ProfileSettingList>
           <Input style={{ width: "50%", height: "2rem" }} value={ChangeUserName} onChange={handleChangeUserName} />
@@ -190,7 +200,7 @@ const ProfileEditForm = (): ReactElement => {
             <Select mode="multiple" placeholder="관심사 설정" onChange={handleChange관심사}>
               {defaultValue &&
                 defaultValue.map((e) => {
-                  return <Option value={e}>{e}</Option>;
+                  return <Option value={e.key}>{e.value}</Option>;
                 })}
             </Select>
           </Form.Item>

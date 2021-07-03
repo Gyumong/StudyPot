@@ -49,6 +49,9 @@ const initialState: IUser = {
   isFetching: false,
   isSuccess: false,
   isError: false,
+  loadUserLoading: false,
+  loadUserSuccess: false,
+  loadUserError: false,
   errorMessage: "",
 };
 
@@ -131,6 +134,9 @@ export const userSlice = createSlice({
     },
     logOut: (state) => {
       state.isLoggedIn = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.isError = false;
     },
   },
   extraReducers: (builder) => {
@@ -165,7 +171,7 @@ export const userSlice = createSlice({
       state.errorMessage = payload;
     });
     builder.addCase(loadUserByToken.pending, (state) => {
-      state.isFetching = true;
+      state.loadUserLoading = true;
     });
     builder.addCase(loadUserByToken.fulfilled, (state, { payload }) => {
       console.log(payload);
@@ -174,15 +180,15 @@ export const userSlice = createSlice({
       state.user.image = payload.image;
       state.user.introduction = payload.introduction;
       state.user.location = payload.location;
-      state.isFetching = false;
-      state.isSuccess = true;
-      state.isError = false;
+      state.loadUserLoading = false;
+      state.loadUserSuccess = true;
+      state.loadUserError = false;
       state.isLoggedIn = true;
     });
     builder.addCase(loadUserByToken.rejected, (state, { payload }: any) => {
-      state.isFetching = false;
-      state.isError = true;
-      state.isSuccess = false;
+      state.loadUserLoading = false;
+      state.loadUserError = true;
+      state.loadUserSuccess = false;
       state.errorMessage = payload;
       state.isLoggedIn = false;
     });

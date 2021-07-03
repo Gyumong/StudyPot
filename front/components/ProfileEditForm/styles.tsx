@@ -23,6 +23,7 @@ export const ProfileEditBlock = styled.div`
   padding: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const ProfileSubmitForm = styled.form`
@@ -37,19 +38,21 @@ export const Setting = styled.p`
   margin-top: 0;
 `;
 
-export const ProfileInputBox = styled.div`
+export const ProfileImage = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 80%;
+  justify-content: center;
+  width: 8rem;
+  height: 8rem;
   margin-left: 2rem;
+  border: 1px dashed #d9d9d9;
+  border-radius: 9999px;
+  position: absolute;
+  top: 0;
+  right: 5rem;
+  color: #4f4f4f;
 
-  position: relative;
-
-  & > img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 50%;
+  &:hover {
+    border-color: #70e0a8;
   }
 `;
 
@@ -162,31 +165,31 @@ export const SelfIntro = styled.p`
   margin-bottom: 1rem;
 `;
 
-export const ProfileImage = styled.div`
-  position: absolute;
-  right: 6rem;
+// export const ProfileImage = styled.div`
+//   position: absolute;
+//   right: 6rem;
 
-  & > button {
-    display: inline-flex;
-    border: 1px solid;
-    border-radius: 0.5rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    --tw-text-opacity: 1;
-    color: rgba(75, 85, 99, var(--tw-text-opacity));
-    --tw-bg-opacity: 1;
-    background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+//   & > button {
+//     display: inline-flex;
+//     border: 1px solid;
+//     border-radius: 0.5rem;
+//     padding-top: 0.25rem;
+//     padding-bottom: 0.25rem;
+//     padding-left: 0.5rem;
+//     padding-right: 0.5rem;
+//     --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+//     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+//     --tw-text-opacity: 1;
+//     color: rgba(75, 85, 99, var(--tw-text-opacity));
+//     --tw-bg-opacity: 1;
+//     background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 
-    &:focus {
-      outline: #26de81 solid 1px;
-      box-shadow: 0px 2px 12px #00000030;
-    }
-  }
-`;
+//     &:focus {
+//       outline: #26de81 solid 1px;
+//       box-shadow: 0px 2px 12px #00000030;
+//     }
+//   }
+// `;
 
 export const ImageEdit = styled.div`
   position: relative;

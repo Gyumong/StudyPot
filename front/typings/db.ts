@@ -3,6 +3,15 @@ export interface ITokenResponse {
   refreshToken: string;
 }
 
+export interface ModalList {
+  title: string;
+}
+
+export interface IModal {
+  modalList: ModalList | null;
+  show: boolean;
+}
+
 export interface IToken {
   expiredAt: number;
   iat: number;
@@ -17,6 +26,9 @@ export interface IUser {
   isError: boolean;
   errorMessage: string;
   isLoggedIn: boolean;
+  loadUserLoading: boolean;
+  loadUserSuccess: boolean;
+  loadUserError: boolean;
 }
 
 export interface IStudy {
