@@ -29,6 +29,6 @@
     "noEmit": true,
     "isolatedModules": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/slices/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/slices/index.js", "lib/store/configureStore.js"],
   "exclude": ["node_modules"]
 }
