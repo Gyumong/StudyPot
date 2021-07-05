@@ -67,6 +67,38 @@ export const StudyName = styled.p`
   }
 `;
 
+export const RecruitInput = styled.input`
+box-sizing: border-box;
+margin: 0;
+font-variant: tabular-nums;
+list-style: none;
+font-feature-settings: 'tnum';
+position: relative;
+display: inline-block;
+width: 40%;
+height: 2rem;
+min-width: 0;
+padding: 2px 11px;
+color: rgba(0, 0, 0, 0.85);
+line-height: 1.5715;
+background-color: #fff;
+background-image: none;
+border: 1px solid #d9d9d9;
+border-radius: 2px;
+transition: all 0.3s;
+&:hover {
+  border-color: #70e0a8;
+  border-right-width: 1px !important;
+}
+&:focus {
+  border-color: #70e0a8;
+  border-right-width: 1px !important;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(95, 228, 161, 0.2);
+}
+`;
+
+
 export const CategoryFormBlock = styled.div`
   display: flex;
   margin-top: 2rem;
@@ -179,4 +211,38 @@ export const StudyList = styled.div`
 
 export const StudyDetail = styled.p`
   color: #828282;
+`;
+
+export const StudyTextArea = styled.textarea`
+
+border: 1px solid #d9d9d9;
+border-radius: 2px;
+
+&:hover {
+  border-color: #70e0a8;
+  border-right-width: 1px !important;
+}
+&:focus {
+  border-color: #70e0a8;
+  border-right-width: 1px !important;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(95, 228, 161, 0.2);
+}
+
+`;
+
+export const HeadNumber = styled.select`
+border: 1px solid #d9d9d9;
+border-radius: 2px;
+transition: all 0.3s;
+&:hover {
+  border-color: #70e0a8;
+  border-right-width: 1px !important;
+}
+&:focus {
+  border-color: #70e0a8;
+  border-right-width: 1px !important;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(95, 228, 161, 0.2);
+}
 `;
