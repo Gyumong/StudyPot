@@ -314,6 +314,7 @@ const ProfileEditForm = (): ReactElement => {
               {passwordError && <Error>비밀번호는 문자,숫자조합 8자 이상만 가능합니다.</Error>}
               {mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}
               <ButtonGroup>
+                <EditButton onClick={onSubmitChangePassword}>변경하기</EditButton>
                 <EditButton
                   onClick={() => {
                     setpsChangeToggle(!psChangeToggle);
@@ -321,7 +322,6 @@ const ProfileEditForm = (): ReactElement => {
                 >
                   취소
                 </EditButton>
-                <EditButton onClick={onSubmitChangePassword}>변경하기</EditButton>
               </ButtonGroup>
             </CInputForm>
           )}
