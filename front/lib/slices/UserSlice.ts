@@ -33,6 +33,11 @@ interface rejectMessage {
   errorMessage: string;
 }
 
+interface passwordChangePayload {
+  changedPassword: string;
+  originalPassword: string;
+}
+
 const initialState: IUser = {
   user: {
     name: "",
@@ -55,9 +60,26 @@ const initialState: IUser = {
   signUpLoading: false,
   signUpSuccess: false,
   signUpError: false,
+  passwordChangeLoading: false,
+  passwordChangeSuccess: false,
+  passwordChangeError: false,
   errorMessage: "",
 };
 
+export const UpdateUserPassword = createAsyncThunk<null, passwordChangePayload, { rejectValue: rejectMessage }>(
+  "users/UpdateUserPassword",
+  async (data, thunkAPI) => {
+    try {
+      const response = await axiosWithToken.put(`/user`, data);
+      return response.data;
+    } catch (e) {
+      console.log("error");
+      return thunkAPI.rejectWithValue({
+        errorMessage: "비밀번호 변경에 실패했습니다.",
+      });
+    }
+  },
+);
 export const loadUserByToken = createAsyncThunk<IloadUser, any, { rejectValue: rejectMessage }>(
   "users/loadUserByToken",
   async (thunkAPI) => {
@@ -207,6 +229,20 @@ export const userSlice = createSlice({
       state.isFetching = false;
       state.isError = true;
       state.isSuccess = false;
+      state.errorMessage = payload;
+    });
+    builder.addCase(UpdateUserPassword.pending, (state) => {
+      state.passwordChangeLoading = true;
+    });
+    builder.addCase(UpdateUserPassword.fulfilled, (state) => {
+      state.passwordChangeLoading = false;
+      state.passwordChangeSuccess = true;
+      state.passwordChangeError = false;
+    });
+    builder.addCase(UpdateUserPassword.rejected, (state, { payload }: any) => {
+      state.passwordChangeLoading = false;
+      state.passwordChangeError = true;
+      state.passwordChangeSuccess = false;
       state.errorMessage = payload;
     });
   },

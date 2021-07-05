@@ -192,6 +192,10 @@ export const CInputForm = styled.div`
   justify-content: center;
   align-items: center;
 `;
+export const Error = styled.div`
+  color: #e01e5a;
+  margin: 8px 0 0;
+`;
 // export const ProfileImage = styled.div`
 //   position: absolute;
 //   right: 6rem;
