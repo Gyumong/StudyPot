@@ -13,7 +13,9 @@ import {
   EditButton,
   ProfileImage,
   ImageEdit,
-  colors,
+  CInput,
+  CInputForm,
+  ButtonGroup,
 } from "./styles";
 import { useRouter } from "next/router";
 import { Select, Cascader, Form, Input, Tag } from "antd";
@@ -41,6 +43,11 @@ const ProfileEditForm = (): ReactElement => {
   const [ChangeUserName, handleChangeUserName] = useInput("");
   const [지역, set지역] = useState([]);
   const [Introduction, setIntroduction] = useState("");
+
+  const [password, , setPassword] = useInput("");
+  const [passwordCheck, , setPasswordCheck] = useInput("");
+  const [psChangeToggle, setpsChangeToggle] = useState(false);
+  const [mismatchError, setMismatchError] = useState(false);
 
   useEffect(() => {
     dispatch(loadUserByToken(null));
@@ -100,6 +107,23 @@ const ProfileEditForm = (): ReactElement => {
       });
     },
     [UserImage],
+  );
+
+  const onChangePassword = useCallback(
+    (e) => {
+      setPassword(e.target.value);
+    },
+    [password],
+  );
+
+  const onChangePasswordCheck = useCallback(
+    (e) => {
+      setPasswordCheck(e.target.value);
+      if (password) {
+        setMismatchError(e.target.value !== password);
+      }
+    },
+    [password],
   );
 
   const onSubmit = useCallback(() => {
@@ -217,7 +241,48 @@ const ProfileEditForm = (): ReactElement => {
       <AccountSetting>
         <ChangePassword>
           <p>비밀번호 변경</p>
-          <AccountSettingButton>변경하기</AccountSettingButton>
+          {psChangeToggle && (
+            <AccountSettingButton
+              onClick={() => {
+                setpsChangeToggle(!psChangeToggle);
+              }}
+            >
+              변경하기
+            </AccountSettingButton>
+          )}
+          {!psChangeToggle && (
+            <CInputForm>
+              <CInput
+                type="password"
+                placeholder="비밀번호(문자,숫자조합 8자 이상)"
+                value={password}
+                style={{ margin: "0" }}
+                onChange={onChangePassword}
+              />
+              <CInput
+                type="password"
+                placeholder="비밀번호 체크"
+                value={passwordCheck}
+                onChange={onChangePasswordCheck}
+              />
+              <ButtonGroup>
+                <EditButton
+                  onClick={() => {
+                    setpsChangeToggle(!psChangeToggle);
+                  }}
+                >
+                  취소
+                </EditButton>
+                <EditButton
+                  onClick={() => {
+                    setpsChangeToggle(!psChangeToggle);
+                  }}
+                >
+                  변경하기
+                </EditButton>
+              </ButtonGroup>
+            </CInputForm>
+          )}
         </ChangePassword>
 
         <DeletedAccount>

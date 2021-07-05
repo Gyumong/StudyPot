@@ -17,6 +17,20 @@ export const colors = [
   "#253858",
   "#666666",
 ];
+export const CInput = styled.input`
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 5rem;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 0.5rem;
+  & + & {
+    margin-top: 2rem;
+  }
+  ::-webkit-input-placeholder {
+    color: #adb5bd;
+  }
+`;
 export const ProfileEditBlock = styled.div`
   width: 50vw;
   margin-bottom: 2rem;
@@ -165,6 +179,19 @@ export const SelfIntro = styled.p`
   margin-bottom: 1rem;
 `;
 
+export const ButtonGroup = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const CInputForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  justify-content: center;
+  align-items: center;
+`;
 // export const ProfileImage = styled.div`
 //   position: absolute;
 //   right: 6rem;
