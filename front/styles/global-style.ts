@@ -8,6 +8,12 @@ export const globalStyles = css`
     box-sizing: border-box;
     overflow-x : hidden;
   }
+
+  ::selection {
+    background: #26DE81;
+    color: #fff;
+ }
+
   a {
     text-decoration: none;
     color: inherit;
