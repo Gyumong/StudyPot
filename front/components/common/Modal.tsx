@@ -7,7 +7,7 @@ import { deleteModal } from "@lib/slices/ModalSlice";
 
 import StudyModal from "@components/StudyModal";
 
-const Modal: React.FC = ({ children }) => {
+const Modal: React.FC = () => {
   const [isBrowser, setIsBrowser] = useState(false);
   const dispatch = useDispatch();
   const { show } = useSelector((state: RootState) => state.modal);
@@ -22,11 +22,7 @@ const Modal: React.FC = ({ children }) => {
   };
 
   const modalContent = show ? (
-    <StyledModalOverlay
-      onClick={() => {
-        dispatch(deleteModal());
-      }}
-    >
+    <StyledModalOverlay onClick={handleCloseClick}>
       <StudyModal studyData={singleStudy} />
     </StyledModalOverlay>
   ) : null;

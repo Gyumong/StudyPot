@@ -28,7 +28,9 @@ import {
 
 import { LocationPin } from "@styled-icons/entypo";
 import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
-
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { JoinStudy } from "@lib/slices/StudySlice";
 interface StudyCardProps {
   studyId?: number;
   studyData: any;
@@ -36,11 +38,28 @@ interface StudyCardProps {
 
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
   console.log(studyData);
+  const dispatch = useDispatch();
+  const stopPropagation = useCallback((e) => {
+    e.stopPropagation();
+  }, []);
+
+  const onClickJoinStudy = useCallback(
+    (e) => {
+      if (studyData) {
+        dispatch(
+          JoinStudy({
+            studyId: studyData?.studyId,
+          }),
+        );
+      }
+    },
+    [studyData],
+  );
   if (!studyData) {
     return null;
   }
   return (
-    <BoxModel>
+    <BoxModel onClick={stopPropagation}>
       <SettingBox>
         <Shrink>
           <img src={studyData.thumbnailUrl} alt="mountains" className="w-full h-64 rounded-lg rounded-b-none" />
@@ -95,7 +114,7 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
               </InnerMiddle>
 
               <InnerBottom>
-                <ApplyButton>참여하기</ApplyButton>
+                <ApplyButton onClick={onClickJoinStudy}>참여하기</ApplyButton>
               </InnerBottom>
             </BackGround>
           </MemberBox>

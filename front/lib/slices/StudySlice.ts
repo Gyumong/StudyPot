@@ -63,6 +63,11 @@ interface IMakeStudy {
   formData: FormData;
 }
 
+interface IJoinStudy {
+  joinContent?: string;
+  studyId: number;
+}
+
 interface StudyInitialType {
   isFetching: boolean;
   isSuccess: boolean;
@@ -105,17 +110,21 @@ const initialState: StudyInitialType = {
   singleStudy: null,
 };
 
-// export const JoinStudy = createAsyncThunk("study/JoinStudy", async (data, thunkAPI) => {
-//   try {
-//     const response = await axiosWithToken.post(`/study/${data.studyId}`);
-//     return response.data;
-//   } catch (e) {
-//     console.log("스터디 가입 에러", e);
-//     return thunkAPI.rejectWithValue({
-//       errorMessage: "스터디 조인에 실패했습니다.",
-//     });
-//   }
-// });
+export const JoinStudy = createAsyncThunk<any, IJoinStudy, { rejectValue: rejectMessage }>(
+  "study/JoinStudy",
+  async (data, thunkAPI) => {
+    try {
+      const { studyId } = data;
+      const response = await axiosWithToken.post(`/study/${studyId}`, data);
+      return response.data;
+    } catch (e) {
+      console.log("스터디 가입 에러", e);
+      return thunkAPI.rejectWithValue({
+        errorMessage: "스터디 조인에 실패했습니다.",
+      });
+    }
+  },
+);
 
 export const LoadOneStudy = createAsyncThunk<
   ILoadOneStudy,
@@ -252,20 +261,19 @@ export const studySlice = createSlice({
       state.isSuccess = false;
       state.errorMessage = payload;
     });
-    // builder.addCase(JoinStudy.pending, (state) => {
-    //   state.joinStudyLoading = true;
-    // });
-    // builder.addCase(JoinStudy.fulfilled, (state, { payload }) => {
-    //   console.log(payload);
-    //   state.joinStudyLoading = false;
-    //   state.joinStudySuccess = true;
-    //   state.joinStudyError = false;
-    // });
-    // builder.addCase(JoinStudy.rejected, (state) => {
-    //   state.joinStudyLoading = false;
-    //   state.joinStudyError = true;
-    //   state.joinStudySuccess = false;
-    // });
+    builder.addCase(JoinStudy.pending, (state) => {
+      state.joinStudyLoading = true;
+    });
+    builder.addCase(JoinStudy.fulfilled, (state, { payload }) => {
+      state.joinStudyLoading = false;
+      state.joinStudySuccess = true;
+      state.joinStudyError = false;
+    });
+    builder.addCase(JoinStudy.rejected, (state) => {
+      state.joinStudyLoading = false;
+      state.joinStudyError = true;
+      state.joinStudySuccess = false;
+    });
   },
 });
 
