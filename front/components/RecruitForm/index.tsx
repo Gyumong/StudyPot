@@ -15,10 +15,7 @@ import {
   Description,
   RecruitInput,
   StudyTextArea,
-  HeadNumber
 } from "./styles";
-
-import SingleSelect from "@components/common/SingleSelect";
 
 import { Radio,  Select, Cascader, Form, Input } from "antd";
 import { InboxOutlined } from '@ant-design/icons';
@@ -155,7 +152,7 @@ const RecruitForm = (): ReactElement => {
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
          
-          <RecruitInput maxLength={32} value={StudyTitle} onChange={handleChangeStudyTitle} />  
+          <RecruitInput required maxLength={32} value={StudyTitle} onChange={handleChangeStudyTitle} />  
         </StudyName>
 
         <CategoryFormBlock>
@@ -244,20 +241,21 @@ const RecruitForm = (): ReactElement => {
         <HeadCount>
           <RecruitFormList>인원설정</RecruitFormList>
 
-          <SingleSelect/>
+     
 
-          {/* <HeadNumber onChange={handleChangeMaxMember}>
-            <option value="number">인원수</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </HeadNumber> */}
+          <Form.Item style={{ width: "40%" }}>
+            <Select placeholder="인원수" onChange={handleChangeMaxMember}>
+              <Option value="2">2</Option>
+              <Option value="3">3</Option>
+              <Option value="4">4</Option>
+              <Option value="5">5</Option>
+              <Option value="6">6</Option>
+              <Option value="7">7</Option>
+              <Option value="8">8</Option>
+              <Option value="9">9</Option>
+              <Option value="10">10</Option>
+            </Select>
+          </Form.Item>
 
         </HeadCount>
 
@@ -287,7 +285,7 @@ const RecruitForm = (): ReactElement => {
 
         <Description> 스터디 설명</Description>
 
-        <StudyTextArea maxLength={255} value={StudyContent} onChange={handleChangeStudyContent} />
+        <StudyTextArea required maxLength={255} value={StudyContent} onChange={handleChangeStudyContent} />
 
         <EditButton>등록</EditButton>
       </RecruitSubmitForm>

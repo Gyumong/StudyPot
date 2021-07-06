@@ -231,18 +231,3 @@ border-radius: 2px;
 
 `;
 
-export const HeadNumber = styled.select`
-border: 1px solid #d9d9d9;
-border-radius: 2px;
-transition: all 0.3s;
-&:hover {
-  border-color: #70e0a8;
-  border-right-width: 1px !important;
-}
-&:focus {
-  border-color: #70e0a8;
-  border-right-width: 1px !important;
-  outline: 0;
-  box-shadow: 0 0 0 2px rgba(95, 228, 161, 0.2);
-}
-`;
