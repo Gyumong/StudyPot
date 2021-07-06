@@ -22,6 +22,7 @@ import { LoadOneStudy } from "@lib/slices/StudySlice";
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { contentArray } from "@lib/slices/StudySlice";
+import { popModal } from "@lib/slices/ModalSlice";
 interface StudyCardProps {
   studyId: number;
   study: contentArray;
@@ -30,13 +31,13 @@ interface StudyCardProps {
 const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
   const dispatch = useDispatch();
   const exampleOnClick = useCallback(() => {
+    dispatch(popModal(null));
     dispatch(
       LoadOneStudy({
         studyId: studyId,
       }),
     );
-    console.log(studyId);
-  }, []);
+  }, [dispatch]);
 
   return (
     <BoxModel onClick={exampleOnClick}>

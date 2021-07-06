@@ -12,6 +12,8 @@ interface categoriestype {
   value: string;
 }
 export interface contentArray {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  map(arg0: (i: any) => any): any;
   id: number;
   thumbnail: string;
   categories: categoriestype;
@@ -72,6 +74,9 @@ interface StudyInitialType {
   selected: boolean;
   last: boolean;
   singleStudy: ILoadOneStudy | null;
+  LoadStudyLoading: boolean;
+  LoadStudySuccess: boolean;
+  LoadStudyError: boolean;
   joinStudyLoading: boolean;
   joinStudySuccess: boolean;
   joinStudyError: boolean;
@@ -83,6 +88,9 @@ const initialState: StudyInitialType = {
   isFetching: false,
   isSuccess: false,
   isError: false,
+  LoadStudyLoading: false,
+  LoadStudySuccess: false,
+  LoadStudyError: false,
   joinStudyLoading: false,
   joinStudySuccess: false,
   joinStudyError: false,
@@ -203,7 +211,7 @@ export const studySlice = createSlice({
       state.errorMessage = payload;
     });
     builder.addCase(LoadStudy.pending, (state) => {
-      state.isFetching = true;
+      state.LoadStudyLoading = true;
     });
     builder.addCase(LoadStudy.fulfilled, (state, { payload }) => {
       const Chocie = state.selectedCategory === "" ? null : state.selectedCategory;
@@ -213,18 +221,19 @@ export const studySlice = createSlice({
         state.selected = false;
         console.log("change");
       }
-      state.study = state.study.concat(payload.contents);
 
+      state.study = state.study.concat(payload.contents);
+      // const post = state.study.filter((item, index) => state.study.indexOf(item) === index);
       state.last = payload.last;
       state.lastIdOfStudyList = payload.lastIdOfStudyList;
-      state.isFetching = false;
-      state.isSuccess = true;
-      state.isError = false;
+      state.LoadStudyLoading = false;
+      state.LoadStudySuccess = true;
+      state.LoadStudyError = false;
     });
     builder.addCase(LoadStudy.rejected, (state, { payload }: any) => {
-      state.isFetching = false;
-      state.isError = true;
-      state.isSuccess = false;
+      state.LoadStudyLoading = false;
+      state.LoadStudyError = true;
+      state.LoadStudySuccess = false;
       state.errorMessage = payload;
     });
     builder.addCase(LoadOneStudy.pending, (state) => {
