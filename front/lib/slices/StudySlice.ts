@@ -85,20 +85,33 @@ interface StudyInitialType {
   joinStudyLoading: boolean;
   joinStudySuccess: boolean;
   joinStudyError: boolean;
+  LoadStudyMembersLoading: boolean;
+  LoadStudyMembersSuccess: boolean;
+  LoadStudyMembersError: boolean;
+  MakeStudyLoading: boolean;
+  MakeStudySuccess: boolean;
+  MakeStudyError: boolean;
   selectedCategory: string;
   filteredStudy: Array<contentArray>;
+  studyMembers: any;
 }
 
 const initialState: StudyInitialType = {
   isFetching: false,
   isSuccess: false,
   isError: false,
+  MakeStudyLoading: false,
+  MakeStudySuccess: false,
+  MakeStudyError: false,
   LoadStudyLoading: false,
   LoadStudySuccess: false,
   LoadStudyError: false,
   joinStudyLoading: false,
   joinStudySuccess: false,
   joinStudyError: false,
+  LoadStudyMembersLoading: false,
+  LoadStudyMembersSuccess: false,
+  LoadStudyMembersError: false,
   errorMessage: "",
   filterCategory: "",
   selectedCategory: "",
@@ -108,7 +121,24 @@ const initialState: StudyInitialType = {
   lastIdOfStudyList: 0,
   last: false,
   singleStudy: null,
+  studyMembers: null,
 };
+
+export const LoadStudyMembers = createAsyncThunk<any, any, { rejectValue: rejectMessage }>(
+  "study/LoadStudyMembers",
+  async (data, thunkAPI) => {
+    try {
+      const { studyId } = data;
+      const response = await axiosWithToken.get(`/study/${studyId}/members`);
+      return response.data;
+    } catch (e) {
+      console.log("스터디 멤버 불러오기가 실패 에러", e);
+      return thunkAPI.rejectWithValue({
+        errorMessage: "스터디 멤버 불러오기가 실패했습니다.",
+      });
+    }
+  },
+);
 
 export const JoinStudy = createAsyncThunk<any, IJoinStudy, { rejectValue: rejectMessage }>(
   "study/JoinStudy",
@@ -206,17 +236,17 @@ export const studySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(MakeStudy.pending, (state) => {
-      state.isFetching = true;
+      state.MakeStudyLoading = true;
     });
     builder.addCase(MakeStudy.fulfilled, (state) => {
-      state.isFetching = false;
-      state.isSuccess = true;
-      state.isError = false;
+      state.MakeStudyLoading = false;
+      state.MakeStudySuccess = true;
+      state.MakeStudyError = false;
     });
     builder.addCase(MakeStudy.rejected, (state, { payload }: any) => {
-      state.isFetching = false;
-      state.isError = true;
-      state.isSuccess = false;
+      state.MakeStudyLoading = false;
+      state.MakeStudyError = true;
+      state.MakeStudySuccess = false;
       state.errorMessage = payload;
     });
     builder.addCase(LoadStudy.pending, (state) => {
@@ -273,6 +303,19 @@ export const studySlice = createSlice({
       state.joinStudyLoading = false;
       state.joinStudyError = true;
       state.joinStudySuccess = false;
+    });
+    builder.addCase(LoadStudyMembers.pending, (state) => {
+      state.LoadStudyMembersLoading = true;
+    });
+    builder.addCase(LoadStudyMembers.fulfilled, (state, { payload }) => {
+      state.LoadStudyMembersLoading = false;
+      state.LoadStudyMembersSuccess = true;
+      state.LoadStudyMembersError = false;
+    });
+    builder.addCase(LoadStudyMembers.rejected, (state) => {
+      state.LoadStudyMembersLoading = false;
+      state.LoadStudyMembersError = true;
+      state.LoadStudyMembersSuccess = false;
     });
   },
 });

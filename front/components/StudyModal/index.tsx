@@ -12,18 +12,11 @@ import {
   Top,
   Bottom,
   UserBox,
-  BackGround,
   UserImgBox,
   UserName,
   Date,
   JoinButton,
-  MemberBox,
-  InnerTop,
-  InnerMiddle,
-  InnerBottom,
   MainBox,
-  MemberButton,
-  ApplyButton,
 } from "./styles";
 
 import { LocationPin } from "@styled-icons/entypo";
@@ -32,37 +25,17 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { JoinStudy } from "@lib/slices/StudySlice";
 import { RootState } from "@lib/slices";
+import StudyMemberBox from "./../StudyMemberBox/index";
 interface StudyCardProps {
   studyId?: number;
   studyData: any;
 }
 
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
-  const [joinPending, setJoinPending] = useState(false);
-  console.log(studyData);
-  const dispatch = useDispatch();
-  const { joinStudyLoading, joinStudySuccess } = useSelector((state: RootState) => state.study);
-  useEffect(() => {
-    if (!joinStudyLoading && joinStudySuccess) {
-      setJoinPending(true);
-    }
-  }, [joinStudyLoading, joinStudySuccess, joinPending]);
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
 
-  const onClickJoinStudy = useCallback(
-    (e) => {
-      if (studyData) {
-        dispatch(
-          JoinStudy({
-            studyId: studyData?.studyId,
-          }),
-        );
-      }
-    },
-    [studyData],
-  );
   if (!studyData) {
     return null;
   }
@@ -109,23 +82,7 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
               </JoinButton>
             </Bottom>
           </TextBox>
-          <MemberBox>
-            <BackGround>
-              <InnerTop>
-                <MemberButton>스터디멤버</MemberButton>
-                <MemberButton>일정</MemberButton>
-                <MemberButton>게시판</MemberButton>
-              </InnerTop>
-
-              <InnerMiddle>
-                <p>멤버가 되시면 상세 내용을 확인하실 수 있습니다.</p>
-              </InnerMiddle>
-
-              <InnerBottom>
-                <ApplyButton onClick={onClickJoinStudy}>{joinPending ? "대기중" : "참여하기"}</ApplyButton>
-              </InnerBottom>
-            </BackGround>
-          </MemberBox>
+          <StudyMemberBox studyData={studyData} />
         </MainBox>
       </SettingBox>
     </BoxModel>
