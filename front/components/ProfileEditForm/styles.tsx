@@ -18,8 +18,7 @@ export const colors = [
   "#666666",
 ];
 export const CInput = styled.input`
-  width: 100%;
-  font-size: 1rem;
+  width: 90%;
   margin-top: 5rem;
   border: none;
   border-bottom: 1px solid #e5e5e5;
@@ -84,6 +83,41 @@ export const EditButton = styled(Button)<Props>`
   width: 8rem;
   height: 2rem;
   margin-top: 2rem;
+  
+`;
+
+export const ChangeButton = styled(Button)<Props>`
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  width: 8rem;
+  height: 2rem;
+  margin-top: 2rem;
+  background-color: #ffffff;
+  border: 2px solid #26de81;
+  color: #26de81;
+  &:hover {
+    background: #70e0a8;
+    color: #ffffff;
+  }
+  
+`;
+
+export const CancleButton = styled(Button)<Props>`
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  width: 8rem;
+  height: 2rem;
+  margin-top: 2rem;
+  background-color: #ffffff;
+  border: 2px solid #adb5bd;
+  color: rgba(75, 85, 99, var(--tw-text-opacity));
+  &:hover {
+    --tw-bg-opacity: 1;
+background-color: rgba(156, 163, 175, var(--tw-bg-opacity));;
+color:  #ffffff;
+  }
 `;
 
 export const AccountSetting = styled(Form)`
@@ -181,7 +215,7 @@ export const SelfIntro = styled.p`
 
 export const ButtonGroup = styled.div`
   display: flex;
-  width: 100%;
+  width: 90%;
   justify-content: space-between;
 `;
 
