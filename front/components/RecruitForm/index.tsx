@@ -149,15 +149,14 @@ const RecruitForm = (): ReactElement => {
   return (
     <RecruitFormBlock>
       <RecruitSubmitForm encType="multipart/form-data" onFinish={onSubmitMakeStudy}>
-        <ImageUploader>
+        <ImageUploader onClick={onClickImageUpload}>
           <p
             style={{ width: "15rem", marginBottom: "0", color: "#70e0a8", fontSize: "3rem" }}
             className="ant-upload-drag-icon"
           >
             <InboxOutlined />
           </p>
-          <input type="file" ref={imageInput} />
-          {/* <button onClick={onClickImageUpload}>image</button> */}
+          <input onChange={handleChangeImage} type="file" hidden ref={imageInput} />
         </ImageUploader>
 
         <StudyName>
