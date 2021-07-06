@@ -28,17 +28,25 @@ import {
 
 import { LocationPin } from "@styled-icons/entypo";
 import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { JoinStudy } from "@lib/slices/StudySlice";
+import { RootState } from "@lib/slices";
 interface StudyCardProps {
   studyId?: number;
   studyData: any;
 }
 
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
+  const [joinPending, setJoinPending] = useState(false);
   console.log(studyData);
   const dispatch = useDispatch();
+  const { joinStudyLoading, joinStudySuccess } = useSelector((state: RootState) => state.study);
+  useEffect(() => {
+    if (!joinStudyLoading && joinStudySuccess) {
+      setJoinPending(true);
+    }
+  }, [joinStudyLoading, joinStudySuccess, joinPending]);
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
@@ -114,7 +122,7 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
               </InnerMiddle>
 
               <InnerBottom>
-                <ApplyButton onClick={onClickJoinStudy}>참여하기</ApplyButton>
+                <ApplyButton onClick={onClickJoinStudy}>{joinPending ? "대기중" : "참여하기"}</ApplyButton>
               </InnerBottom>
             </BackGround>
           </MemberBox>
