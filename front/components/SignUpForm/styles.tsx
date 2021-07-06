@@ -99,7 +99,7 @@ export const Desc = styled.div`
 
 export const Error = styled.div`
   color: #e01e5a;
-  margin: 8px 0 16px;
+  margin: 8px 0 0;
 `;
 
 export const Success = styled.div`
@@ -107,14 +107,14 @@ export const Success = styled.div`
   font-weight: bold;
 `;
 export const SignUpButton = styled(Button)`
-  margin-top: 2rem;
+  margin-top: 1rem;
 `;
 
-export const SelfIntro = styled.p`
+export const SelfIntro = styled.div`
   color: #4f4f4f;
 `;
 
-export const SignUpInnerBox = styled.p``;
+export const SignUpInnerBox = styled.div``;
 
 export const Interest = styled.div`
   margin-bottom: 3rem;

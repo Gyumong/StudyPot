@@ -15,7 +15,7 @@ const find = (): ReactElement => {
   const { study, last, isFetching, selectedCategory } = useSelector((state: RootState) => state.study);
 
   const dispatch = useDispatch();
-  const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 3000), [dispatch]);
+  const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 200), [dispatch]);
   useEffect(() => {
     window.scrollTo(0, 0);
 
