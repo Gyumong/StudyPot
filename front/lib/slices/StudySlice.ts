@@ -311,11 +311,13 @@ export const studySlice = createSlice({
       state.LoadStudyMembersLoading = false;
       state.LoadStudyMembersSuccess = true;
       state.LoadStudyMembersError = false;
+      state.studyMembers = payload;
     });
     builder.addCase(LoadStudyMembers.rejected, (state) => {
       state.LoadStudyMembersLoading = false;
       state.LoadStudyMembersError = true;
       state.LoadStudyMembersSuccess = false;
+      state.studyMembers = null;
     });
   },
 });

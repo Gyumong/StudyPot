@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { JoinStudy } from "@lib/slices/StudySlice";
 import { RootState } from "@lib/slices";
 import { LoadStudyMembers } from "./../../lib/slices/StudySlice";
+import { MemberList, InnerMiddleMemberBox, MemberBackGround, MemberImgBox, MemberDesc } from "./styles";
 interface StudyProMemberBoxProps {
   studyData: any;
 }
@@ -19,7 +20,7 @@ const StudyMemberBox: React.FC<StudyProMemberBoxProps> = ({ studyData }) => {
   const [joinPending, setJoinPending] = useState(false);
   console.log(studyData);
   const dispatch = useDispatch();
-  const { joinStudyLoading, joinStudySuccess } = useSelector((state: RootState) => state.study);
+  const { joinStudyLoading, joinStudySuccess, studyMembers } = useSelector((state: RootState) => state.study);
   useEffect(() => {
     if (!joinStudyLoading && joinStudySuccess) {
       setJoinPending(true);
@@ -31,7 +32,8 @@ const StudyMemberBox: React.FC<StudyProMemberBoxProps> = ({ studyData }) => {
         studyId: studyData?.studyId,
       }),
     );
-  }, []);
+  }, [studyData]);
+
   const onClickJoinStudy = useCallback(
     (e) => {
       if (studyData) {
@@ -44,6 +46,53 @@ const StudyMemberBox: React.FC<StudyProMemberBoxProps> = ({ studyData }) => {
     },
     [studyData],
   );
+
+  if (studyMembers?.isMember) {
+    return (
+      <MemberBox>
+        <MemberBackGround>
+          <InnerTop>
+            <MemberButton>스터디멤버</MemberButton>
+            <MemberButton>일정</MemberButton>
+            <MemberButton>게시판</MemberButton>
+          </InnerTop>
+
+          <InnerMiddleMemberBox>
+            <MemberList>
+              <MemberImgBox>
+                <img
+                  src={studyMembers?.studyMemberList[0].imageUrl}
+                  alt="mountains"
+                  className="w-full h-64 rounded-lg rounded-b-none"
+                />
+              </MemberImgBox>
+              <MemberDesc>{studyMembers?.studyMemberList[0].userName}</MemberDesc>
+            </MemberList>
+            <MemberList>
+              <MemberImgBox>
+                <img
+                  src={studyMembers?.studyMemberList[0].imageUrl}
+                  alt="mountains"
+                  className="w-full h-64 rounded-lg rounded-b-none"
+                />
+              </MemberImgBox>
+              <MemberDesc>{studyMembers?.studyMemberList[0].userName}</MemberDesc>
+            </MemberList>
+            <MemberList>
+              <MemberImgBox>
+                <img
+                  src={studyMembers?.studyMemberList[0].imageUrl}
+                  alt="mountains"
+                  className="w-full h-64 rounded-lg rounded-b-none"
+                />
+              </MemberImgBox>
+              <MemberDesc>{studyMembers?.studyMemberList[0].userName}</MemberDesc>
+            </MemberList>
+          </InnerMiddleMemberBox>
+        </MemberBackGround>
+      </MemberBox>
+    );
+  }
   return (
     <MemberBox>
       <BackGround>

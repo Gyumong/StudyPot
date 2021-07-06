@@ -39,6 +39,7 @@ const ProfileEditForm = (): ReactElement => {
   const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const { passwordChangeSuccess, passwordChangeLoading } = useSelector((state: RootState) => state.users);
+
   const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
   const [UserImage, setUserImage] = useState<Blob>();
   const [selectedValue, setSelectedValue] = useState([]);
