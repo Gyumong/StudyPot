@@ -32,6 +32,9 @@ export interface IUser {
   signUpLoading: boolean;
   signUpSuccess: boolean;
   signUpError: boolean;
+  passwordChangeLoading: boolean;
+  passwordChangeSuccess: boolean;
+  passwordChangeError: boolean;
 }
 
 export interface IStudy {
