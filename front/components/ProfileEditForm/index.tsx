@@ -39,6 +39,7 @@ const ProfileEditForm = (): ReactElement => {
   const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const { passwordChangeSuccess, passwordChangeLoading } = useSelector((state: RootState) => state.users);
+
   const [defaultValue, setDefaultValue] = useState<Array<IdefaultValue>>([]);
   const [UserImage, setUserImage] = useState<Blob>();
   const [selectedValue, setSelectedValue] = useState([]);
@@ -226,32 +227,6 @@ const ProfileEditForm = (): ReactElement => {
                     {
                       value: "관악구",
                       label: "관악구",
-                    },
-                  ],
-                },
-                {
-                  value: "부산광역시",
-                  label: "부산광역시",
-                  children: [
-                    {
-                      value: "강서구",
-                      label: "강서구",
-                    },
-                    {
-                      value: "금정구",
-                      label: "금정구",
-                    },
-                    {
-                      value: "기장군",
-                      label: "기장군",
-                    },
-                    {
-                      value: "남구",
-                      label: "남구",
-                    },
-                    {
-                      value: "동구",
-                      label: "동구",
                     },
                   ],
                 },

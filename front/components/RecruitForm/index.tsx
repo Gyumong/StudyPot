@@ -15,19 +15,22 @@ import {
   Description,
 } from "./styles";
 
-import { Radio,  Select, Cascader, Form, Input } from "antd";
-import { InboxOutlined } from '@ant-design/icons';
+import { Radio, Select, Cascader, Form, Input } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import axios from "axios";
 import { backUrl } from "config/config";
 import useInput from "@hooks/useInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MakeStudy } from "@lib/slices/StudySlice";
+import { useRouter } from "next/router";
+import { RootState } from "@lib/slices";
 
 type IStudyState = "OPEN" | "CLOSE";
 type IStudyType = "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
 const RecruitForm = (): ReactElement => {
   const imageInput = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const [StudyTitle, handleChangeStudyTitle] = useInput("");
   const [defaultValue, setDefaultValue] = useState([]);
   const [selectedValue, setSelectedValue] = useState([]);
@@ -39,6 +42,7 @@ const RecruitForm = (): ReactElement => {
   const [StudyThumbnail, setStudyThumnail] = useState<Blob>();
 
   const dispatch = useDispatch();
+  const { MakeStudyLoading, MakeStudySuccess } = useSelector((state: RootState) => state.study);
   useEffect(() => {
     async function getCategories() {
       try {
@@ -52,6 +56,12 @@ const RecruitForm = (): ReactElement => {
     }
     getCategories();
   }, []);
+
+  useEffect(() => {
+    if (!MakeStudyLoading && MakeStudySuccess) {
+      router.push("/find");
+    }
+  }, [MakeStudyLoading, MakeStudySuccess]);
 
   const handleChangeCategories = useCallback(
     (value) => {
@@ -139,17 +149,19 @@ const RecruitForm = (): ReactElement => {
   return (
     <RecruitFormBlock>
       <RecruitSubmitForm encType="multipart/form-data" onFinish={onSubmitMakeStudy}>
-          <ImageUploader>
-              <p style={{ width: "15rem", marginBottom:"0", color:"#70e0a8", fontSize: "3rem" }} className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <input type="file" ref={imageInput} />
-            {/* <button onClick={onClickImageUpload}>image</button> */}
-          </ImageUploader>
+        <ImageUploader onClick={onClickImageUpload}>
+          <p
+            style={{ width: "15rem", marginBottom: "0", color: "#70e0a8", fontSize: "3rem" }}
+            className="ant-upload-drag-icon"
+          >
+            <InboxOutlined />
+          </p>
+          <input onChange={handleChangeImage} type="file" hidden ref={imageInput} />
+        </ImageUploader>
 
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
-         
+
           <Input style={{ width: "40%", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
         </StudyName>
 
@@ -201,32 +213,6 @@ const RecruitForm = (): ReactElement => {
                     {
                       value: "관악구",
                       label: "관악구",
-                    },
-                  ],
-                },
-                {
-                  value: "부산광역시",
-                  label: "부산광역시",
-                  children: [
-                    {
-                      value: "강서구",
-                      label: "강서구",
-                    },
-                    {
-                      value: "금정구",
-                      label: "금정구",
-                    },
-                    {
-                      value: "기장군",
-                      label: "기장군",
-                    },
-                    {
-                      value: "남구",
-                      label: "남구",
-                    },
-                    {
-                      value: "동구",
-                      label: "동구",
                     },
                   ],
                 },

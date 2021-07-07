@@ -24,7 +24,6 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   &:hover {
-
     background: #70e0a8;
     color: #ffffff;
 
@@ -39,7 +38,6 @@ const StyledButton = styled.button`
     outline: none;
     box-shadow: 0px 2px 12px #00000030;
   }
-  
 `;
 
 const Button: FC<Props> = (props) => <StyledButton {...props} />;
