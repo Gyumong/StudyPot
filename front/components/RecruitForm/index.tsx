@@ -216,32 +216,6 @@ const RecruitForm = (): ReactElement => {
                     },
                   ],
                 },
-                {
-                  value: "부산광역시",
-                  label: "부산광역시",
-                  children: [
-                    {
-                      value: "강서구",
-                      label: "강서구",
-                    },
-                    {
-                      value: "금정구",
-                      label: "금정구",
-                    },
-                    {
-                      value: "기장군",
-                      label: "기장군",
-                    },
-                    {
-                      value: "남구",
-                      label: "남구",
-                    },
-                    {
-                      value: "동구",
-                      label: "동구",
-                    },
-                  ],
-                },
               ]}
             />
           </Form.Item>
