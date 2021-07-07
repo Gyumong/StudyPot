@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@craco/craco": "^6.1.2",
@@ -15,7 +16,7 @@
     "@emotion/styled": "^11.3.0",
     "@reduxjs/toolkit": "1.5.1",
     "@styled-icons/octicons": "^10.33.0",
-    "antd": "^4.15.5",
+    "antd": "^4.16.6",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.5.0",
@@ -28,6 +29,7 @@
     "next-images": "^1.7.0",
     "next-redux-saga": "4.1.2",
     "next-redux-wrapper": "6.0.2",
+    "patch-package": "^6.4.7",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
     "react-dom": "^17.0.2",
