@@ -12,10 +12,32 @@ height: 300px;
 padding: 5rem;
 background-color: #ffffff;
 
-& > h1 {
-    font-weight: 300;
-    font-size: 1.875rem;
+${props => props.theme.mq.mobileL} {
+  
+  height: 150px;
+  padding: 2.5rem;
+  
 }
+
+${props => props.theme.mq.laptop} {
+
+ height: 300px;
+ padding: 5rem;
+}
+
+`;
+
+export const FrameCopy = styled.div`
+
+${props => props.theme.mq.mobileL} {
+  
+  font-size: 1.125rem;
+}
+
+${props => props.theme.mq.laptop} {
+ font-size: 1.875rem;
+}
+
 `;
 
 export const ButtonBox = styled.div`
@@ -23,6 +45,17 @@ export const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
 
+
+${props => props.theme.mq.mobileL} {
+  margin-left: 5rem;
+  flex-direction:column;
+  
+}
+
+${props => props.theme.mq.laptop} {
+  margin-left: 0rem;
+  flex-direction:row;
+}
 `;
 
 
@@ -42,4 +75,14 @@ export const LoginButton = styled(Button)`
     background: #70e0a8;
     color: #ffffff;
   }
+
+
+${props => props.theme.mq.mobileL} {
+  margin-top: 1.5rem;
+  
+}
+
+${props => props.theme.mq.laptop} {
+  margin-top: 0rem;
+}
 `;
