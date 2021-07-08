@@ -7,13 +7,18 @@ import { ConnectedRouter } from "connected-next-router";
 import wrapper from "@lib/store/configureStore";
 import 'tailwindcss/tailwind.css';
 
+import {ThemeProvider} from '@emotion/react';
+import theme from '@styles/theme';
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Global styles={globalStyles} />
-      <ConnectedRouter>
-        <Component {...pageProps} />
-      </ConnectedRouter>
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyles} />
+        <ConnectedRouter>
+          <Component {...pageProps} />
+        </ConnectedRouter>
+      </ThemeProvider>
     </>
   );
 }
