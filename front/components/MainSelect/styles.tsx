@@ -23,11 +23,15 @@ export const BoxModel = styled.div`
 
 
   ${props => props.theme.mq.mobileL} {
-    left: 0.125rem;
+    left: 2.5rem;
+    width: 25rem;
+  height: 5rem;
     }
    
     ${props => props.theme.mq.laptop} {
       left: 30rem;
+      width: 30rem;
+  height: 5rem;
     }
 
 `;

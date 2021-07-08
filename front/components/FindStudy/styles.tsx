@@ -22,8 +22,6 @@ export const GridBox = styled.div`
   ${props => props.theme.mq.mobileL} {
     grid-template-columns: repeat(1, minmax(0, 1fr));
     }
-
- 
    
     ${props => props.theme.mq.laptop} {
       grid-template-columns: repeat(3, minmax(0, 1fr));
