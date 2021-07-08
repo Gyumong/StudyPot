@@ -150,7 +150,7 @@ const RecruitForm = (): ReactElement => {
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
          
-          <Input style={{ width: "40%", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
+          <Input style={{ width: "13rem", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
         </StudyName>
 
         <CategoryFormBlock>
@@ -173,7 +173,7 @@ const RecruitForm = (): ReactElement => {
         <Location>
           <RecruitFormList>지역</RecruitFormList>
 
-          <Form.Item style={{ width: "40%" }}>
+          <Form.Item style={{ width: "13rem" }}>
             <Cascader
               placeholder="지역 설정"
               onChange={handleChangeLocatedAt}
@@ -237,7 +237,7 @@ const RecruitForm = (): ReactElement => {
 
         <HeadCount>
           <RecruitFormList>인원설정</RecruitFormList>
-          <Form.Item style={{ width: "40%" }}>
+          <Form.Item style={{ width: "13rem" }}>
             <Select placeholder="인원수" onChange={handleChangeMaxMember}>
               <Option value="1">1</Option>
               <Option value="2">2</Option>
