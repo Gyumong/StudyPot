@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Button from "../common/Button";
 
+
 interface Props {
   name?: string;
   className?: string;
@@ -16,6 +17,8 @@ export const MainFrame = styled.div`
   height: 5rem;
   background-color: white;
   border-bottom: 1px solid #eeefee;
+
+
 `;
 
 export const Logo = styled.a`
@@ -24,6 +27,16 @@ export const Logo = styled.a`
   left: 5%;
   text-decoration: none;
   cursor: pointer;
+
+  ${props => props.theme.mq.mobileL} {
+   width: 20%;
+  }
+ 
+  ${props => props.theme.mq.laptop} {
+    width: 100%;
+  }
+
+ 
 `;
 
 export const MenuFrame = styled.ul`
@@ -32,6 +45,17 @@ export const MenuFrame = styled.ul`
   top: 0.5rem;
   left: 40%;
   color: #4f4f4f;
+
+  ${props => props.theme.mq.mobileL} {
+  
+    left: 28%;
+   }
+  
+   ${props => props.theme.mq.laptop} {
+  
+    left: 40%;
+   }
+ 
 `;
 
 export const MenuItem = styled.li`
@@ -46,26 +70,62 @@ export const MenuItem = styled.li`
   & + & {
     margin-left: 2rem;
   }
+
+  ${props => props.theme.mq.mobileL} {
+    font-size: 0.875rem;
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      font-size: 1rem;
+    }
 `;
 
 export const ButtonFrame = styled.div`
   position: absolute;
   top: 0;
   left: 74%;
+  ${props => props.theme.mq.mobileL} {
+    left: 65%;
+    
+    }
+   
+    ${props => props.theme.mq.laptop} {
+     
+      left: 74%;
+    }
 `;
 
 export const RegisterButton = styled(Button)`
   position: relative;
   width: 8rem;
-  height: 2rem;
+  height: 3rem;
   margin-left: 1rem;
   margin-top: 1rem;
+
+
+  ${props => props.theme.mq.mobileL} {
+    margin-left: 0rem;
+    font-size: 0.875rem;
+    width: 3.5rem;
+  height: 3.5rem;
+  border-radius:1rem;
+
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      margin-left: 1rem;
+      font-size: 1rem;
+      width: 8rem;
+      height: 3rem;
+      border-radius:0.5rem;
+    }
+ 
 `;
 
 export const LoginButton = styled(Button)<Props>`
   position: relative;
   width: 8rem;
-  height: 2rem;
+  height: 3rem;
   margin-top: 1rem;
   background-color: #ffffff;
   border: 2px solid #26de81;
@@ -74,4 +134,23 @@ export const LoginButton = styled(Button)<Props>`
     background: #70e0a8;
     color: #ffffff;
   }
+
+  ${props => props.theme.mq.mobileL} {
+
+    font-size: 0.875rem;
+    width: 3.5rem;
+  height: 3.5rem;
+  border-radius:1rem;
+  margin-right:1rem;
+
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      font-size: 1rem;
+      width: 8rem;
+  height: 3rem;
+  border-radius:0.5rem;
+  margin-right:0rem;
+
+    }
 `;
