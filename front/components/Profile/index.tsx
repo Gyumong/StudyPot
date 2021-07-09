@@ -2,17 +2,18 @@ import React, { ReactElement, useEffect } from "react";
 import {
   ProfileFormBlock,
   Location,
+  LocationIcon,
+  LightningIcon,
   Interest,
   UserName,
   SelfIntro,
   ProfileEditButton,
   DescBlock,
   ImageBlock,
+
 } from "./styles";
 import Link from "next/link";
 
-import { LocationPin } from "@styled-icons/entypo/LocationPin";
-import { LightningFill } from "@styled-icons/bootstrap/LightningFill";
 import gravatar from "gravatar";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,11 +36,11 @@ const Profile = (): ReactElement => {
       <DescBlock>
         <UserName>{user.name}</UserName>
         <Location>
-          <LocationPin size="28" title="Location icon" />
+          <LocationIcon/>
           <p>{user.location}</p>
         </Location>
         <Interest>
-          <LightningFill size="26" title="Interest icon" />
+          <LightningIcon size="26" title="Interest icon" />
           {user.categories.map((value: any) => {
             return <p>{value.value}</p>;
           })}
