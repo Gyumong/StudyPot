@@ -14,7 +14,8 @@ export const BoxModel = styled.div`
   padding-right: 1rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  max-width: 45rem;
+  max-width: 40rem;
+  max-height: 50rem;
 `;
 
 export const SettingBox = styled.div`
