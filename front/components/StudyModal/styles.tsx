@@ -14,8 +14,6 @@ export const BoxModel = styled.div`
   padding-right: 1rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  max-width: 45rem;
-
 
   ${props => props.theme.mq.mobileL} {
     margin-top: 1.5rem;
@@ -26,6 +24,7 @@ export const BoxModel = styled.div`
     margin-top: 0.5rem;
     max-width: 45rem;
   }
+
 `;
 
 export const SettingBox = styled.div`
