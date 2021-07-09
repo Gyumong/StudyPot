@@ -118,8 +118,10 @@ export const RegisterButton = styled(Button)`
     margin-left: 0rem;
     font-size: 0.875rem;
     width: 4.5rem;
+
   height: 4.5rem;
   border-radius:1rem;
+
 
     }
    
@@ -151,8 +153,10 @@ export const LoginButton = styled(Button)<Props>`
     margin-top: 0rem;
     font-size: 0.875rem;
     width: 4.5rem;
+
   height: 4.5rem;
   border-radius:1rem;
+
   margin-right:1rem;
 
     }
