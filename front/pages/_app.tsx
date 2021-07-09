@@ -14,9 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <ThemeProvider theme={theme}>
         <Global styles={globalStyles} />
-        <ConnectedRouter>
-          <Component {...pageProps} />
-        </ConnectedRouter>
+        <Component {...pageProps} />
       </ThemeProvider>
     </>
   );
