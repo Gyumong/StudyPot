@@ -7,10 +7,11 @@ import {
     SubCopy,
     ButtonBox,
     ServiceButton,
-    MakeButton
+    MakeButton,
+    MainImage
     
   } from "./styles";
-import Image from "next/image";
+
 
 const Main = () => {
  
@@ -33,7 +34,7 @@ const Main = () => {
            </CopyButtonBox>
         
           
-            <Image src = "/typo_350x1900_lotate_main_logo_studypot.png" alt="main image" width={350} height={1500}/>
+            <MainImage src = "/typo_350x1900_lotate_main_logo_studypot.png" alt="main image" width={350} height={1500}/>
           
        </Frame>
             

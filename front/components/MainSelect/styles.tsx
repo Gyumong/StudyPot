@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 
+
+
 export const BoxModel = styled.div`
   display: flex;
   position: absolute;
@@ -18,6 +20,20 @@ export const BoxModel = styled.div`
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
   font-size: 0.875rem;
   line-height: 1.25rem;
+
+
+  ${props => props.theme.mq.mobileL} {
+    left: 2.5rem;
+    width: 25rem;
+  height: 5rem;
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      left: 30rem;
+      width: 30rem;
+  height: 5rem;
+    }
+
 `;
 
 export const OnOffline = styled.div`

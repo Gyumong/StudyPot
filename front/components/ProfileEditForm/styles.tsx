@@ -37,6 +37,17 @@ export const ProfileEditBlock = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+
+
+  ${props => props.theme.mq.mobileL} {
+    width: 90vw;
+    }
+   
+    ${props => props.theme.mq.laptop} {
+    width: 50vw;
+    }
+
+
 `;
 
 export const ProfileSubmitForm = styled.form`
@@ -56,10 +67,10 @@ export const ProfileImage = styled.div`
   justify-content: center;
   width: 8rem;
   height: 8rem;
-  margin-left: 2rem;
+  
   border: 1px dashed #d9d9d9;
   border-radius: 9999px;
-  position: absolute;
+  
   top: 0;
   right: 5rem;
   color: #4f4f4f;
@@ -67,6 +78,21 @@ export const ProfileImage = styled.div`
   &:hover {
     border-color: #70e0a8;
   }
+
+
+  ${props => props.theme.mq.mobileL} {
+    margin-left: -1rem;
+    margin-bottom: 2rem;
+    position: static;
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      margin-left: 2rem;
+      margin-bottom: 0rem;
+      position: absolute;
+    }
+
+
 `;
 
 export const ProfileListBlock = styled.p`
@@ -100,6 +126,18 @@ export const ChangeButton = styled(Button)<Props>`
     background: #70e0a8;
     color: #ffffff;
   }
+
+
+
+  ${props => props.theme.mq.mobileL} {
+    margin-right:1rem;
+  
+  }
+  
+  ${props => props.theme.mq.laptop} {
+    margin-right:0rem;
+  }
+
   
 `;
 
@@ -118,14 +156,27 @@ export const CancleButton = styled(Button)<Props>`
 background-color: rgba(156, 163, 175, var(--tw-bg-opacity));;
 color:  #ffffff;
   }
+
+
+
 `;
 
 export const AccountSetting = styled(Form)`
   width: 100%;
-  padding: 3rem;
+  
   display: flex;
   flex-direction: column;
   position: relative;
+
+
+  ${props => props.theme.mq.mobileL} {
+    padding: 1rem;
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      padding: 3rem;
+    }
+
 `;
 
 export const ChangePassword = styled.div`
@@ -167,12 +218,6 @@ export const AccountSettingButton = styled.p`
   }
 `;
 
-// export const Category = styled.div`
-//   display: flex;
-//   margin-top: 2rem;
-//   height: 3rem;
-
-// `;
 
 export const TextArea = styled.textarea`
   display: block;
@@ -217,6 +262,7 @@ export const ButtonGroup = styled.div`
   display: flex;
   width: 90%;
   justify-content: space-between;
+
 `;
 
 export const CInputForm = styled.div`
@@ -230,31 +276,7 @@ export const Error = styled.div`
   color: #e01e5a;
   margin: 8px 0 0;
 `;
-// export const ProfileImage = styled.div`
-//   position: absolute;
-//   right: 6rem;
 
-//   & > button {
-//     display: inline-flex;
-//     border: 1px solid;
-//     border-radius: 0.5rem;
-//     padding-top: 0.25rem;
-//     padding-bottom: 0.25rem;
-//     padding-left: 0.5rem;
-//     padding-right: 0.5rem;
-//     --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-//     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-//     --tw-text-opacity: 1;
-//     color: rgba(75, 85, 99, var(--tw-text-opacity));
-//     --tw-bg-opacity: 1;
-//     background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
-
-//     &:focus {
-//       outline: #26de81 solid 1px;
-//       box-shadow: 0px 2px 12px #00000030;
-//     }
-//   }
-// `;
 
 export const ImageEdit = styled.div`
   position: relative;
