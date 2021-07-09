@@ -14,8 +14,17 @@ export const BoxModel = styled.div`
   padding-right: 1rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  max-width: 40rem;
-  max-height: 50rem;
+
+  ${props => props.theme.mq.mobileL} {
+    margin-top: 1.5rem;
+    max-width: 30rem;
+  }
+ 
+  ${props => props.theme.mq.laptop} {
+    margin-top: 0.5rem;
+    max-width: 45rem;
+  }
+
 `;
 
 export const SettingBox = styled.div`
@@ -35,6 +44,14 @@ export const MainBox = styled.div`
 
 export const Shrink = styled.div`
   max-width: 700px;
+
+  ${props => props.theme.mq.mobileL} {
+    max-width: 500px;
+  }
+ 
+  ${props => props.theme.mq.laptop} {
+    max-width: 700px;
+  }
 `;
 
 export const TextBox = styled.div`
@@ -72,11 +89,20 @@ export const LikeButton = styled.button`
   border: 1px solid #26de81;
   border-radius: 0.25rem;
   margin-bottom: 0;
-  font-size: 0.75rem;
+  
   line-height: 1rem;
   &:hover {
     background: #70e0a8;
     color: #ffffff;
+  }
+
+
+  ${props => props.theme.mq.mobileL} {
+    font-size: 0.75rem;
+  }
+  
+  ${props => props.theme.mq.laptop} {
+    font-size: 1rem;
   }
 `;
 
@@ -103,6 +129,15 @@ export const Detail = styled.p`
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   margin-right: 0.25rem;
+
+
+  ${props => props.theme.mq.mobileL} {
+    padding-bottom: 4rem;
+  }
+  
+  ${props => props.theme.mq.laptop} {
+    padding-bottom: 8rem;
+  }
 `;
 
 export const LocationBox = styled.div`
@@ -170,6 +205,14 @@ export const JoinButton = styled(Button)`
   width: 8rem;
   height: 2rem;
   margin-top: 0.25rem;
+
+  ${props => props.theme.mq.mobileL} {
+    display: none;
+  }
+  
+  ${props => props.theme.mq.laptop} {
+    display: flex;
+  }
 `;
 
 export const MemberBox = styled.div`
@@ -226,4 +269,15 @@ export const ApplyButton = styled(Button)<ButtonProps>`
   height: 5rem;
   margin-top: 0.25rem;
   border-radius: 9999px;
+
+
+
+${props => props.theme.mq.mobileL} {
+  margin-left: 5.5rem;
+}
+
+${props => props.theme.mq.laptop} {
+  margin-left: 13rem;
+}
+
 `;
