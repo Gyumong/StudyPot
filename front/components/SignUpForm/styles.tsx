@@ -4,7 +4,23 @@ import palette from "@styles/palette";
 import chroma from "chroma-js";
 
 export const colourStyles = {
-  control: (styles: any) => ({ ...styles, backgroundColor: "white" }),
+  control: (styles: any, state: any) => ({
+    ...styles,
+    backgroundColor: "white",
+    borderColor: state.isFocused && "#26DE81",
+    // This line disable the blue border
+    boxShadow: "none",
+    ":hover": {
+      ...styles[":hover"],
+      borderColor: "#26DE81",
+      boxShadow: "none",
+    },
+    ":active": {
+      ...styles[":active"],
+      boxShadow: "none",
+      borderColor: "#26DE81",
+    },
+  }),
   option: (styles: { [x: string]: any }, { data, isDisabled, isFocused, isSelected }: any) => {
     const color = chroma(data.color);
     return {
@@ -12,10 +28,14 @@ export const colourStyles = {
       backgroundColor: isDisabled ? null : isSelected ? data.color : isFocused ? color.alpha(0.1).css() : null,
       color: isDisabled ? "#ccc" : isSelected ? (chroma.contrast(color, "white") > 2 ? "white" : "black") : data.color,
       cursor: isDisabled ? "not-allowed" : "default",
-
+      ":hover": {
+        ...styles[":hover"],
+        borderColor: "#26DE81",
+      },
       ":active": {
         ...styles[":active"],
         backgroundColor: !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
+        borderColor: "#26DE81",
       },
     };
   },

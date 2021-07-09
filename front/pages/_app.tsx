@@ -3,21 +3,18 @@
 import type { AppProps } from "next/app";
 import { Global } from "@emotion/react";
 import { globalStyles } from "./../styles/global-style";
-import { ConnectedRouter } from "connected-next-router";
 import wrapper from "@lib/store/configureStore";
-import 'tailwindcss/tailwind.css';
+import "tailwindcss/tailwind.css";
 
-import {ThemeProvider} from '@emotion/react';
-import theme from '@styles/theme';
+import { ThemeProvider } from "@emotion/react";
+import theme from "@styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeProvider theme={theme}>
         <Global styles={globalStyles} />
-        <ConnectedRouter>
-          <Component {...pageProps} />
-        </ConnectedRouter>
+        <Component {...pageProps} />
       </ThemeProvider>
     </>
   );
