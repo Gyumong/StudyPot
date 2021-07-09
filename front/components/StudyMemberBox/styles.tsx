@@ -15,8 +15,8 @@ export const InnerMiddleMemberBox = styled.div`
   font-size: 0.875rem;
   align-items: flex-start;
 `;
-export const MemberImgBox = styled.div`
-  & > img {
+export const MemberImgBox = styled.img`
+ 
     width: 3rem;
     height: 3rem;
     object-fit: cover;
@@ -24,7 +24,7 @@ export const MemberImgBox = styled.div`
     margin-right: 1rem;
     --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  }
+  
 `;
 
 export const MemberDesc = styled.div`
@@ -34,7 +34,7 @@ export const MemberDesc = styled.div`
   height: 100%;
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 1rem;
 `;
 
 export const MemberBackGround = styled.div`

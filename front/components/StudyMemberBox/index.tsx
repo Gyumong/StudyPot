@@ -59,33 +59,33 @@ const StudyMemberBox: React.FC<StudyProMemberBoxProps> = ({ studyData }) => {
 
           <InnerMiddleMemberBox>
             <MemberList>
-              <MemberImgBox>
-                <img
+             
+                <MemberImgBox 
                   src={studyMembers?.studyMemberList[0].imageUrl}
                   alt="mountains"
                   className="w-full h-64 rounded-lg rounded-b-none"
                 />
-              </MemberImgBox>
+              
               <MemberDesc>{studyMembers?.studyMemberList[0].userName}</MemberDesc>
             </MemberList>
             <MemberList>
-              <MemberImgBox>
-                <img
+             
+                <MemberImgBox 
                   src={studyMembers?.studyMemberList[0].imageUrl}
                   alt="mountains"
                   className="w-full h-64 rounded-lg rounded-b-none"
                 />
-              </MemberImgBox>
+              
               <MemberDesc>{studyMembers?.studyMemberList[0].userName}</MemberDesc>
             </MemberList>
             <MemberList>
-              <MemberImgBox>
-                <img
+             
+                <MemberImgBox 
                   src={studyMembers?.studyMemberList[0].imageUrl}
                   alt="mountains"
                   className="w-full h-64 rounded-lg rounded-b-none"
                 />
-              </MemberImgBox>
+             
               <MemberDesc>{studyMembers?.studyMemberList[0].userName}</MemberDesc>
             </MemberList>
           </InnerMiddleMemberBox>
