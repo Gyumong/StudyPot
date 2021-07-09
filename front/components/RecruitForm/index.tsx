@@ -252,7 +252,7 @@ const RecruitForm = (): ReactElement => {
             buttonStyle={"outline"}
             defaultValue={StudyState}
             size={"middle"}
-            options={["OPEN", "ClOSE"]}
+            options={["OPEN", "CLOSE"]}
             onChange={handleChangeStudyState}
           />
         </State>
