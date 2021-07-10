@@ -66,9 +66,9 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
 
             <Bottom>
               <UserBox>
-                
-                  <UserImgBox src={studyData.leader.imageUrl} alt="avatar" />
-                
+                <UserImgBox>
+                  <img src={studyData.leader.imageUrl} alt="avatar" />
+                </UserImgBox>
                 <div>
                   <UserName>{studyData.leader.name} </UserName>
                   <Date> 14 Aug </Date>
