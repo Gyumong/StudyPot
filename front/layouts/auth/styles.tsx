@@ -15,6 +15,7 @@ export const AuthTemplateBlock = styled.div`
 ${props => props.theme.mq.mobileL} {
   min-height: 120vh;
   top: 6rem;
+  
 }
 
 ${props => props.theme.mq.laptop} {
@@ -27,7 +28,8 @@ ${props => props.theme.mq.laptop} {
 `;
 
 export const WhiteBox = styled.div`
-  margin-top: 1rem;
+margin-top: 1rem;
+  margin-bottom: 1rem;
   background: white;
   padding: 2rem;
   border-radius: 1.5rem;
@@ -40,10 +42,12 @@ box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #
 
 
 ${props => props.theme.mq.mobileL} {
+  
   width: 90vw;
 }
 
 ${props => props.theme.mq.laptop} {
+ 
   width: 50vw;
 }
 
