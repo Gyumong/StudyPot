@@ -240,6 +240,15 @@ export const studySlice = createSlice({
     resetStudy: (state) => {
       state.selectedCategory = "";
     },
+    clearStudy: (state) => {
+      state.study = [];
+      state.last = false;
+      state.lastIdOfStudyList = 0;
+      state.LoadStudyLoading = false;
+      state.LoadStudySuccess = false;
+      state.LoadStudyError = false;
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(MakeStudy.pending, (state) => {
@@ -329,6 +338,6 @@ export const studySlice = createSlice({
   },
 });
 
-export const { clearState, filterCategory, resetStudy } = studySlice.actions;
+export const { clearState, filterCategory, resetStudy, clearStudy } = studySlice.actions;
 
 export default studySlice.reducer;

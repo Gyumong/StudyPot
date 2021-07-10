@@ -5,7 +5,7 @@ import { GridBox } from "@components/FindStudy/styles";
 import StudyCard from "@components/StudyCard";
 import MainSelect from "@components/MainSelect";
 import { useDispatch, useSelector } from "react-redux";
-import { clearState, contentArray, LoadOneStudy, LoadStudy } from "@lib/slices/StudySlice";
+import { clearState, contentArray, LoadStudy, clearStudy } from "@lib/slices/StudySlice";
 import { RootState, AppThunkDispatch } from "@lib/store/configureStore";
 import { useCallback, useMemo } from "react";
 import { loadUserByToken } from "@lib/slices/UserSlice";
@@ -32,6 +32,7 @@ const find = (): ReactElement => {
   useEffect(() => {
     return () => {
       dispatch(clearState());
+      dispatch(clearStudy());
     };
   }, []);
 
