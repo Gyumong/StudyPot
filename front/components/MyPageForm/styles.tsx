@@ -9,7 +9,7 @@ export const MypageFormBlock = styled.main`
 export const StudyList = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 1.5rem;
+  
   & > p {
     color: #4f4f4f;
     font-weight: 500;

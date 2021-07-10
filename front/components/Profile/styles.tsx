@@ -5,6 +5,7 @@ export const ProfileFormBlock = styled.div`
   padding: 0;
   display: flex;
   position: relative;
+  margin-bottom: 5rem;
 `;
 
 export const DescBlock = styled.div`
