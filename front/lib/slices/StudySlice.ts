@@ -276,8 +276,11 @@ export const studySlice = createSlice({
         state.selected = false;
         console.log("change");
       }
-
-      state.study = state.study.concat(payload.contents);
+      const filteredItems = payload.contents.filter((item) => state.study.some((study) => study.id === item.id));
+      console.log(filteredItems);
+      if (filteredItems.length < 1) {
+        state.study = state.study.concat(payload.contents);
+      }
       // const post = state.study.filter((item, index) => state.study.indexOf(item) === index);
       state.last = payload.last;
       state.lastIdOfStudyList = payload.lastIdOfStudyList;
