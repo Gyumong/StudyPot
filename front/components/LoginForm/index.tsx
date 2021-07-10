@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, loginUser } from "@lib/slices/UserSlice";
 import { useRouter } from "next/router";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import Modal from "@components/common/Modal";
 
 const LoginForm = () => {

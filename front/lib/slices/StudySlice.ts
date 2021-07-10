@@ -2,6 +2,8 @@ import { backUrl } from "../../config/config";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosWithToken from "@utils/axios";
 import axios, { AxiosRequestConfig } from "axios";
+import { AppDispatch } from "@lib/store/configureStore";
+import { RootState } from "../store/configureStore";
 
 interface rejectMessage {
   errorMessage: string;
@@ -174,24 +176,29 @@ export const LoadOneStudy = createAsyncThunk<
 
 // ${data?.categoryName ? `&categoryName=${data?.categoryName}` : ""}
 
-export const LoadStudy = createAsyncThunk<ILoadStudy, ILoadStudyPayload | undefined, { rejectValue: rejectMessage }>(
-  "study/LoadStudy",
-  async (data, thunkAPI) => {
-    try {
-      const query = data?.categoryName === "" ? "" : `&categoryName=${data?.categoryName}`;
-      const response = await axios.get(
-        `${backUrl}/study?size=3${query}${data?.lastId ? `&lastId=${data?.lastId}` : ""}`,
-      );
+export const LoadStudy = createAsyncThunk<
+  ILoadStudy,
+  ILoadStudyPayload | undefined,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    rejectValue: rejectMessage;
+  }
+>("study/LoadStudy", async (data, thunkAPI) => {
+  try {
+    const query = data?.categoryName === "" ? "" : `&categoryName=${data?.categoryName}`;
+    const response = await axios.get(
+      `${backUrl}/study?size=3${query ? query : ""}${data?.lastId ? `&lastId=${data?.lastId}` : ""}`,
+    );
 
-      return response.data;
-    } catch (e) {
-      console.log("Error", e);
-      return thunkAPI.rejectWithValue({
-        errorMessage: "스터디 불러오기에 실패했습니다.",
-      });
-    }
-  },
-);
+    return response.data;
+  } catch (e) {
+    console.log("Error", e);
+    return thunkAPI.rejectWithValue({
+      errorMessage: "스터디 불러오기에 실패했습니다.",
+    });
+  }
+});
 export const MakeStudy = createAsyncThunk<IMakeStudy, FormData, { rejectValue: rejectMessage }>(
   "study/MakeStudy",
   async (formData, thunkAPI) => {

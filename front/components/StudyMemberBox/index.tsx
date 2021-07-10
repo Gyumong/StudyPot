@@ -10,7 +10,7 @@ import {
 } from "../StudyModal/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { JoinStudy } from "@lib/slices/StudySlice";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import { LoadStudyMembers } from "./../../lib/slices/StudySlice";
 import { MemberList, InnerMiddleMemberBox, MemberBackGround, MemberImgBox, MemberDesc } from "./styles";
 interface StudyProMemberBoxProps {
