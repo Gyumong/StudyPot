@@ -3,7 +3,7 @@ import AuthTemplate from "@layouts/auth";
 import RecruitForm from "@components/RecruitForm";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUserByToken } from "@lib/slices/UserSlice";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import { useRouter } from "next/router";
 
 const Recruit = (): ReactElement => {

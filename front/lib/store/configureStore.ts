@@ -1,26 +1,21 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { createWrapper } from "next-redux-wrapper";
-import { rootReducer } from "../slices";
-import { createRouterMiddleware, initialRouterState } from "connected-next-router";
-import Router from "next/router";
+import { configureStore, getDefaultMiddleware, EnhancedStore, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { createWrapper, MakeStore } from "next-redux-wrapper";
+import { Action, AnyAction } from "redux";
+import { reducer } from "../slices";
 
-export const initStore = (context: any) => {
-  const routerMiddleware = createRouterMiddleware();
-  const { asPath } = context.ctx || Router.router || {};
-  let initialState;
-  if (asPath) {
-    initialState = {
-      router: initialRouterState(asPath),
-    };
-  }
-  return configureStore({
-    reducer: rootReducer,
-    preloadedState: initialState,
-    middleware: [routerMiddleware, ...getDefaultMiddleware()],
-  });
-};
+export const store = configureStore({
+  reducer: reducer,
+  middleware: [...getDefaultMiddleware()],
+});
 
-const wrapper = createWrapper(initStore, {
+const setupStore = (context: any): EnhancedStore => store;
+const makeStore: MakeStore = (context) => setupStore(context);
+export type AppThunkDispatch = ThunkDispatch<RootState, void, AnyAction>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action>;
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+const wrapper = createWrapper<AppStore>(makeStore, {
   debug: process.env.NODE_ENV === "development",
 });
 

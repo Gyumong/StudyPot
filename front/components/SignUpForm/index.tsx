@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Select, { ValueType } from "react-select";
 import { clearState, signUpUser } from "@lib/slices/UserSlice";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import axios from "axios";
 import { backUrl } from "config/config";
 import { useRouter } from "next/router";

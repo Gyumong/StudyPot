@@ -10,7 +10,7 @@ import {
 } from "../StudyModal/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { JoinStudy } from "@lib/slices/StudySlice";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import { LoadStudyMembers } from "./../../lib/slices/StudySlice";
 import { MemberList, InnerMiddleMemberBox, MemberBackGround, MemberImgBox, MemberDesc } from "./styles";
 interface StudyProMemberBoxProps {
@@ -18,7 +18,6 @@ interface StudyProMemberBoxProps {
 }
 const StudyMemberBox: React.FC<StudyProMemberBoxProps> = ({ studyData }) => {
   const [joinPending, setJoinPending] = useState(false);
-  console.log(studyData);
   const dispatch = useDispatch();
   const { joinStudyLoading, joinStudySuccess, studyMembers } = useSelector((state: RootState) => state.study);
   useEffect(() => {
@@ -27,12 +26,14 @@ const StudyMemberBox: React.FC<StudyProMemberBoxProps> = ({ studyData }) => {
     }
   }, [joinStudyLoading, joinStudySuccess, joinPending]);
   useEffect(() => {
-    dispatch(
-      LoadStudyMembers({
-        studyId: studyData?.studyId,
-      }),
-    );
-  }, [studyData]);
+    if (!joinStudyLoading) {
+      dispatch(
+        LoadStudyMembers({
+          studyId: studyData?.studyId,
+        }),
+      );
+    }
+  }, [studyData, joinStudyLoading]);
 
   const onClickJoinStudy = useCallback(
     (e) => {

@@ -24,7 +24,7 @@ import useInput from "@hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { MakeStudy } from "@lib/slices/StudySlice";
 import { useRouter } from "next/router";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 
 type IStudyState = "OPEN" | "CLOSE";
 type IStudyType = "ONLINE" | "OFFLINE" | "ON_AND_OFFLINE";
@@ -161,9 +161,8 @@ const RecruitForm = (): ReactElement => {
 
         <StudyName>
           <RecruitFormList>제목</RecruitFormList>
-        
-          <Input style={{ width: "13rem", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
 
+          <Input style={{ width: "13rem", height: "2rem" }} value={StudyTitle} onChange={handleChangeStudyTitle} />
         </StudyName>
 
         <CategoryFormBlock>

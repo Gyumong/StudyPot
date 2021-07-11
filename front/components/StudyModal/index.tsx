@@ -24,7 +24,6 @@ import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { JoinStudy } from "@lib/slices/StudySlice";
-import { RootState } from "@lib/slices";
 import StudyMemberBox from "./../StudyMemberBox/index";
 interface StudyCardProps {
   studyId?: number;
