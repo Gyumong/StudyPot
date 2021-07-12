@@ -90,6 +90,9 @@ interface StudyInitialType {
   LoadStudyMembersLoading: boolean;
   LoadStudyMembersSuccess: boolean;
   LoadStudyMembersError: boolean;
+  LikeStudyLoading: boolean;
+  LikeStudySuccess: boolean;
+  LikeStudyError: boolean;
   MakeStudyLoading: boolean;
   MakeStudySuccess: boolean;
   MakeStudyError: boolean;
@@ -114,6 +117,9 @@ const initialState: StudyInitialType = {
   LoadStudyMembersLoading: false,
   LoadStudyMembersSuccess: false,
   LoadStudyMembersError: false,
+  LikeStudyLoading: false,
+  LikeStudySuccess: false,
+  LikeStudyError: false,
   errorMessage: "",
   filterCategory: "",
   selectedCategory: "",
@@ -126,6 +132,21 @@ const initialState: StudyInitialType = {
   studyMembers: null,
 };
 
+export const LikeStudy = createAsyncThunk<any, { studyId: number }, { rejectValue: rejectMessage }>(
+  "study/LikeStudy",
+  async (data, thunkAPI) => {
+    try {
+      const { studyId } = data;
+      const response = await axiosWithToken.post(`/study/${studyId}/like`);
+      return response.data;
+    } catch (e) {
+      console.log("스터디 좋아요가 실패", e);
+      return thunkAPI.rejectWithValue({
+        errorMessage: "스터디 좋아요가 실패했습니다.",
+      });
+    }
+  },
+);
 export const LoadStudyMembers = createAsyncThunk<any, any, { rejectValue: rejectMessage }>(
   "study/LoadStudyMembers",
   async (data, thunkAPI) => {
@@ -337,6 +358,20 @@ export const studySlice = createSlice({
       state.LoadStudyMembersError = true;
       state.LoadStudyMembersSuccess = false;
       state.studyMembers = null;
+    });
+    builder.addCase(LikeStudy.pending, (state) => {
+      state.LikeStudyLoading = true;
+    });
+    builder.addCase(LikeStudy.fulfilled, (state, { payload }) => {
+      state.LikeStudyLoading = false;
+      state.LikeStudySuccess = true;
+      state.LikeStudyError = false;
+      console.log(payload);
+    });
+    builder.addCase(LikeStudy.rejected, (state) => {
+      state.LikeStudyLoading = false;
+      state.LikeStudyError = true;
+      state.LikeStudySuccess = false;
     });
   },
 });

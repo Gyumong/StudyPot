@@ -23,17 +23,34 @@ import { LocationPin } from "@styled-icons/entypo";
 import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { JoinStudy } from "@lib/slices/StudySlice";
+import { JoinStudy, LikeStudy } from "@lib/slices/StudySlice";
 import StudyMemberBox from "./../StudyMemberBox/index";
+import { useRouter } from "next/router";
+import { RootState } from "@lib/store/configureStore";
 interface StudyCardProps {
   studyId?: number;
   studyData: any;
 }
 
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.users);
+  const router = useRouter();
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
+
+  const AddLike = useCallback(() => {
+    if (user && studyData) {
+      dispatch(
+        LikeStudy({
+          studyId: studyData.studyId,
+        }),
+      );
+    } else {
+      router.push("/login");
+    }
+  }, [user, dispatch, studyData]);
 
   if (!studyData) {
     return null;
@@ -57,7 +74,7 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
               </LocationButton>
               <TitleBox>
                 <Title>{studyData.title}</Title>
-                <LikeButton>💚 &nbsp; 2</LikeButton>
+                <LikeButton onClick={AddLike}>💚 &nbsp; {studyData.studyLikeCount}</LikeButton>
               </TitleBox>
             </Top>
 
