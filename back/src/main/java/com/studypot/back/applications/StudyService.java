@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -59,48 +60,9 @@ public class StudyService {
 
   public InfinityScrollResponseDto getStudyList(PageableRequestDto pageableRequestDto) {
     PageRequest pageRequest = PageRequest.of(0, pageableRequestDto.getSize(), sortCreatedAt());
+    List<Study> studyList = getStudies(pageableRequestDto, pageRequest);
 
-    List<Study> studyList;
-
-    if (pageableRequestDto.isFirst()) {
-
-      if (pageableRequestDto.isEntireCategory()) {
-
-        Page<Study> studyPage = studyRepository.findAll(pageRequest);
-        studyList = studyPage.stream().collect(Collectors.toList());
-      } else {
-
-        List<StudyCategory> studyCategoryList = studyCategoryRepository
-            .findAllByCategory(pageRequest, pageableRequestDto.getCategoryName());
-        studyList = studyCategoryList.stream().map(StudyCategory::getStudy).collect(Collectors.toList());
-      }
-    } else {
-
-      if (pageableRequestDto.isEntireCategory()) {
-
-        studyList = studyRepository.findAllByIdLessThan(pageRequest, pageableRequestDto.getLastId());
-      } else {
-
-        List<StudyCategory> studyCategoryList = studyCategoryRepository
-            .findAllByCategoryAndStudyIdLessThan(
-                pageRequest, pageableRequestDto.getCategoryName(), pageableRequestDto.getLastId()
-            );
-        studyList = studyCategoryList.stream().map(StudyCategory::getStudy).collect(Collectors.toList());
-      }
-    }
-
-    if (pageableRequestDto.isEntireCategory()) {
-
-      Study study = studyRepository.getFirstBy().orElseThrow(StudyNotFoundException::new);
-
-      return new InfinityScrollResponseDto(studyList, study);
-    } else {
-
-      StudyCategory lastStudyCategory = studyCategoryRepository.getFirstByCategory(pageableRequestDto.getCategoryName())
-          .orElseThrow(StudyNotFoundException::new);
-
-      return new InfinityScrollResponseDto(studyList, lastStudyCategory.getStudy());
-    }
+    return createInfinityScrollResponseDto(pageableRequestDto, studyList);
   }
 
   private String createImageUrlOrNull(MultipartFile thumbnail) throws IOException {
@@ -134,5 +96,113 @@ public class StudyService {
   private Sort sortCreatedAt() {
 
     return Sort.by(Direction.DESC, "createdAt");
+  }
+
+  private List<Study> getStudies(PageableRequestDto pageableRequestDto, PageRequest pageRequest) {
+
+    StudyList studyList;
+
+    if (pageableRequestDto.isFirst()) {
+
+      if (pageableRequestDto.isEntireCategory()) {
+
+        studyList = new EntireCategoryFirstPage(pageRequest);
+      } else {
+
+        studyList = new SelectedCategoryFirstPage(pageableRequestDto, pageRequest);
+      }
+    } else {
+
+      if (pageableRequestDto.isEntireCategory()) {
+
+        studyList = new EntireCategoryLeftPage(pageableRequestDto, pageRequest);
+      } else {
+
+        studyList = new SelectedCategoryLeftPage(pageableRequestDto, pageRequest);
+      }
+    }
+
+    return studyList.getStudyList();
+  }
+
+  private InfinityScrollResponseDto createInfinityScrollResponseDto(PageableRequestDto pageableRequestDto, List<Study> studyList) {
+    if (pageableRequestDto.isEntireCategory()) {
+
+      Study study = studyRepository.getFirstBy().orElseThrow(StudyNotFoundException::new);
+
+      return new InfinityScrollResponseDto(studyList, study);
+    } else {
+
+      StudyCategory lastStudyCategory = studyCategoryRepository.getFirstByCategory(pageableRequestDto.getCategoryName())
+          .orElseThrow(StudyNotFoundException::new);
+
+      return new InfinityScrollResponseDto(studyList, lastStudyCategory.getStudy());
+    }
+  }
+
+  private interface StudyList {
+
+    List<Study> getStudyList();
+  }
+
+  @RequiredArgsConstructor
+  private class EntireCategoryFirstPage implements StudyList {
+
+    private final Pageable pageable;
+
+    @Override
+    public List<Study> getStudyList() {
+      Page<Study> studyPage = studyRepository.findAll(pageable);
+
+      return studyPage.stream().collect(Collectors.toList());
+    }
+  }
+
+  @RequiredArgsConstructor
+  private class SelectedCategoryFirstPage implements StudyList {
+
+    private final PageableRequestDto pageableRequestDto;
+
+    private final Pageable pageable;
+
+    @Override
+    public List<Study> getStudyList() {
+      List<StudyCategory> studyCategoryList = studyCategoryRepository
+          .findAllByCategory(pageable, pageableRequestDto.getCategoryName());
+
+      return studyCategoryList.stream().map(StudyCategory::getStudy).collect(Collectors.toList());
+    }
+  }
+
+  @RequiredArgsConstructor
+  private class EntireCategoryLeftPage implements StudyList {
+
+    private final PageableRequestDto pageableRequestDto;
+
+    private final Pageable pageable;
+
+    @Override
+    public List<Study> getStudyList() {
+
+      return studyRepository.findAllByIdLessThan(pageable, pageableRequestDto.getLastId());
+    }
+  }
+
+  @RequiredArgsConstructor
+  private class SelectedCategoryLeftPage implements StudyList {
+
+    private final PageableRequestDto pageableRequestDto;
+
+    private final Pageable pageable;
+
+    @Override
+    public List<Study> getStudyList() {
+      List<StudyCategory> studyCategoryList = studyCategoryRepository
+          .findAllByCategoryAndStudyIdLessThan(
+              pageable, pageableRequestDto.getCategoryName(), pageableRequestDto.getLastId()
+          );
+
+      return studyCategoryList.stream().map(StudyCategory::getStudy).collect(Collectors.toList());
+    }
   }
 }
