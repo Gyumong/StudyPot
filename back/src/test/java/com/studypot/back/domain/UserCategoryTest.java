@@ -22,10 +22,10 @@ public class UserCategoryTest {
   @Test
   public void getCategoryName() {
     List<CategoryName> categories = new ArrayList<>();
-    categories.add(CategoryName.INTERVIEW);
+    categories.add(CategoryName.JOB_INTERVIEW);
 
-    assertThat(categories.get(0).name(), is("INTERVIEW"));
-    assertThat(categories.get(0).getValue(), is("면접"));
+    assertThat(categories.get(0).name(), is("JOB_INTERVIEW"));
+    assertThat(categories.get(0).getValue(), is("취업/면접"));
   }
 
 }
