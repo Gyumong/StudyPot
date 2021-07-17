@@ -47,7 +47,7 @@ class UserServiceTest {
     User mockUser = User.builder().email(email).name(name).password(passwordEncoder.encode(password)).build();
 
     List<CategoryName> categories = new ArrayList<>();
-    categories.add(CategoryName.valueOf("IT"));
+    categories.add(CategoryName.valueOf("COMPUTER_IT"));
     UserSignupRequestDto mockDto = new UserSignupRequestDto();
     mockDto.setCategories(categories);
 
