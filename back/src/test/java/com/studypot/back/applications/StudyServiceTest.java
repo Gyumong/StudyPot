@@ -6,6 +6,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.MockitoAnnotations.openMocks;
 
+import com.studypot.back.applications.study.EntireCategoryAfterPageStudyService;
+import com.studypot.back.applications.study.EntireCategoryFirstPageStudyService;
+import com.studypot.back.applications.study.SelectedCategoryAfterPageStudyService;
+import com.studypot.back.applications.study.SelectedCategoryFirstPageStudyService;
 import com.studypot.back.domain.CategoryName;
 import com.studypot.back.domain.MeetingType;
 import com.studypot.back.domain.Study;
@@ -61,12 +65,33 @@ class StudyServiceTest {
 
   private List<StudyMember> studyMemberList = new ArrayList<>();
 
+  @Mock
+  private EntireCategoryFirstPageStudyService entireCategoryFirstPageStudyService;
+
+  @Mock
+  private EntireCategoryAfterPageStudyService entireCategoryAfterPageStudyService;
+
+  @Mock
+  private SelectedCategoryFirstPageStudyService selectedCategoryFirstPageStudyService;
+
+  @Mock
+  private SelectedCategoryAfterPageStudyService selectedCategoryAfterPageStudyService;
+
   @BeforeEach
   public void setUp() {
     openMocks(this);
-    this.studyService = new StudyService(studyRepository, s3Service, userRepository, studyCategoryRepository);
+    this.studyService = new StudyService(
+        studyRepository,
+        s3Service,
+        userRepository,
+        studyCategoryRepository,
+        entireCategoryFirstPageStudyService,
+        entireCategoryAfterPageStudyService,
+        selectedCategoryFirstPageStudyService,
+        selectedCategoryAfterPageStudyService
+    );
     this.userId = 1L;
-    this.studyCategoryList.add(StudyCategory.builder().category(CategoryName.INTERVIEW).build());
+    this.studyCategoryList.add(StudyCategory.builder().category(CategoryName.JOB_INTERVIEW).build());
     this.studyMemberList.add(StudyMember.builder().userId(101L).build());
     mockUser = User.builder().build();
     mockStudy = Study.builder()
@@ -86,7 +111,7 @@ class StudyServiceTest {
     given(studyRepository.save(any(Study.class))).willReturn(mockStudy);
 
     List<CategoryName> categories = new ArrayList<>();
-    categories.add(CategoryName.INTERVIEW);
+    categories.add(CategoryName.JOB_INTERVIEW);
     StudyCreateRequestDto studyCreateRequestDto = new StudyCreateRequestDto();
     studyCreateRequestDto.setCategories(categories);
 
