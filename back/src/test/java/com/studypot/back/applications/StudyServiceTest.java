@@ -54,7 +54,7 @@ class StudyServiceTest {
     openMocks(this);
     this.studyService = new StudyService(studyRepository, s3Service, userRepository);
     this.userId = 1L;
-    this.studyCategoryList.add(StudyCategory.builder().category(CategoryName.INTERVIEW).build());
+    this.studyCategoryList.add(StudyCategory.builder().category(CategoryName.JOB_INTERVIEW).build());
     this.studyMemberList.add(StudyMember.builder().userId(101L).build());
     mockUser = User.builder().build();
     mockStudy = Study.builder()
@@ -73,7 +73,7 @@ class StudyServiceTest {
     given(studyRepository.save(any(Study.class))).willReturn(mockStudy);
 
     List<CategoryName> categories = new ArrayList<>();
-    categories.add(CategoryName.INTERVIEW);
+    categories.add(CategoryName.JOB_INTERVIEW);
     StudyCreateRequestDto studyCreateRequestDto = new StudyCreateRequestDto();
     studyCreateRequestDto.setCategories(categories);
 
