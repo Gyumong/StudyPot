@@ -49,6 +49,7 @@ export interface ILoadOneStudy {
   participatingNumber: number;
   thumbnail: string;
   title: string;
+  studyLikeCount: number;
 }
 
 interface ILoadOneStudyPayload {
