@@ -6,23 +6,16 @@ import axios from "axios";
 import { backUrl } from "../../config/config";
 import studySlice from "./StudySlice";
 import ModalSlice from "./ModalSlice";
-import { AppDispatch, RootState } from "@lib/store/configureStore";
+import { AppDispatch } from "@lib/store/configureStore";
 import { useDispatch } from "react-redux";
 
 axios.defaults.baseURL = `${backUrl}`; // baseurl 설정 앞으로 요청할때
-interface rejectMessage {
-  errorMessage: string;
-}
+
 export interface State {
   users: IUser;
   study: IStudy;
   modal: IModal;
 }
-// export const rootReducer = combineReducers({
-//   users: userSlice,
-//   study: studySlice,
-//   modal: ModalSlice,
-// });
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 

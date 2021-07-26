@@ -23,21 +23,47 @@ import { LocationPin } from "@styled-icons/entypo";
 import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { JoinStudy } from "@lib/slices/StudySlice";
+import { JoinStudy, LikeStudy } from "@lib/slices/StudySlice";
 import StudyMemberBox from "./../StudyMemberBox/index";
+import { useRouter } from "next/router";
+import { RootState } from "@lib/store/configureStore";
 interface StudyCardProps {
   studyId?: number;
   studyData: any;
 }
 
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.users);
+  const { singleStudy } = useSelector((state: RootState) => state.study);
+  const [LikeStudyNum, setLikeStudyNum] = useState(0);
+  const router = useRouter();
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      setLikeStudyNum(0);
+    };
+  }, []);
+  const AddLike = useCallback(() => {
+    if (user && studyData && !!!LikeStudyNum) {
+      dispatch(
+        LikeStudy({
+          studyId: studyData.studyId,
+        }),
+      );
+      setLikeStudyNum((prev) => prev + 1);
+    } else if (!user) {
+      router.push("/login");
+    }
+  }, [user, dispatch, studyData, LikeStudyNum]);
+
   if (!studyData) {
     return null;
   }
+  console.log(!!!LikeStudyNum);
   return (
     <BoxModel onClick={stopPropagation}>
       <SettingBox>
@@ -57,7 +83,7 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
               </LocationButton>
               <TitleBox>
                 <Title>{studyData.title}</Title>
-                <LikeButton>💚 &nbsp; 2</LikeButton>
+                <LikeButton onClick={AddLike}>💚 &nbsp; {singleStudy.studyLikeCount + LikeStudyNum}</LikeButton>
               </TitleBox>
             </Top>
 
