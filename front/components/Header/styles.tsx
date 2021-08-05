@@ -7,6 +7,7 @@ interface Props {
   className?: string;
   onClick?: (e: Event) => void;
 }
+
 export const MainFrame = styled.div`
   display: flex;
   position: fixed;
@@ -20,7 +21,7 @@ export const MainFrame = styled.div`
 
 
   ${props => props.theme.mq.mobileL} {
-    height: 6rem;
+    height: 7.5rem;
    }
   
    ${props => props.theme.mq.laptop} {
@@ -37,12 +38,12 @@ export const Logo = styled.a`
   cursor: pointer;
 
   ${props => props.theme.mq.mobileL} {
-    top: 2rem;
+    top: 3rem;
    width: 20%;
   }
  
   ${props => props.theme.mq.laptop} {
-    width: 100%;
+    width: 10%;
     top: 1rem;
   }
 
@@ -57,7 +58,7 @@ export const MenuFrame = styled.ul`
   color: #4f4f4f;
 
   ${props => props.theme.mq.mobileL} {
-    top: 1.5rem;
+    top: 2rem;
     left: 28%;
    }
   
@@ -78,7 +79,7 @@ export const MenuItem = styled.li`
     color: #26de81;
   }
   & + & {
-    margin-left: 2rem;
+    margin-left: 1.5rem;
   }
 
   ${props => props.theme.mq.mobileL} {
@@ -91,17 +92,25 @@ export const MenuItem = styled.li`
 `;
 
 export const ButtonFrame = styled.div`
+  display: flex;
+  
+  justify-content: space-between;
+  
   position: absolute;
   top: 0;
-  left: 74%;
+  margin-top: 1rem;
+  
   ${props => props.theme.mq.mobileL} {
-    left: 65%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    flex-direction: column;
+    left: 76%;
     }
    
     ${props => props.theme.mq.laptop} {
-      margin-top: 0rem;
+      flex-direction: row;
+      width: 17rem;
       left: 74%;
+      margin-top: 1rem;
     }
 `;
 
@@ -109,27 +118,21 @@ export const RegisterButton = styled(Button)`
   position: relative;
   width: 8rem;
   height: 3rem;
-  margin-left: 1rem;
-  
-
 
   ${props => props.theme.mq.mobileL} {
-    margin-top: 0rem;
-    margin-left: 0rem;
-    font-size: 0.875rem;
-    width: 4.5rem;
-  height: 4.5rem;
-  border-radius:1rem;
-
+    width: 5rem;
+  height: 2rem;
+  border-radius:1.25rem;
     }
    
     ${props => props.theme.mq.laptop} {
-      margin-left: 1rem;
+      display: flex;
       font-size: 1rem;
       width: 8rem;
       height: 3rem;
       border-radius:0.5rem;
-      margin-top: 1rem;
+      
+      
     }
  
 `;
@@ -138,7 +141,7 @@ export const LoginButton = styled(Button)<Props>`
   position: relative;
   width: 8rem;
   height: 3rem;
-  margin-top: 1rem;
+  
   background-color: #ffffff;
   border: 2px solid #26de81;
   color: #26de81;
@@ -150,10 +153,11 @@ export const LoginButton = styled(Button)<Props>`
   ${props => props.theme.mq.mobileL} {
     margin-top: 0rem;
     font-size: 0.875rem;
-    width: 4.5rem;
-  height: 4.5rem;
-  border-radius:1rem;
+    width: 5rem;
+  height: 2rem;
+  border-radius:2rem;
   margin-right:1rem;
+  margin-bottom: 1rem;
 
     }
    
@@ -163,7 +167,7 @@ export const LoginButton = styled(Button)<Props>`
   height: 3rem;
   border-radius:0.5rem;
   margin-right:0rem;
-  margin-top: 1rem;
+  margin-bottom: 0rem;
 
     }
 `;

@@ -6,7 +6,7 @@ import Image from "next/image";
 export const Frame = styled.div`
   display: flex;
   position: relative;
-  z-index: 20;
+  margin-top: 0rem;
   width: 100vw;
   max-height: 1000px;
   margin-top: 5rem;
@@ -15,13 +15,14 @@ export const Frame = styled.div`
   background-color: #fffff;
 
   ${props => props.theme.mq.mobileL} {
-    max-height: 350px;
+    margin-top: 7rem;
+    max-height: 400px;
+
   }
-  ${props => props.theme.mq.tablet} {
-    max-height: 1000px;
-  }
+
   ${props => props.theme.mq.laptop} {
-    
+    margin-top: 0rem;
+    max-height: 1000px;
   }
 
 
@@ -106,11 +107,9 @@ export const ButtonBox = styled.div`
 
 
 ${props => props.theme.mq.mobileL} {
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
-${props => props.theme.mq.tablet} {
-  margin-top: 5rem;
-}
+
 ${props => props.theme.mq.laptop} {
   margin-top: 5.5rem;
 }
@@ -126,6 +125,18 @@ export const ServiceButton = styled(Button)`
   border: 2px solid #26de81;
   color: #26de81;
 
+
+${props => props.theme.mq.mobileL} {
+  width: 8rem;
+  height: 3rem;
+}
+
+
+${props => props.theme.mq.laptop} {
+  width: 10rem;
+  height: 3rem;
+}
+
  
 `;
 
@@ -135,6 +146,18 @@ export const MakeButton = styled(Button)`
   height: 3rem;
   margin-left: 1rem;
   margin-top: 1rem;
+
+  ${props => props.theme.mq.mobileL} {
+    width: 8rem;
+    height: 3rem;
+  }
+  
+  
+  ${props => props.theme.mq.laptop} {
+    width: 10rem;
+    height: 3rem;
+  }
+  
 
 `;
 
