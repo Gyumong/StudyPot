@@ -10,15 +10,18 @@ export const AuthTemplateBlock = styled.div`
   right: 0;
   bottom: 0;
   background: #f2f2f2;
+ 
 
 
 ${props => props.theme.mq.mobileL} {
-  min-height: 120vh;
-  top: 6rem;
+  min-height: 150vh;
+  top: 0rem;
 }
 
 ${props => props.theme.mq.laptop} {
-  min-height: 150vh;
+  
+  top: 3rem;
+  min-height: 130vh;
   top: 0;
   bottom: 0;
 }
@@ -40,10 +43,12 @@ box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #
 
 
 ${props => props.theme.mq.mobileL} {
+  margin-top: 0rem;
   width: 90vw;
 }
 
 ${props => props.theme.mq.laptop} {
+  margin-top: 1rem;
   width: 50vw;
 }
 

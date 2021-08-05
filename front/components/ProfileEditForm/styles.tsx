@@ -40,11 +40,16 @@ export const ProfileEditBlock = styled.div`
 
 
   ${props => props.theme.mq.mobileL} {
+    padding-left: 4vw;
+    padding-right: 4vw;
     width: 90vw;
     }
    
     ${props => props.theme.mq.laptop} {
-    width: 50vw;
+     
+      padding-left: 0;
+    padding-right: 0;
+      width: 50vw;
     }
 
 
@@ -60,6 +65,17 @@ export const Setting = styled.p`
   font-size: 1rem;
   font-weight: 500;
   margin-top: 0;
+
+
+
+  ${props => props.theme.mq.mobileL} {
+    margin-top: 1rem;
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      margin-top: 0;
+    }
+  
 `;
 
 export const ProfileImage = styled.div`
@@ -100,6 +116,16 @@ export const ProfileListBlock = styled.p`
   margin-bottom: 2rem;
   width: 20rem;
   height: 2rem;
+
+
+  ${props => props.theme.mq.mobileL} {
+    width: 18rem;
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      width: 20rem;
+    }
+
 `;
 
 export const EditButton = styled(Button)<Props>`
@@ -252,6 +278,17 @@ export const ProfileSettingList = styled.div`
   margin-right: 1.875rem;
   margin-bottom: 1rem;
 `;
+export const SelfIntroForm = styled.div`
+  
+${props => props.theme.mq.mobileL} {
+  width : 100%
+  }
+ 
+  ${props => props.theme.mq.laptop} {
+    width : 90%
+  }
+`;
+
 
 export const SelfIntro = styled.p`
   color: #4f4f4f;

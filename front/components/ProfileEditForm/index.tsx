@@ -18,6 +18,7 @@ import {
   CInputForm,
   ButtonGroup,
   Error,
+  SelfIntroForm
 } from "./styles";
 import { useRouter } from "next/router";
 import { Select, Cascader, Form, Input } from "antd";
@@ -247,8 +248,10 @@ const ProfileEditForm = (): ReactElement => {
           </Form.Item>
         </ProfileListBlock>
 
+        <SelfIntroForm>
         <SelfIntro> 자기소개</SelfIntro>
-        <Input.TextArea style={{ width: "90%" }} value={Introduction} onChange={handleChange자기소개} />
+        <Input.TextArea style={{ width: "100%" }} value={Introduction} onChange={handleChange자기소개} />
+        </SelfIntroForm>
 
         <EditButton>수정완료</EditButton>
       </AccountSetting>

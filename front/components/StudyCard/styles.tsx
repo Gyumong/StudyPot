@@ -11,8 +11,10 @@ export const BoxModel = styled.div`
   padding-top: 2rem;
   padding-bottom: 2rem;
   max-width: 36rem;
-
   cursor: pointer;
+  
+  margin:auto;
+ 
 `;
 
 export const SettingBox = styled.div`
@@ -23,10 +25,30 @@ export const SettingBox = styled.div`
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
   letter-spacing: 0.025em;
+  
+
+  ${props => props.theme.mq.mobileL} {
+    max-width: 20rem;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      max-width: 36rem;
+    }
 `;
 
 export const Shrink = styled.div`
   width: 450px;
+
+
+  ${props => props.theme.mq.mobileL} {
+    width: 320px;
+    
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      width: 450px;
+    }
 `;
 
 export const TextBox = styled.div`

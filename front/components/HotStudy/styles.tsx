@@ -43,6 +43,12 @@ export const MoreButton = styled(Button)`
   font-size: 1rem;
   line-height: 2rem;
 
+  
+  ${props => props.theme.mq.mobileL} {
+    width: 8rem;
+    height: 3rem;
+  }
+
 
  
 `;
