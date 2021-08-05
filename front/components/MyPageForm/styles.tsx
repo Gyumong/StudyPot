@@ -27,6 +27,16 @@ export const StudyListBox = styled.div`
   justify-content: space-between;
   border: 1px solid #bdbdbd;
   padding: 0.5rem;
+
+
+
+${props => props.theme.mq.mobileL} {
+  flex-direction: column;
+}
+
+${props => props.theme.mq.laptop} {
+  flex-direction: row;
+}
 `;
 
 export const StudyName = styled.p`
