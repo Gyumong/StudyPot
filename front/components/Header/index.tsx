@@ -74,6 +74,7 @@ const Header = () => {
           <RegisterButton>회원가입</RegisterButton>
         </Link>
       </ButtonFrame>
+      
     </MainFrame>
   );
 };

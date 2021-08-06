@@ -23,15 +23,17 @@ export const BoxModel = styled.div`
 
 
   ${props => props.theme.mq.mobileL} {
+    top: 9rem;
     left: 2.5rem;
-    width: 25rem;
+    width: 19rem;
   height: 5rem;
     }
    
     ${props => props.theme.mq.laptop} {
+      top: 7rem;
       left: 30rem;
       width: 30rem;
-  height: 5rem;
+      height: 5rem;
     }
 
 `;
@@ -98,6 +100,32 @@ export const OnOffline = styled.div`
     outline: none;
     box-shadow: 0px 2px 12px #00000030;
   }
+
+
+
+  ${props => props.theme.mq.mobileL} {
+    width: 8rem;
+  height: 5rem;
+  & > span {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 0.75rem;
+    color: #828282;
+  }
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      width: 10rem;
+  height: 5rem;
+
+  & > span {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    color: #828282;
+  }
+  
+    }
 `;
 
 export const OnOffList = styled.ul`
@@ -179,6 +207,27 @@ export const TypeInner = styled.div`
     line-height: 1rem;
     color: #828282;
   }
+
+  ${props => props.theme.mq.mobileL} {
+  
+  & > span {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 0.75rem;
+    color: #828282;
+  }
+    }
+   
+    ${props => props.theme.mq.laptop} {
+    
+    & > span {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1rem;
+      color: #828282;
+    }
+  
+    }
 `;
 
 export const TypeDropDown = styled.ul`
@@ -229,4 +278,17 @@ export const FindButton = styled.button`
     outline: none;
     box-shadow: 0px 2px 12px #00000030;
   }
+
+  ${props => props.theme.mq.mobileL} {
+    width: 2rem;
+    height: 2rem;
+    
+      }
+     
+      ${props => props.theme.mq.laptop} {
+      
+        width: 4rem;
+        height: 4rem;
+    
+      }
 `;

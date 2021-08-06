@@ -6,7 +6,7 @@ const Footer = () => {
  
     return (
         <Frame>
-            <p>© StudyPot, Inc. 2021. We love our users!</p>
+            <p>© StudyPot, Inc. 2021</p>
         </Frame>
     )
 };

@@ -11,6 +11,9 @@ export const LoginFormBlock = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+
+
 `;
 
 export const Header = styled.header`
@@ -48,6 +51,24 @@ export const Desc = styled.div`
     text-decoration: underline;
     font-weight: 600;
   }
+
+
+${props => props.theme.mq.mobileL} {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+${props => props.theme.mq.laptop} {
+  flex-direction: row;
+  margin-top: 2.5rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  letter-spacing: -0.015em;
+}
 `;
 
 export const Error = styled.div`
@@ -56,5 +77,6 @@ export const Error = styled.div`
 `;
 
 export const LoginButton = styled(Button)`
+  font-weight: 500;
   margin-top: 2rem;
 `;
