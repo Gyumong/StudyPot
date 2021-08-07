@@ -65,48 +65,117 @@ export const StudyName = styled.p`
     width: 4rem;
     margin-right: 3rem;
   }
+  ${props => props.theme.mq.mobileL} {
+    flex-direction: column;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      flex-direction: row;
+    }
 `;
 
 export const CategoryFormBlock = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
+
+  ${props => props.theme.mq.mobileL} {
+    flex-direction: column;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      flex-direction: row;
+    }
+
 `;
 
 export const CategoryList = styled.div`
 width: 4rem;
 margin-bottom: 1rem;
 margin-right: 3rem;
+
+
+
 `;
 
 export const Location = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
+  ${props => props.theme.mq.mobileL} {
+    flex-direction: column;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      flex-direction: row;
+    }
 `;
 
 export const HeadCount = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
+  ${props => props.theme.mq.mobileL} {
+    flex-direction: column;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      flex-direction: row;
+    }
 `;
 
 export const Type = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
+   
+  ${props => props.theme.mq.mobileL} {
+    flex-direction: column;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      flex-direction: row;
+    }
 `;
 
 export const State = styled.div`
   display: flex;
   margin-top: 2rem;
   height: 3rem;
+
+   
+  ${props => props.theme.mq.mobileL} {
+    margin-top: 5rem;
+    flex-direction: column;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      margin-top: 2rem;
+      flex-direction: row;
+    }
 `;
 
 export const Description = styled.p`
   color: #4f4f4f;
   margin-top: 2rem;
   margin-bottom: 1rem;
+
+    
+  ${props => props.theme.mq.mobileL} {
+    margin-top: 3rem;
+   
+    }
+   
+    ${props => props.theme.mq.laptop} {
+      margin-top: 2rem;
+    }
+
 `;
 
 export const RecruitFormList = styled.div`
@@ -116,7 +185,7 @@ export const RecruitFormList = styled.div`
 `;
 
 export const EditButton = styled(Button)`
-  margin-top: 1rem;
+  margin-top: 2rem;
   width: 8rem;
   height: 2rem;
 `;
