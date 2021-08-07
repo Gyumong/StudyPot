@@ -46,6 +46,9 @@
 
 ## Installation
 
+`# project root directory front
+`
+
 `npm i
 `
 `
