@@ -3,9 +3,17 @@
 스터디팟 웹사이트는 그룹 스터디 활동을 위해 만들어진 플랫폼입니다. 
 <br/>
 
-## 🖥 WebPage 
+## 🖥 WebPage Preview(Web,Mobile)
+
+
+<img src="https://user-images.githubusercontent.com/68359858/128474732-0df64eee-cff4-475e-a5ab-6be34fb4ed3b.png">
+
+<br/>
+<br/>
 
 👉🏻 클릭시 [StudyPot](https://www.studypot.kr/) 웹페이지로 이동합니다.
+
+<br/>
 
 ## 🛠 Front Tech-Stacks
 
@@ -35,12 +43,6 @@
 <br/>
 <br/>
 
-## 📸 MainPage Preview(Web,Mobile)
-
-<img src="https://user-images.githubusercontent.com/68359858/128474732-0df64eee-cff4-475e-a5ab-6be34fb4ed3b.png">
-
-<br/>
-<br/>
 
 ## Installation
 
