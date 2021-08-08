@@ -6,7 +6,7 @@
 ## 🖥 WebPage Preview(Web,Mobile)
 
 
-<img src="https://user-images.githubusercontent.com/68359858/128474732-0df64eee-cff4-475e-a5ab-6be34fb4ed3b.png">
+<img width="600px" src="https://user-images.githubusercontent.com/68359858/128474732-0df64eee-cff4-475e-a5ab-6be34fb4ed3b.png" alt="mockup"/>
 
 <br/>
 <br/>
@@ -48,9 +48,12 @@
 
 `# project root directory front
 `
+<br/>
 
 `npm i
 `
+<br/>
+
 `
 npm run dev
 `
