@@ -90,7 +90,7 @@ export const LikeButton = styled.button`
   border: 1px solid #26de81;
   border-radius: 0.25rem;
   margin-bottom: 0;
-  font-size: 0.75rem;
+  
   line-height: 1rem;
   &:hover {
     background: #70e0a8;
@@ -206,7 +206,6 @@ export const JoinButton = styled(Button)`
   width: 8rem;
   height: 2rem;
   margin-top: 0.25rem;
-
 
   ${props => props.theme.mq.mobileL} {
     display: none;
