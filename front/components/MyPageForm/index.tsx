@@ -9,7 +9,7 @@ const MyPageForm = (): ReactElement => {
 
   return (
     <MypageFormBlock>
-      <Profile />
+      <Profile user={user} />
 
       <StudyList>
         <p>내스터디</p>
