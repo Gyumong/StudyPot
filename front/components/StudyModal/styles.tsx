@@ -18,13 +18,15 @@ export const BoxModel = styled.div`
   max-height: 50rem;
 
   ${props => props.theme.mq.mobileL} {
-    margin-top: 1.5rem;
-    max-width: 30rem;
+    margin-top: -6rem;
+    max-width: 22rem;
+    max-height: 750px;
   }
  
   ${props => props.theme.mq.laptop} {
     margin-top: 0.5rem;
     max-width: 45rem;
+    max-height: 50rem;
   }
 `;
 
@@ -38,20 +40,44 @@ export const SettingBox = styled.div`
   letter-spacing: 0.025em;
 `;
 
-export const MainBox = styled.div`
-  display: flex;
-  padding: 2rem;
-`;
+
 
 export const Shrink = styled.div`
   max-width: 700px;
 
   ${props => props.theme.mq.mobileL} {
-    max-width: 500px;
+    
+
+    & > img {
+      max-width: 500px;
+      max-height: 200px;
+    }
+   
   }
  
   ${props => props.theme.mq.laptop} {
-    max-width: 700px;
+
+    & > img {
+      max-width: 700px;
+      max-height: 500px;
+    }
+  }
+`;
+
+export const MainBox = styled.div`
+  display: flex;
+  padding: 2rem;
+
+
+
+  ${props => props.theme.mq.mobileL} {
+    
+    flex-direction: column;
+   
+  }
+ 
+  ${props => props.theme.mq.laptop} {
+    flex-direction: row;
   }
 `;
 
@@ -65,6 +91,31 @@ export const TextBox = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   position: relative;
+
+  ${props => props.theme.mq.mobileL} {
+    display: flex;
+    height: 250px;
+    flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom:3rem;
+    }
+   
+  }
+ 
+  ${props => props.theme.mq.laptop} {
+    display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  height: 700px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  position: relative;
+  margin-bottom:0rem;
+  }
 `;
 
 export const TitleBox = styled.div`
@@ -97,14 +148,6 @@ export const LikeButton = styled.button`
     color: #ffffff;
   }
 
-
-  ${props => props.theme.mq.mobileL} {
-    font-size: 0.75rem;
-  }
-  
-  ${props => props.theme.mq.laptop} {
-    font-size: 1rem;
-  }
 `;
 
 export const Category = styled.p`
@@ -133,11 +176,11 @@ export const Detail = styled.p`
 
 
   ${props => props.theme.mq.mobileL} {
-    padding-bottom: 4rem;
+    padding-bottom: 2rem;
   }
   
   ${props => props.theme.mq.laptop} {
-    padding-bottom: 8rem;
+    padding-bottom: 11rem;
   }
 `;
 
@@ -175,6 +218,15 @@ export const Top = styled.div``;
 export const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
+
+
+  ${props => props.theme.mq.mobileL} {
+    
+  }
+  
+  ${props => props.theme.mq.laptop} {
+   
+  }
 `;
 
 export const UserBox = styled.div`
@@ -224,6 +276,16 @@ export const MemberBox = styled.div`
   padding-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  ${props => props.theme.mq.mobileL} {
+    width: 100%;
+    height: 14rem;
+  }
+  
+  ${props => props.theme.mq.laptop} {
+    width: 50%;
+    height: 25rem;
+  }
+ 
 `;
 
 export const BackGround = styled.div`
@@ -274,9 +336,15 @@ export const ApplyButton = styled(Button)<ButtonProps>`
 
 
 ${props => props.theme.mq.mobileL} {
-  margin-left: 5.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-left: 11rem;
+  margin-top: -1rem;
 }
 ${props => props.theme.mq.laptop} {
+  width: 5rem;
+  height: 5rem;
   margin-left: 13rem;
+  margin-top: 0.25rem;
 }
 `;
