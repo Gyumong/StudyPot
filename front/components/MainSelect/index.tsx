@@ -6,7 +6,7 @@ import { MagnifyingGlass } from "@styled-icons/entypo";
 import { useDispatch, useSelector } from "react-redux";
 import { backUrl } from "config/config";
 import axios from "axios";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import _ from "lodash";
 import { filterCategory, LoadStudy } from "@lib/slices/StudySlice";
 interface IdefaultValue {

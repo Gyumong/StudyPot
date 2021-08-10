@@ -25,7 +25,7 @@ import { Select, Cascader, Form, Input } from "antd";
 import "antd/dist/antd.css";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, loadUserByToken, UpdateUserPassword, UpdateUserProfile } from "@lib/slices/UserSlice";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import { backUrl } from "config/config";
 import axios from "axios";
 import useInput from "@hooks/useInput";

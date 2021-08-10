@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { logOut } from "@lib/slices/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.users);

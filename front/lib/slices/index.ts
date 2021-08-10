@@ -4,39 +4,32 @@ import { HYDRATE } from "next-redux-wrapper";
 import userSlice from "./UserSlice";
 import axios from "axios";
 import { backUrl } from "../../config/config";
-import { routerReducer } from "connected-next-router";
 import studySlice from "./StudySlice";
 import ModalSlice from "./ModalSlice";
+import { AppDispatch } from "@lib/store/configureStore";
+import { useDispatch } from "react-redux";
+
 axios.defaults.baseURL = `${backUrl}`; // baseurl 설정 앞으로 요청할때
+
 export interface State {
   users: IUser;
   study: IStudy;
   modal: IModal;
 }
-export const rootReducer = combineReducers({
-  users: userSlice,
-  study: studySlice,
-  modal: ModalSlice,
-  router: routerReducer,
-});
 
-export type RootState = ReturnType<typeof rootReducer>;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 
-let initialRootState: RootState;
-
-export const reducer = (state: any, action: any) => {
-  if (action.type === HYDRATE) {
-    if (state === initialRootState) {
-      const nextState = {
-        ...state,
-        ...action.payload,
-      };
-      if (typeof window !== "undefined" && state?.router) {
-        nextState.router = state.router;
-      }
-      return nextState;
-    } else {
-      return rootReducer(state, action);
+export const reducer = (state: any, action: AnyAction) => {
+  switch (action.type) {
+    case HYDRATE:
+      console.log("HYDRATE", action);
+      return { ...state, ...action.payload };
+    default: {
+      return combineReducers({
+        users: userSlice,
+        study: studySlice,
+        modal: ModalSlice,
+      })(state, action);
     }
   }
 };

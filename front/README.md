@@ -3,7 +3,11 @@
 스터디팟 웹사이트는 그룹 스터디 활동을 위해 만들어진 플랫폼입니다. 
 <br/>
 
+<br/>
+
+
 ## 🖥 WebPage Preview(Web,Mobile)
+
 
 
 <img width="600px" src="https://user-images.githubusercontent.com/68359858/128474732-0df64eee-cff4-475e-a5ab-6be34fb4ed3b.png" alt="mockup"/>
@@ -56,4 +60,7 @@
 
 `
 npm run dev
+
 `
+<br/>
+

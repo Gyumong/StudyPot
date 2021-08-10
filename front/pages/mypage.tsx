@@ -4,7 +4,7 @@ import Header from "@components/Header";
 import MyPageForm from "@components/MyPageForm";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, loadUserByToken } from "@lib/slices/UserSlice";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import { useRouter } from "next/router";
 const Mypage = (): ReactElement => {
   const dispatch = useDispatch();

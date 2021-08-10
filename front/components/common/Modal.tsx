@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ReactDOM from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 import { deleteModal } from "@lib/slices/ModalSlice";
 
 import StudyModal from "@components/StudyModal";

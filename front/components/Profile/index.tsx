@@ -17,7 +17,7 @@ import gravatar from "gravatar";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUserByToken } from "@lib/slices/UserSlice";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 
 const Profile = (): ReactElement => {
   const router = useRouter();
