@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { MypageFormBlock, StudyList, StudyListBox, StudyName, StudyDetail } from "./styles";
 import Profile from "@components/Profile";
 import { useSelector } from "react-redux";
-import { RootState } from "@lib/slices";
+import { RootState } from "@lib/store/configureStore";
 
 const MyPageForm = (): ReactElement => {
   const { user } = useSelector((state: RootState) => state.users);
