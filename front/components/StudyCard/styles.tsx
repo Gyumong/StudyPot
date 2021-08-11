@@ -28,7 +28,9 @@ export const SettingBox = styled.div`
   
 
   ${props => props.theme.mq.mobileL} {
+
     max-width: 20rem;
+
    
     }
    

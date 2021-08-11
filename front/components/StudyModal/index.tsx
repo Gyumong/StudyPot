@@ -16,7 +16,7 @@ import {
   UserName,
   Date,
   JoinButton,
-  MainBox,
+  MainBox
 } from "./styles";
 
 import { LocationPin } from "@styled-icons/entypo";
@@ -70,7 +70,9 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
         <Shrink>
           <img src={studyData.thumbnailUrl} alt="mountains" className="w-full h-64 rounded-lg rounded-b-none" />
         </Shrink>
+
         <MainBox>
+
           <TextBox>
             <Top>
               {studyData.categories.map((category: any) => {
@@ -106,9 +108,15 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
                 &nbsp; {studyData.participatingNumber} /{studyData.maxStudyNumber}
               </JoinButton>
             </Bottom>
+
           </TextBox>
+         
+
           <StudyMemberBox studyData={studyData} />
+
+         
         </MainBox>
+
       </SettingBox>
     </BoxModel>
   );
