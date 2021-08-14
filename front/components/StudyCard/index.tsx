@@ -12,7 +12,7 @@ import {
   UserNameBox,
   UserImgBox,
   UserName,
-  Date,
+  Date as DateSpan,
   JoinButton,
 } from "./styles";
 
@@ -39,6 +39,25 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
     );
   }, [dispatch]);
 
+  const formatDate = (date: Date) => {
+    const monthTexts: Array<string> = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    return `${new Date(date).getDate()} ${monthTexts[new Date(date).getMonth()]}`;
+  };
+
   return (
     <BoxModel onClick={exampleOnClick}>
       <SettingBox>
@@ -56,21 +75,18 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
 
           <TitleBox>
             <Title>{study.title}</Title>
-            <LikeButton>💚 &nbsp; 2</LikeButton>
+            <LikeButton>💚&nbsp;{study.studyLike.likeCount}</LikeButton>
           </TitleBox>
 
           <Detail>{study.content}</Detail>
 
           <UserNameBox>
             <UserImgBox>
-              <img
-                src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=731&q=80"
-                alt="avatar"
-              />
+              <img src={study.leader.imageUrl} alt="avatar" />
             </UserImgBox>
             <div>
-              <UserName> 윤겸 </UserName>
-              <Date> 14 Aug </Date>
+              <UserName>{study.leader.name}</UserName>
+              <DateSpan>{formatDate(study.createdAt)}</DateSpan>
             </div>
             <JoinButton>
               {" "}

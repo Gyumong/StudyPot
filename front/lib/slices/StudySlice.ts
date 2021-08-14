@@ -13,6 +13,16 @@ interface categoriestype {
   key: string;
   value: string;
 }
+
+interface leader {
+  name: string;
+  imageUrl: string;
+}
+
+interface studyLike {
+  like: boolean;
+  likeCount: number;
+}
 export interface contentArray {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   map(arg0: (i: any) => any): any;
@@ -25,7 +35,9 @@ export interface contentArray {
   meetingType: string;
   maxNumber: number;
   participatingNumber: number;
-  leaderUserId: number;
+  leader: leader;
+  studyLike: studyLike;
+  createdAt: Date;
 }
 
 interface ILoadStudy {
