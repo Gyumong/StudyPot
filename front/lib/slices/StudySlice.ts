@@ -200,7 +200,7 @@ export const LoadOneStudy = createAsyncThunk<
   { rejectValue: rejectMessage }
 >("study/LoadOneStudy", async (data, thunkAPI) => {
   try {
-    const response = await axios.get(`${backUrl}/study/${data?.studyId}`);
+    const response = await axiosWithToken.get(`${backUrl}/study/${data?.studyId}`);
     return response.data;
   } catch (e) {
     console.log("Error", e);
