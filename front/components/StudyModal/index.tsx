@@ -32,38 +32,48 @@ interface StudyCardProps {
   studyData: ILoadOneStudy;
 }
 
+const icon = {
+  like: "💚",
+  unlike: "💛",
+};
+
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.users);
-  const { singleStudy } = useSelector((state: RootState) => state.study);
-  const [LikeStudyNum, setLikeStudyNum] = useState(0);
+  const [studyLikeStatus, setStudyLikeStatus] = useState(false);
+  const [studyLikeIcon, setStudyLikeIcon] = useState(icon.unlike);
+  const [studyLikeCount, setStudyLikeCount] = useState(0);
   const router = useRouter();
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
 
   useEffect(() => {
-    return () => {
-      setLikeStudyNum(0);
-    };
-  }, []);
+    setStudyLikeStatus(studyData?.studyLike.like);
+    setStudyLikeIcon(studyData?.studyLike.like ? icon.like : icon.unlike);
+    setStudyLikeCount(studyData?.studyLike.likeCount);
+  }, [studyData]);
+
   const AddLike = useCallback(() => {
-    if (user && studyData && !!!LikeStudyNum) {
+    if (user && studyData) {
       dispatch(
         LikeStudy({
           studyId: studyData.studyId,
         }),
       );
-      setLikeStudyNum((prev) => prev + 1);
+      const changedLikeStatus = !studyLikeStatus;
+      setStudyLikeStatus(changedLikeStatus);
+      setStudyLikeIcon(changedLikeStatus ? icon.like : icon.unlike);
+      setStudyLikeCount((prev) => (changedLikeStatus ? prev + 1 : prev - 1));
     } else if (!user) {
       router.push("/login");
     }
-  }, [user, dispatch, studyData, LikeStudyNum]);
+  }, [user, dispatch, studyData, studyLikeCount]);
 
   if (!studyData) {
     return null;
   }
-  console.log(!!!LikeStudyNum);
+
   return (
     <BoxModel onClick={stopPropagation}>
       <SettingBox>
@@ -84,7 +94,9 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
               </LocationButton>
               <TitleBox>
                 <Title>{studyData.title}</Title>
-                <LikeButton onClick={AddLike}>💚 &nbsp; {singleStudy.studyLike.likeCount}</LikeButton>
+                <LikeButton onClick={AddLike}>
+                  {studyLikeIcon} &nbsp; {studyLikeCount}
+                </LikeButton>
               </TitleBox>
             </Top>
 
