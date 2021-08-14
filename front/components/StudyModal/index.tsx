@@ -23,13 +23,13 @@ import { LocationPin } from "@styled-icons/entypo";
 import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { JoinStudy, LikeStudy } from "@lib/slices/StudySlice";
+import { ILoadOneStudy, LikeStudy } from "@lib/slices/StudySlice";
 import StudyMemberBox from "./../StudyMemberBox/index";
 import { useRouter } from "next/router";
 import { RootState } from "@lib/store/configureStore";
 interface StudyCardProps {
   studyId?: number;
-  studyData: any;
+  studyData: ILoadOneStudy;
 }
 
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
@@ -84,7 +84,7 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
               </LocationButton>
               <TitleBox>
                 <Title>{studyData.title}</Title>
-                <LikeButton onClick={AddLike}>💚 &nbsp; {singleStudy.studyLikeCount + LikeStudyNum}</LikeButton>
+                <LikeButton onClick={AddLike}>💚 &nbsp; {singleStudy.studyLike.likeCount}</LikeButton>
               </TitleBox>
             </Top>
 

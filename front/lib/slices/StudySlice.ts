@@ -47,21 +47,23 @@ interface ILoadStudy {
 }
 
 export interface ILoadOneStudy {
-  categories: {
+  studyId: number;
+  thumbnailUrl: string;
+  categories: Array<{
     key: string;
     value: string;
-  };
+  }>;
   content: string;
   createdAt: string;
   leader: {
     imageUrl: string;
     name: string;
   };
-  maxNumber: number;
+  maxStudyNumber: number;
   participatingNumber: number;
   thumbnail: string;
   title: string;
-  studyLikeCount: number;
+  studyLike: studyLike;
 }
 
 interface ILoadOneStudyPayload {
