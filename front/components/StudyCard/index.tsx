@@ -28,6 +28,11 @@ interface StudyCardProps {
   study: contentArray;
 }
 
+const icon = {
+  like: "💚",
+  unlike: "💛",
+};
+
 const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
   const dispatch = useDispatch();
   const exampleOnClick = useCallback(() => {
@@ -75,7 +80,9 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
 
           <TitleBox>
             <Title>{study.title}</Title>
-            <LikeButton>💚&nbsp;{study.studyLike.likeCount}</LikeButton>
+            <LikeButton>
+              {study.studyLike.like ? icon.like : icon.unlike}&nbsp;{study.studyLike.likeCount}
+            </LikeButton>
           </TitleBox>
 
           <Detail>{study.content}</Detail>

@@ -23,7 +23,7 @@ import { LocationPin } from "@styled-icons/entypo";
 import { PeopleFill } from "@styled-icons/bootstrap/PeopleFill";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ILoadOneStudy, LikeStudy } from "@lib/slices/StudySlice";
+import { ILoadOneStudy, LikeStudy, updateStudyLike } from "@lib/slices/StudySlice";
 import StudyMemberBox from "./../StudyMemberBox/index";
 import { useRouter } from "next/router";
 import { RootState } from "@lib/store/configureStore";
@@ -40,6 +40,7 @@ const icon = {
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.users);
+  const { study } = useSelector((state: RootState) => state.study);
   const [studyLikeStatus, setStudyLikeStatus] = useState(false);
   const [studyLikeIcon, setStudyLikeIcon] = useState(icon.unlike);
   const [studyLikeCount, setStudyLikeCount] = useState(0);
@@ -56,12 +57,20 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
 
   const AddLike = useCallback(() => {
     if (user && studyData) {
+      const changedLikeStatus = !studyLikeStatus;
+
       dispatch(
         LikeStudy({
           studyId: studyData.studyId,
         }),
       );
-      const changedLikeStatus = !studyLikeStatus;
+      dispatch(
+        updateStudyLike({
+          studyId: studyData.studyId,
+          likeStatus: changedLikeStatus,
+        }),
+      );
+
       setStudyLikeStatus(changedLikeStatus);
       setStudyLikeIcon(changedLikeStatus ? icon.like : icon.unlike);
       setStudyLikeCount((prev) => (changedLikeStatus ? prev + 1 : prev - 1));

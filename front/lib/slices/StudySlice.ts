@@ -4,6 +4,7 @@ import axiosWithToken from "@utils/axios";
 import axios, { AxiosRequestConfig } from "axios";
 import { AppDispatch } from "@lib/store/configureStore";
 import { RootState } from "../store/configureStore";
+import _ from "lodash";
 
 interface rejectMessage {
   errorMessage: string;
@@ -285,6 +286,21 @@ export const studySlice = createSlice({
       state.LoadStudyError = false;
       return state;
     },
+    updateStudyLike: (state, action) => {
+      const { studyId, likeStatus } = action.payload;
+
+      const studyIndex = state.study.findIndex((studyItem) => studyItem.id === studyId);
+      const updateStudy = state.study[studyIndex];
+      state.study.splice(studyIndex, 1, {
+        ...updateStudy,
+        studyLike: {
+          like: likeStatus,
+          likeCount: likeStatus ? updateStudy.studyLike.likeCount + 1 : updateStudy.studyLike.likeCount - 1,
+        },
+      });
+
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(MakeStudy.pending, (state) => {
@@ -391,6 +407,6 @@ export const studySlice = createSlice({
   },
 });
 
-export const { clearState, filterCategory, resetStudy, clearStudy } = studySlice.actions;
+export const { clearState, filterCategory, resetStudy, clearStudy, updateStudyLike } = studySlice.actions;
 
 export default studySlice.reducer;
