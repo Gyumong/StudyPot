@@ -27,6 +27,7 @@ const find = (): ReactElement => {
   // }, []);
   useEffect(() => {
     dispatch(loadUserByToken(null));
+    dispatch(LoadStudy({ lastId: null, categoryName: "" }));
   }, []);
 
   useEffect(() => {
@@ -66,10 +67,5 @@ const find = (): ReactElement => {
     </>
   );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const dispatch = context.store.dispatch as AppThunkDispatch;
-  await dispatch(LoadStudy({ lastId: null, categoryName: "" }));
-});
 
 export default find;
