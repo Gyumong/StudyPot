@@ -223,8 +223,8 @@ export const LoadStudy = createAsyncThunk<
 >("study/LoadStudy", async (data, thunkAPI) => {
   try {
     const query = data?.categoryName === "" ? "" : `&categoryName=${data?.categoryName}`;
-    const response = await axios.get(
-      `${backUrl}/study?size=3${query ? query : ""}${data?.lastId ? `&lastId=${data?.lastId}` : ""}`,
+    const response = await axiosWithToken.get(
+      `${backUrl}/study?size=9${query ? query : ""}${data?.lastId ? `&lastId=${data?.lastId}` : ""}`,
     );
 
     return response.data;
