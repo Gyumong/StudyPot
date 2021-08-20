@@ -45,14 +45,25 @@ axiosWithToken.interceptors.response.use(
       console.log("토큰 만료");
       originalRequest._retry = true;
       const refreshToken = window.localStorage.getItem("refreshToken");
-      const { data } = await axios.get(`${backUrl}/refresh`, {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      });
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data.data;
-      localStorage.setItem("accessToken", newAccessToken);
-      localStorage.setItem("refreshToken", newRefreshToken);
+
+      if (refreshToken) {
+        try {
+          const { data } = await axios.get(`${backUrl}/refresh`, {
+            headers: {
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          });
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data.data;
+          localStorage.setItem("accessToken", newAccessToken);
+          localStorage.setItem("refreshToken", newRefreshToken);
+        } catch (e) {
+          console.warn("토큰을 삭제합니다.", e);
+          window.localStorage.removeItem("accessToken");
+          window.localStorage.removeItem("refreshToken");
+          return Promise.reject(e);
+        }
+      }
+
       return axios(originalRequest);
     }
     return Promise.reject(error);
