@@ -4,6 +4,7 @@ import axiosWithToken from "@utils/axios";
 import axios, { AxiosRequestConfig } from "axios";
 import { AppDispatch } from "@lib/store/configureStore";
 import { RootState } from "../store/configureStore";
+import _ from "lodash";
 
 interface rejectMessage {
   errorMessage: string;
@@ -12,6 +13,16 @@ interface categoriestype {
   map(arg0: (v: any) => any): any;
   key: string;
   value: string;
+}
+
+interface leader {
+  name: string;
+  imageUrl: string;
+}
+
+interface studyLike {
+  like: boolean;
+  likeCount: number;
 }
 export interface contentArray {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,7 +36,9 @@ export interface contentArray {
   meetingType: string;
   maxNumber: number;
   participatingNumber: number;
-  leaderUserId: number;
+  leader: leader;
+  studyLike: studyLike;
+  createdAt: Date;
 }
 
 interface ILoadStudy {
@@ -35,21 +48,23 @@ interface ILoadStudy {
 }
 
 export interface ILoadOneStudy {
-  categories: {
+  studyId: number;
+  thumbnailUrl: string;
+  categories: Array<{
     key: string;
     value: string;
-  };
+  }>;
   content: string;
   createdAt: string;
   leader: {
     imageUrl: string;
     name: string;
   };
-  maxNumber: number;
+  maxStudyNumber: number;
   participatingNumber: number;
   thumbnail: string;
   title: string;
-  studyLikeCount: number;
+  studyLike: studyLike;
 }
 
 interface ILoadOneStudyPayload {
@@ -186,7 +201,7 @@ export const LoadOneStudy = createAsyncThunk<
   { rejectValue: rejectMessage }
 >("study/LoadOneStudy", async (data, thunkAPI) => {
   try {
-    const response = await axios.get(`${backUrl}/study/${data?.studyId}`);
+    const response = await axiosWithToken.get(`${backUrl}/study/${data?.studyId}`);
     return response.data;
   } catch (e) {
     console.log("Error", e);
@@ -209,8 +224,8 @@ export const LoadStudy = createAsyncThunk<
 >("study/LoadStudy", async (data, thunkAPI) => {
   try {
     const query = data?.categoryName === "" ? "" : `&categoryName=${data?.categoryName}`;
-    const response = await axios.get(
-      `${backUrl}/study?size=3${query ? query : ""}${data?.lastId ? `&lastId=${data?.lastId}` : ""}`,
+    const response = await axiosWithToken.get(
+      `${backUrl}/study?size=9${query ? query : ""}${data?.lastId ? `&lastId=${data?.lastId}` : ""}`,
     );
 
     return response.data;
@@ -269,6 +284,21 @@ export const studySlice = createSlice({
       state.LoadStudyLoading = false;
       state.LoadStudySuccess = false;
       state.LoadStudyError = false;
+      return state;
+    },
+    updateStudyLike: (state, action) => {
+      const { studyId, likeStatus } = action.payload;
+
+      const studyIndex = state.study.findIndex((studyItem) => studyItem.id === studyId);
+      const updateStudy = state.study[studyIndex];
+      state.study.splice(studyIndex, 1, {
+        ...updateStudy,
+        studyLike: {
+          like: likeStatus,
+          likeCount: likeStatus ? updateStudy.studyLike.likeCount + 1 : updateStudy.studyLike.likeCount - 1,
+        },
+      });
+
       return state;
     },
   },
@@ -377,6 +407,6 @@ export const studySlice = createSlice({
   },
 });
 
-export const { clearState, filterCategory, resetStudy, clearStudy } = studySlice.actions;
+export const { clearState, filterCategory, resetStudy, clearStudy, updateStudyLike } = studySlice.actions;
 
 export default studySlice.reducer;

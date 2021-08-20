@@ -5,9 +5,6 @@ import * as jwt from "jsonwebtoken";
 
 export const axiosWithToken: AxiosInstance = axios.create({
   baseURL: backUrl,
-  headers: {
-    Authorization: `Bearer ${typeof Storage !== "undefined" && localStorage.getItem("accessToken")}`,
-  },
 });
 
 axiosWithToken.interceptors.request.use(
