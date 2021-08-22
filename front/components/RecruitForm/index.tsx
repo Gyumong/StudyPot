@@ -59,7 +59,7 @@ const RecruitForm = (): ReactElement => {
 
   useEffect(() => {
     if (!MakeStudyLoading && MakeStudySuccess) {
-      router.push("/find");
+      router.push("/study");
     }
   }, [MakeStudyLoading, MakeStudySuccess]);
 
