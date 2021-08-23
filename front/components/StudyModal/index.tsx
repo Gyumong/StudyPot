@@ -26,7 +26,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ILoadOneStudy, LikeStudy, updateStudyLike } from "@lib/slices/StudySlice";
 import StudyMemberBox from "./../StudyMemberBox/index";
 import { useRouter } from "next/router";
-import { RootState } from "@lib/store/configureStore";
+import { AppDispatch } from "@lib/store/configureStore";
+import { deleteModal } from "@lib/slices/ModalSlice";
 interface StudyCardProps {
   studyId?: number;
   studyData: ILoadOneStudy;
@@ -38,9 +39,7 @@ const icon = {
 };
 
 const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.users);
-  const { study } = useSelector((state: RootState) => state.study);
+  const dispatch = useDispatch<AppDispatch>();
   const [studyLikeStatus, setStudyLikeStatus] = useState(false);
   const [studyLikeIcon, setStudyLikeIcon] = useState(icon.unlike);
   const [studyLikeCount, setStudyLikeCount] = useState(0);
@@ -56,28 +55,28 @@ const StudyModal: React.FC<StudyCardProps> = ({ studyData }) => {
   }, [studyData]);
 
   const AddLike = useCallback(() => {
-    if (user && studyData) {
-      const changedLikeStatus = !studyLikeStatus;
+    if (studyData) {
+      dispatch(LikeStudy({ studyId: studyData.studyId })).then(({ payload }) => {
+        if (payload.errorMessage) {
+          dispatch(deleteModal());
+          return router.push("/login");
+        }
 
-      dispatch(
-        LikeStudy({
-          studyId: studyData.studyId,
-        }),
-      );
-      dispatch(
-        updateStudyLike({
-          studyId: studyData.studyId,
-          likeStatus: changedLikeStatus,
-        }),
-      );
+        const changedLikeStatus = !studyLikeStatus;
 
-      setStudyLikeStatus(changedLikeStatus);
-      setStudyLikeIcon(changedLikeStatus ? icon.like : icon.unlike);
-      setStudyLikeCount((prev) => (changedLikeStatus ? prev + 1 : prev - 1));
-    } else if (!user) {
-      router.push("/login");
+        dispatch(
+          updateStudyLike({
+            studyId: studyData.studyId,
+            likeStatus: changedLikeStatus,
+          }),
+        );
+
+        setStudyLikeStatus(changedLikeStatus);
+        setStudyLikeIcon(changedLikeStatus ? icon.like : icon.unlike);
+        setStudyLikeCount((prev) => (changedLikeStatus ? prev + 1 : prev - 1));
+      });
     }
-  }, [user, dispatch, studyData, studyLikeCount]);
+  }, [dispatch, studyData, studyLikeCount]);
 
   if (!studyData) {
     return null;

@@ -27,7 +27,7 @@ const Header = () => {
 
         <MenuFrame>
           <MenuItem>
-            <Link href="/find">
+            <Link href="/study">
               <a>스터디찾기</a>
             </Link>
           </MenuItem>
@@ -58,7 +58,7 @@ const Header = () => {
       </Link>
       <MenuFrame>
         <MenuItem>
-          <Link href="/find">스터디찾기</Link>
+          <Link href="/study">스터디찾기</Link>
         </MenuItem>
         <MenuItem>
           <Link href="/recruit">스터디모집</Link>

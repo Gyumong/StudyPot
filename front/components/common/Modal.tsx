@@ -6,9 +6,11 @@ import { RootState } from "@lib/store/configureStore";
 import { deleteModal } from "@lib/slices/ModalSlice";
 
 import StudyModal from "@components/StudyModal";
+import { useRouter } from "next/router";
 
 const Modal: React.FC = () => {
   const [isBrowser, setIsBrowser] = useState(false);
+  const router = useRouter();
   const dispatch = useDispatch();
   const { show } = useSelector((state: RootState) => state.modal);
   const { singleStudy } = useSelector((state: RootState) => state.study);
@@ -19,6 +21,7 @@ const Modal: React.FC = () => {
   const handleCloseClick = (e: any) => {
     e.preventDefault();
     dispatch(deleteModal());
+    router.push("/study");
   };
 
   const modalContent = show ? (

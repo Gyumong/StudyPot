@@ -1,30 +1,26 @@
-import React, { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import Header from "@components/Header";
 import { StudyCardContainer } from "@components/FindStudy/styles";
 import { GridBox } from "@components/FindStudy/styles";
 import StudyCard from "@components/StudyCard";
 import MainSelect from "@components/MainSelect";
 import { useDispatch, useSelector } from "react-redux";
-import { clearState, contentArray, LoadStudy, clearStudy } from "@lib/slices/StudySlice";
-import { RootState, AppThunkDispatch } from "@lib/store/configureStore";
-import { useCallback, useMemo } from "react";
+import { clearState, contentArray, LoadStudy, clearStudy, LoadOneStudy } from "@lib/slices/StudySlice";
+import { RootState } from "@lib/store/configureStore";
+import { useMemo } from "react";
 import { loadUserByToken } from "@lib/slices/UserSlice";
 import _ from "lodash";
 import Modal from "@components/common/Modal";
-import wrapper, { AppDispatch, AppThunk } from "@lib/store/configureStore";
-import { useAppDispatch } from "../lib/slices";
+import { AppDispatch } from "@lib/store/configureStore";
+import { useRouter } from "next/router";
+import { popModal } from "@lib/slices/ModalSlice";
 
 const find = (): ReactElement => {
+  const router = useRouter();
   const { study, last, LoadStudyLoading, selectedCategory } = useSelector((state: RootState) => state.study);
-  const Appdispatch = useAppDispatch();
   const dispatch = useDispatch<AppDispatch>();
   const throttleGetLoadStudy = useMemo(() => _.throttle((param) => dispatch(LoadStudy(param)), 200), [dispatch]);
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
 
-  //   const lastId = study[study.length - 1]?.id;
-  //   throttleGetLoadStudy({ lastId, categoryName: selectedCategory });
-  // }, []);
   useEffect(() => {
     dispatch(loadUserByToken(null));
     dispatch(LoadStudy({ lastId: null, categoryName: "" }));
@@ -51,6 +47,13 @@ const find = (): ReactElement => {
       window.removeEventListener("scroll", onScroll);
     };
   }, [study, last, LoadStudyLoading, selectedCategory]);
+
+  useEffect(() => {
+    if (router.query.studyId) {
+      dispatch(popModal(null));
+      dispatch(LoadOneStudy({ studyId: parseInt(router.query.studyId as string) }));
+    }
+  }, [router.query.studyId]);
 
   return (
     <>

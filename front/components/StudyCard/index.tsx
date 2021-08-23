@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { contentArray } from "@lib/slices/StudySlice";
 import { popModal } from "@lib/slices/ModalSlice";
+import { useRouter } from "next/router";
 interface StudyCardProps {
   studyId: number;
   study: contentArray;
@@ -34,6 +35,7 @@ const icon = {
 };
 
 const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const exampleOnClick = useCallback(() => {
     dispatch(popModal(null));
@@ -42,6 +44,7 @@ const StudyCard: React.FC<StudyCardProps> = ({ studyId, study }) => {
         studyId: studyId,
       }),
     );
+    router.push(`/study/${studyId}`);
   }, [dispatch]);
 
   const formatDate = (date: Date) => {
