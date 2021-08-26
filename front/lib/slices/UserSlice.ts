@@ -16,6 +16,8 @@ interface IloadUser {
   introduction: string;
   location: string;
   name: string;
+  participatingStudyList: Array<any>;
+  interestingStudyList: Array<any>;
   errorMessage: string;
 }
 interface signUpPayload {
@@ -47,6 +49,20 @@ const initialState: IUser = {
       {
         key: "",
         value: "",
+      },
+    ],
+    participatingStudyList: [
+      {
+        studyId: -1,
+        studyTitle: "",
+        studyContent: "",
+      },
+    ],
+    interestingStudyList: [
+      {
+        studyId: -1,
+        studyTitle: "",
+        studyContent: "",
       },
     ],
   },
@@ -205,6 +221,8 @@ export const userSlice = createSlice({
       state.user.image = payload.image;
       state.user.introduction = payload.introduction;
       state.user.location = payload.location;
+      state.user.participatingStudyList = payload.participatingStudyList;
+      state.user.interestingStudyList = payload.interestingStudyList;
       state.loadUserLoading = false;
       state.loadUserSuccess = true;
       state.loadUserError = false;

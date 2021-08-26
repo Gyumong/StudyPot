@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import {
   ProfileFormBlock,
   Location,
@@ -14,22 +14,8 @@ import Link from "next/link";
 import { LocationPin } from "@styled-icons/entypo/LocationPin";
 import { LightningFill } from "@styled-icons/bootstrap/LightningFill";
 import gravatar from "gravatar";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { loadUserByToken } from "@lib/slices/UserSlice";
-import { RootState } from "@lib/store/configureStore";
 
-const Profile = (): ReactElement => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.users);
-
-  useEffect(() => {
-    dispatch(loadUserByToken(null));
-  }, [dispatch]);
-  console.log(user);
-  console.log(user.image);
-
+const Profile = ({ user }: { user: any }): ReactElement => {
   return (
     <ProfileFormBlock>
       <DescBlock>
